@@ -11,6 +11,61 @@
   <script src="{% static '/codemirror/mode/swift/swift.js' %}"></script>
   <script src="{% static '/codemirror/mode/pascal/pascal.js' %}"></script>
   <script src="{% static '/codemirror/mode/fortran/fortran.js' %}"></script>
+  <link rel="stylesheet" href="{% static '/codemirror/theme/3024-day.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/3024-night.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/abcdef.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/ambiance.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/base16-dark.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/bespin.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/base16-light.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/blackboard.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/cobalt.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/colorforth.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/dracula.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/duotone-dark.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/duotone-light.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/eclipse.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/elegant.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/erlang-dark.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/gruvbox-dark.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/hopscotch.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/icecoder.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/isotope.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/lesser-dark.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/liquibyte.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/lucario.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/material.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/mbo.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/mdn-like.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/midnight.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/monokai.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/neat.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/neo.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/night.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/nord.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/oceanic-next.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/panda-syntax.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/paraiso-dark.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/paraiso-light.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/pastel-on-dark.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/railscasts.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/rubyblue.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/seti.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/shadowfox.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/solarized.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/the-matrix.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/tomorrow-night-bright.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/tomorrow-night-eighties.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/ttcn.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/twilight.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/vibrant-ink.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/xq-dark.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/xq-light.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/yeti.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/idea.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/darcula.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/yonce.css' %}">
+  <link rel="stylesheet" href="{% static '/codemirror/theme/zenburn.css' %}">
   <style>.CodeMirror {border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;height:415px}</style>
 {% endblock %}
 {% block content %}
@@ -68,10 +123,64 @@
                     </div>
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">主题</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
-                      <select class="form-control">
-                        <option>Default</option>
-                        <option>Light</option>
-                        <option>Dark</option>
+                      <select class="form-control" id="theme">
+                        <option selected="">default</option>
+                        <option>3024-day</option>
+                        <option>3024-night</option>
+                        <option>abcdef</option>
+                        <option>ambiance</option>
+                        <option>base16-dark</option>
+                        <option>base16-light</option>
+                        <option>bespin</option>
+                        <option>blackboard</option>
+                        <option>cobalt</option>
+                        <option>colorforth</option>
+                        <option>darcula</option>
+                        <option>dracula</option>
+                        <option>duotone-dark</option>
+                        <option>duotone-light</option>
+                        <option>eclipse</option>
+                        <option>elegant</option>
+                        <option>erlang-dark</option>
+                        <option>gruvbox-dark</option>
+                        <option>hopscotch</option>
+                        <option>icecoder</option>
+                        <option>idea</option>
+                        <option>isotope</option>
+                        <option>lesser-dark</option>
+                        <option>liquibyte</option>
+                        <option>lucario</option>
+                        <option>material</option>
+                        <option>mbo</option>
+                        <option>mdn-like</option>
+                        <option>midnight</option>
+                        <option>monokai</option>
+                        <option>neat</option>
+                        <option>neo</option>
+                        <option>night</option>
+                        <option>nord</option>
+                        <option>oceanic-next</option>
+                        <option>panda-syntax</option>
+                        <option>paraiso-dark</option>
+                        <option>paraiso-light</option>
+                        <option>pastel-on-dark</option>
+                        <option>railscasts</option>
+                        <option>rubyblue</option>
+                        <option>seti</option>
+                        <option>shadowfox</option>
+                        <option>solarized dark</option>
+                        <option>solarized light</option>
+                        <option>the-matrix</option>
+                        <option>tomorrow-night-bright</option>
+                        <option>tomorrow-night-eighties</option>
+                        <option>ttcn</option>
+                        <option>twilight</option>
+                        <option>vibrant-ink</option>
+                        <option>xq-dark</option>
+                        <option>xq-light</option>
+                        <option>yeti</option>
+                        <option>yonce</option>
+                        <option>zenburn</option>
                       </select>
                     </div>
                   </div>
@@ -105,6 +214,7 @@
                   height: "100%",
                   matchBrackets: true
         });
+      //更改语言
       function changcode() {
         var t = $('#codetype').val();
         var c ="";
@@ -141,6 +251,7 @@
       }
       $('#codetype').change(changcode);
       changcode();
+      //提交代码
       $('#submit').click(function(){
         $('#submit').enable = false;
         $.post("../running/", { codetype: $('#codetype').val(), stdin: $('#stdin').val() ,code: editor.getValue()},
@@ -148,6 +259,13 @@
             $('#submit').enable = true;
             $('#stdout').val(data['stdout']);
           });
+      });
+      //更改主题
+      $('#theme').change(function(){
+        var input = document.getElementById("theme");
+        var theme = input.options[input.selectedIndex].textContent;
+        editor.setOption("theme", theme);
+        
       });
     </script>
 {% endblock %}
