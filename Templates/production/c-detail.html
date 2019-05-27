@@ -1,0 +1,201 @@
+{% extends 'c-base.html' %}
+{% block css %}
+    
+{% endblock %}
+{% block content %}
+
+<!-- page content -->
+  <div class="right_col" role="main">
+    <div class="">
+      <div class="col-md-8 col-sm-8 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>题目：排列拆分</h2>
+          <ul class="nav navbar-right panel_toolbox">
+              <li><a href="../coding"><button type="button" class="btn btn-success btn-sm">开始答题</button></a>
+              </li>
+            </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          
+            给定整数序列 A1, A2, . . . , AN。对序列的修改分为两类：在序列任意位置（包括开头和末尾）
+  插入一个新元素，以及删去序列的一个元素。注意，当序列为空时，无法从中删去元素。
+  请计算，至少要进行多少次修改，才能使得修改后的序列可以被拆分成若干排列。形式化地，
+  修改后序列的所有元素应当能被拆分成零个或更多的集合，使得每个元素恰好属于一个集合。对
+  于每个集合，如果其中包含 L 个元素，那么这 L 个元素应当恰好为 1 ∼ L 的整数，出现各一次。
+            <div class="ln_solid"></div>
+          <h4>输入格式</h4>
+          <p class="font-gray-dark">
+              输入的第一行包含一个整数 T，代表测试数据的组数。接下来是 T 组数据。<br/>
+  每组数据的第一行包含一个整数 N。<br/>
+  第二行包含 N 个整数 A1, A2, . . . , AN。
+          </p>
+          
+          <div class="ln_solid"></div>
+          <h4>输出格式</h4>
+          <p class="font-gray-dark">
+              对于每组数据，输出一行，包含一个整数，代表最少需要进行的修改次数。</p>
+              <div class="ln_solid"></div>
+          <h4>数据范围</h4>
+          <p class="font-gray-dark">
+              • 1 ≤ T ≤ 1, 000<br/>
+  • 1 ≤ N ≤ 106<br/>
+  • 1 ≤ Ai ≤ 109<br/>
+  • 单个输入中 ∑N ≤ 106
+  </p>
+              <div class="ln_solid"></div>
+          <h4>样例输入</h4>
+          <p class="font-gray-dark">
+              2<br/>
+              5<br/>
+              1 4 1 2 2<br/>
+              4<br/>
+              2 3 2 3</p>
+              <div class="ln_solid"></div>
+          <h4>样例输出</h4>
+          <p class="font-gray-dark">
+              1<br/>
+              2</p>
+              <div class="table-responsive">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <th style="width:20%">作者:</th>
+                        <td>兰兰</td>
+                      </tr>
+                      <tr>
+                        <th>标签</th>
+                        <td>基础问题</td>
+                      </tr>
+                      <tr>
+                        <th>创建日期:</th>
+                        <td>2018-01-01</td>
+                      </tr>
+                      <tr>
+                        <th>时间限制</th>
+                        <td>1s</td>
+                      </tr>
+                      <tr>
+                          <th>代码限制</th>
+                          <td>50000 Bytes</td>
+                      </tr>
+                      <tr>
+                          <th>语言</th>
+                          <td>C, CPP14, JAVA, PYTH, PYTH 3.6, PYPY, CS2, PAS fpc, PAS gpc, RUBY, PHP, GO, NODEJS, HASK, SCALA, D, PERL, FORT, WSPC, ADA, CAML, ICK, BF, ASM, CLPS, PRLG, ICON, SCM qobi, PIKE, ST, NICE, LUA, BASH, NEM, LISP sbcl, LISP clisp, SCM guile, JS, ERL, TCL, PERL6, TEXT, SCM chicken, CLOJ, FS</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+        </div>
+      </div>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+              <button type="button" class="btn btn-info btn-sm">我的答案</button>
+              <button type="button" class="btn btn-info btn-sm">全部答案</button>
+          </div>
+          <div class="x_content">
+              <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>大神</th>
+                      <th>时间</th>
+                      <th>内存</th>
+                      <th>语言</th>
+                      <th>方案</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>比尔</td>
+                      <td>0.00m</td>
+                      <td>9M</td>
+                      <td>Basic</td>
+                      <td><a href="../viewsolution"><button type="button" class="btn btn-info btn-xs">看</button></a></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>盖茨</td>
+                      <td>0.00m</td>
+                      <td>9M</td>
+                      <td>C++</td>
+                      <td><button type="button" class="btn btn-info btn-xs">看</button></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>川普</td>
+                      <td>0.00m</td>
+                      <td>9M</td>
+                      <td>JAVA</td>
+                      <td><button type="button" class="btn btn-info btn-xs">看</button></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">4</th>
+                      <td>奥巴马</td>
+                      <td>0.00m</td>
+                      <td>9M</td>
+                      <td>Python3</td>
+                      <td><button type="button" class="btn btn-info btn-xs">看</button></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">5</th>
+                      <td>乔布斯</td>
+                      <td>0.00m</td>
+                      <td>9M</td>
+                      <td>Swift</td>
+                      <td><button type="button" class="btn btn-info btn-xs">看</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>乔布斯</td>
+                        <td>0.00m</td>
+                        <td>9M</td>
+                        <td>Swift</td>
+                        <td><button type="button" class="btn btn-info btn-xs">看</button></td>
+                      </tr>
+                      <tr>
+                          <th scope="row">7</th>
+                          <td>乔布斯</td>
+                          <td>0.00m</td>
+                          <td>9M</td>
+                          <td>Swift</td>
+                          <td><button type="button" class="btn btn-info btn-xs">看</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">8</th>
+                            <td>乔布斯</td>
+                            <td>0.00m</td>
+                            <td>9M</td>
+                            <td>Swift</td>
+                            <td><button type="button" class="btn btn-info btn-xs">看</button></td>
+                          </tr>
+                          <tr>
+                              <th scope="row">9</th>
+                              <td>乔布斯</td>
+                              <td>0.00m</td>
+                              <td>9M</td>
+                              <td>Swift</td>
+                              <td><button type="button" class="btn btn-info btn-xs">看</button></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">10</th>
+                                <td>乔布斯</td>
+                                <td>0.00m</td>
+                                <td>9M</td>
+                                <td>Swift</td>
+                                <td><button type="button" class="btn btn-info btn-xs">看</button></td>
+                              </tr>
+                  </tbody>
+                </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<!-- /page content -->
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends 'c-base.html' %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static '/codemirror/lib/codemirror.css' %}">
+  <script src="{% static '/codemirror/lib/codemirror.js' %}"></script>
+  <script src="{% static '/codemirror/mode/python/python.js' %}"></script>
+  <script src="{% static '/codemirror/mode/go/go.js' %}"></script>
+  <script src="{% static '/codemirror/mode/clike/clike.js' %}"></script>
+  <script src="{% static '/codemirror/mode/ruby/ruby.js' %}"></script>
+  <script src="{% static '/codemirror/mode/perl/perl.js' %}"></script>
+  <script src="{% static '/codemirror/mode/swift/swift.js' %}"></script>
+  <script src="{% static '/codemirror/mode/pascal/pascal.js' %}"></script>
+  <script src="{% static '/codemirror/mode/fortran/fortran.js' %}"></script>
+  <style>.CodeMirror {border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;height:415px}</style>
+{% endblock %}
+{% block content %}
+<!-- page content -->
+<form class="form-horizontal form-label-left" method="post" action="../running/">
+  <div class="right_col" role="main">
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <div class="form-group">
+            <label class="control-label col-md-3" >输入： 
+            </label>
+            <div class="col-md-12">
+              <textarea class="editor-wrapper form-control" id="stdin" >
+1
+2
+3
+              </textarea></div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3" >输出：
+            </label>
+            <div class="col-md-12">
+                <textarea class="editor-wrapper form-control" id="stdout" ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h4><a href="../detail" target="blank">题目：排列拆分</a></h4>
+          <div class="clearfix"></div>
+        </div>
+          {% csrf_token %}
+            <div class="x_content">
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-2 col-xs-12">语言</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                      <select class="form-control" id="codetype" name="codetype">
+                        <option value="python">Python</option>
+                        <option value="text/x-go">GO</option>
+                        <option value="text/x-c++src">C++</option>
+                        <option value="text/x-csrc">C</option>
+                        <option value="text/x-java">JAVA</option>
+                        <option value="text/x-csharp">C#</option>
+                        <option value="text/x-objectivec">Objective C</option>
+                        <option value="text/x-swift">Swift</option>
+                        <option value="text/x-ruby">Ruby</option>
+                        <option value="text/x-perl">Perl</option>
+                        <option value="text/x-fortran">Fortran</option>
+                        <option value="text/x-pascal">Pascal</option>
+                      </select>
+                    </div>
+                    <label class="control-label col-md-2 col-sm-2 col-xs-12">主题</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                      <select class="form-control">
+                        <option>Default</option>
+                        <option>Light</option>
+                        <option>Dark</option>
+                      </select>
+                    </div>
+                  </div>
+                <textarea id="codeid" class="form-control" name="code">
+
+                </textarea>  
+            </div>
+            <div class="x_content">
+              <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <button class="btn btn-success pull-right" type="button" id="submit">提交</button>
+                  <button type="reset" class="btn btn-danger pull-right">重置</button>
+                  <button class="btn btn-primary pull-right" type="button">保存</button>
+                </div>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+ </form>
+<!-- /page content -->
+{% endblock %}
+{% block js %}
+    <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("codeid"), {
+            mode: {name: $('#codetype').val(),
+                  version: 3,
+                  singleLineStringErrors: false},
+                  lineNumbers: true,
+                  indentUnit: 4,
+                  height: "100%",
+                  matchBrackets: true
+        });
+      function changcode() {
+        var t = $('#codetype').val();
+        var c ="";
+        if(t == "python"){
+          c = 'def factorial(x):\n  if x == 1:\n    print(x)\n    return x\n  y = x * factorial(x-1)\n  print(y)\n  return y\nprint()\nfactorial(10)';
+        }else if(t == "text/x-go"){
+          c = 'package main\n\nimport (\n    "fmt"\n    "os"\n)\n\nfunc main() {\n    fmt.Println(os.Args)\n}';
+        }else if(t == "text/x-c++src"){
+          c = '#include<iostream>\nusing namespace std;\n\nint main(int argc,char *argv[])\n{\n    for(int i=0;i<argc;i++)\n        cout<<argv[i]<<endl;\n}';
+        }else if(t == "text/x-csrc"){
+          c = '#include <stdio.h>\n\nint main(int argn,char **argv)\n{\n    printf("main input is %d %s",argn,*(argv+1));\n    return 0;\n}';
+        }else if(t == "perl"){
+          c = 'def factorial(x):\n  if x == 1:\n    print(x)\n    return x\n  y = x * factorial(x-1)\n  print(y)\n  return y\nprint()\nfactorial(10)';
+        }else if(t == "text/x-ruby"){
+          c = 'def main()\n   puts "Hello," + $*[0]\nend\nmain';
+        }else if(t == "text/x-csharp"){
+          c = 'class HelloMono\n { \n    public static void Main(string[ ] args) \n    {\n         System.Console.WriteLine(args[0]); \n    } \n}';
+        }else if(t == "text/x-java"){
+          c = 'public class VMargs {\n\n    public static void main(String[] args) {\n        String result = args[0];\n        System.out.println("my: " + result);\n    }\n}'
+        }else if(t == "text/x-objectivec"){
+          c = 'int main(int argc, const char * argv[])\n{\n    printf(argv[0]);\n    return 0;\n}';
+        }else if(t == "text/x-swift"){
+          c = 'print("my first swift ")';
+        }else if(t == "text/x-perl"){
+          c = '#!/usr/bin/perl\nsub Average{\n$n = scalar(@_);\n\n$sum = 0;\n   foreach $item (@_){\n      $sum += $item;\n   }\n   $average = $sum / $n;\n   print "传入的参数为 : ","@_\n";           # 打印整个数组\n}\nAverage(10, 20, 30);'
+        }else if(t == "text/x-fortran"){
+          c = 'PROGRAM test_get_command_argument\nInteger :: i,n\nCharacter(len=128) :: arg\ni = 0\nDO\nCALL get_command_argument(i, arg)\nIF (LEN_TRIM(arg) == 0) EXIT\nWRITE (*,*) i,arg\ni = i+1\nEND DO\nEND PROGRAM\n'
+        }else if(t == "text/x-pascal"){
+          c = 'program hello;\nbegin\n	writeln(\'hhh\')\nend.'
+        }
+        
+        editor.setOption("mode",t);
+        editor.setValue(c);
+      }
+      $('#codetype').change(changcode);
+      changcode();
+      $('#submit').click(function(){
+        $('#submit').enable = false;
+        $.post("../running/", { codetype: $('#codetype').val(), stdin: $('#stdin').val() ,code: editor.getValue()},
+          function(data){
+            $('#submit').enable = true;
+            $('#stdout').val(data['stdout']);
+          });
+      });
+    </script>
+{% endblock %}
