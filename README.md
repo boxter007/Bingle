@@ -1,10 +1,23 @@
 # Bingle
-致力于成为优秀程序员的摇篮，通过在线练习、参加竞赛，参加企业考评获得积分，成为优秀的程序员
+## 运行环境
+Python3+Django
 
-在线添加题库，在线答题、在线编译、在线自动校验运行结果。
+## 语言编译环境
+C:gcc
+C++:g++
+C#:Mono
+Python:Python3
+JAVA:Java8
+Pascal:Free Pascal
+需要预先在服务器上安装各种语言的编译器，并将其路径加入到PATH中。开发测试的时候建议使用Mac电脑，可以一次性便捷安装所有的编译环境。
 
-目前支持11中语言在线编译运行，还在持续增加中。
+## 运行程序
+python3 manage.py runserver
 
-每一个程序员都因该有自己的Bingle Rank，BingleRank代表着程序员的最高荣誉。无论参加日常联系还是参加国内外竞赛，只要是Bingle承办都可以获得BingleRank。
-
-BingleRank伴随程序员的一生，无论是择业还是终生成就。
+## 代码结构
+Bingle/Templetes/production 下为界面模板
+  urls.py 分发url请求
+  view.py 处理urls.py分发的请求
+  compiler.py 处理编译和运行代码的主类
+Background 为后台处理数据库、模型相关模块
+  models.py 定义了数据库模型
