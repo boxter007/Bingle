@@ -76,7 +76,7 @@
       <div class="x_panel">
         <div class="x_content">
           <div class="form-group">
-            <label class="control-label col-md-3" >输入： 
+            <label class="control-label col-md-4" >输入： 
             </label>
             <div class="col-md-12">
               <textarea class="editor-wrapper form-control" id="stdin" >
@@ -86,7 +86,7 @@
               </textarea></div>
           </div>
           <div class="form-group">
-            <label class="control-label col-md-3" >输出：
+            <label class="control-label col-md-4" >输出：
             </label>
             <div class="col-md-12">
                 <textarea class="editor-wrapper form-control" id="stdout" ></textarea>
@@ -194,6 +194,7 @@
                   <button class="btn btn-success pull-right" type="button" id="submit">提交</button>
                   <button type="reset" class="btn btn-danger pull-right">重置</button>
                   <button class="btn btn-primary pull-right" type="button">保存</button>
+                  <span id="issue" style="visibility: hidden">1</span>
                 </div>
               </div>
             </div>
@@ -254,7 +255,11 @@
       //提交代码
       $('#submit').click(function(){
         $('#submit').enable = false;
-        $.post("../running/", { codetype: $('#codetype').val(), stdin: $('#stdin').val() ,code: editor.getValue()},
+        //console.log($('#issue').text());
+        $.post("../running/", { codetype: $('#codetype').val(), 
+                                stdin: $('#stdin').val() ,
+                                code: editor.getValue(),
+                                issue: $('#issue').text()},
           function(data){
             $('#submit').enable = true;
             $('#stdout').val(data['stdout']);

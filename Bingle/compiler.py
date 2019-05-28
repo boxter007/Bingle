@@ -1,17 +1,25 @@
 import os, sys, subprocess, tempfile, time
+from BackGround import models
 import logging
+log = logging.getLogger("collect")
 class compiler:
-    logger = logging.getLogger()
     code = ""
     codetype = "c"
     stdin = ""
     stdout = ""
-    def __init__(self,ctype,c,s):
+    user = 0
+    issue = 0
+
+    def __init__(self,ctype,c,s,i,u):
         self.code = c
         self.codetype = ctype
         self.stdin = s
+        self.issue = i
+        self.user = u
+    
     def run(self):
         outdata = ""
+        #log.info(self.code)
         if self.codetype == "python":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='python_') 
@@ -167,3 +175,33 @@ class compiler:
             except subprocess.CalledProcessError as e:
                 outdata = e.output
         return outdata.decode('utf-8')
+
+    def submit(self):
+        issueobj = models.Issue.objects.filter(id=self.issue)
+        totalcost = 0
+        curcost = 0
+        if(issueobj.exists()):
+            curIssue = issueobj[0]
+            submit = curIssue.Submit.objects.create(
+                        codetype=self.codetype,
+                        code = self.code,
+                        user = models.User.objects.filter(id=self.user)[0],
+                        cost = totalcost,
+                        issue = curIssue)
+            for check in curIssue.check_set.all():
+                self.stdin = check.input
+                checksubmit = self.equaloutput(check.output, self.run())
+                log.info(checksubmit)
+                curcost = curIssue.cost*check.percent/100 if checksubmit else 0 
+                totalcost = totalcost + curcost
+                curIssue.SubmitCheck.objects.create(
+                        submitid = submit,
+                        checkid = check,
+                        ispass = checksubmit,
+                        cost =  curcost)
+            
+            curIssue.Submit.objects.filter(id=submit.id).update(
+                        cost = totalcost)                        
+    
+    def equaloutput(self,checkout,programout):
+        return checkout.strip() == programout.strip()
