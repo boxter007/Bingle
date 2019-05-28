@@ -3,16 +3,17 @@
 Python3+Django
 
 ## 语言编译环境
-C:gcc
-C++:g++
-C#:Mono
-Python:Python3
-JAVA:Java8
-Pascal:Free Pascal
+- C:gcc
+- C++:g++
+- C#:Mono
+- Python:Python3
+- JAVA:Java8
+- Pascal:Free Pascal
+
 需要预先在服务器上安装各种语言的编译器，并将其路径加入到PATH中。开发测试的时候建议使用Mac电脑，可以一次性便捷安装所有的编译环境。
 
 ## 运行程序
-python3 manage.py runserver
+> python3 manage.py runserver
 
 ## 代码结构
 Bingle/Templetes/production 下为界面模板
