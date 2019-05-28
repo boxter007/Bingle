@@ -3,11 +3,6 @@
 log/*
 *.log
 Bingle/__pycache__/*
-Bingle/__pycache__/view.cpython-36.pyc
-Bingle/__pycache__/view.cpython-36.pyc
-Bingle/__pycache__/settings.cpython-36.pyc
-Bingle/__pycache__/__init__.cpython-36.pyc
-Bingle/__pycache__/compiler.cpython-36.pyc
+BackGround/__pycache__/*
 BackGround/migrations/*
 .DS_Store
-Bingle/__pycache__
