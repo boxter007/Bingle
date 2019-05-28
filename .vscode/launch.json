@@ -11,7 +11,9 @@
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "runserver",
-                "8000"
+                "8000",
+                "--noreload",
+                "--nothreading"
             ],
             "django": true
         }
