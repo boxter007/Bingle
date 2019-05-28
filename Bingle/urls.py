@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('coding/', view.coding),
     path('running/', view.running),
+    path('submit/', view.submit),
     path('qlist/', view.qlist),
     path('detail/', view.detail),
     path('answers/', view.answers),

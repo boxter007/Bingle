@@ -208,6 +208,8 @@ class compiler:
         issueobj = models.Issue.objects.filter(id=self.issue)
         totalcost = 0
         curcost = 0
+        result = ""
+        i = 0
         if(issueobj.exists()):
             curIssue = issueobj[0]
             #先保存提交的信息
@@ -220,10 +222,14 @@ class compiler:
             for check in curIssue.check_set.all():
                 #验证提交的代码是否执行正确
                 self.stdin = check.input
-                checksubmit = self.equaloutput(check.output, self.run()['outdata'])
+                outdata = self.run()
+                checksubmit = self.equaloutput(check.output, outdata['outdata'])
                 log.info(checksubmit)
                 curcost = curIssue.cost*check.percent/100 if checksubmit else 0 
                 totalcost = totalcost + curcost
+                i += 1
+                result += '验证{0}:\nScore:{4}\nRuntime:\n{1}秒\nInput:\n--------\n{2}\n--------\nOutput:\n--------\n{3}\n--------\n'.format(i,outdata['runtime'],self.stdin,outdata['outdata'],curcost)
+
                 #保存验证结果
                 curIssue.SubmitCheck.objects.create(
                         submitid = submit,
@@ -233,6 +239,7 @@ class compiler:
             #更新提交的信息中的总分
             curIssue.Submit.objects.filter(id=submit.id).update(
                         cost = totalcost)                        
-    
+        return result
+
     def equaloutput(self,checkout,programout):
         return checkout.strip() == programout.strip()

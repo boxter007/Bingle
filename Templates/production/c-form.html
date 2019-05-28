@@ -252,18 +252,34 @@
       changcode();
       //run代码
       $('#run').click(function(){
-        $('#run').enable = false;
-        $('#submit').enable = false;
+        $('#run').attr("disabled",true); 
+        $('#submit').attr("disabled",true); 
         //console.log($('#issue').text());
         $.post("../running/", { codetype: $('#codetype').val(), 
                                 stdin: $('#stdin').val() ,
                                 code: editor.getValue(),
                                 issue: $('#issue').text()},
           function(data){
-            $('#run').enable = true;
-            $('#submit').enable = true;
+            $('#run').attr("disabled",false); 
+            $('#submit').attr("disabled",false); 
             $('#stdout').val(data['stdout']['outdata']);
             $('#runtime').text('运行时间:' + data['stdout']['runtime']+'秒');
+          });
+      });
+      //提交代码
+      $('#submit').click(function(){
+        $('#run').attr("disabled",true); 
+        $('#submit').attr("disabled",true); 
+        $('#runtime').text('');
+        $.post("../submit/", { codetype: $('#codetype').val(), 
+                                stdin: $('#stdin').val() ,
+                                code: editor.getValue(),
+                                issue: $('#issue').text()},
+          function(data){
+            console.log(data);
+            $('#run').attr("disabled",false); 
+            $('#submit').attr("disabled",false); 
+            $('#stdout').val(data['stdout']);
           });
       });
       //更改主题

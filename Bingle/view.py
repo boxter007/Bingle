@@ -44,3 +44,18 @@ def running(request):
     context['code']     = code
     context['codetype'] = codetype
     return  HttpResponse(json.dumps(context), content_type='application/json')
+
+@csrf_exempt
+def submit(request):    
+    context          = {}
+    codetype = request.POST['codetype']
+    code     = request.POST['code']
+    stdin    = request.POST['stdin']
+    issue    = request.POST['issue']
+    user     = request.session['user']
+    #log.info(request.POST)
+    result   = compiler.compiler(codetype,code,stdin,issue,user)
+    context['stdout']   = result.submit()
+    context['code']     = code
+    context['codetype'] = codetype
+    return  HttpResponse(json.dumps(context), content_type='application/json')
