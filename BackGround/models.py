@@ -55,6 +55,8 @@ class Issue(models.Model):
         ispass = models.BooleanField()
         cost = models.FloatField(default=100.00)
         createdate = models.DateTimeField(auto_now_add=True)
+        memory = models.FloatField(default=0.00)
+        runtime = models.FloatField(default=0.00)
 
         def __str__(self):
             return self.id + ',submitid:' + self.submitid + ',checkid:' + self.checkid

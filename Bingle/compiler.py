@@ -1,6 +1,7 @@
 import os, sys, subprocess, tempfile, time
 from BackGround import models
 import logging
+import time
 log = logging.getLogger("collect")
 class compiler:
     code = ""
@@ -9,7 +10,7 @@ class compiler:
     stdout = ""
     user = 0
     issue = 0
-
+    runtime = 0
     def __init__(self,ctype,c,s,i,u):
         self.code = c
         self.codetype = ctype
@@ -27,9 +28,13 @@ class compiler:
                 fpath = os.path.join(TempFile, FileNum) 
                 with open(fpath, 'w', encoding='utf-8') as f: 
                     f.write(self.code) 
+                starttime = time.process_time() 
                 outdata = subprocess.check_output([sys.executable, fpath,self.stdin], stderr=subprocess.STDOUT, timeout=50)
-            except subprocess.CalledProcessError as e:
+                self.runtime = time.process_time() - starttime
+            except Exception as e:
                 outdata = e.output
+                self.runtime = "TimeOut"
+                
         elif self.codetype == "text/x-go":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='go_') 
@@ -40,6 +45,8 @@ class compiler:
                 outdata = subprocess.check_output(["go","run", fpath , self.stdin], shell=False , stderr=subprocess.STDOUT, timeout=50)
             except subprocess.CalledProcessError as e:
                 outdata = e.output
+                self.runtime = "TimeOut"
+
         elif self.codetype == "text/x-c++src":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='cpp_') 
@@ -56,6 +63,8 @@ class compiler:
 
             except subprocess.CalledProcessError as e:
                 outdata = e.output
+                self.runtime = "TimeOut"
+
         elif self.codetype == "text/x-csrc":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='c_') 
@@ -72,6 +81,8 @@ class compiler:
 
             except subprocess.CalledProcessError as e:
                 outdata = e.output
+                self.runtime = "TimeOut"
+
         elif self.codetype == "text/x-ruby":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='rb_') 
@@ -82,6 +93,8 @@ class compiler:
                 outdata = subprocess.check_output(["ruby", fpath , self.stdin], shell=False , stderr=subprocess.STDOUT, timeout=50)
             except subprocess.CalledProcessError as e:
                 outdata = e.output
+                self.runtime = "TimeOut"
+
         elif self.codetype == "text/x-java":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='java_') 
@@ -92,6 +105,8 @@ class compiler:
                 outdata = subprocess.check_output(["java", fpath , self.stdin], shell=False , stderr=subprocess.STDOUT, timeout=50)
             except subprocess.CalledProcessError as e:
                 outdata = e.output
+                self.runtime = "TimeOut"
+
         elif self.codetype == "text/x-perl":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='pl_') 
@@ -102,6 +117,8 @@ class compiler:
                 outdata = subprocess.check_output(["perl", fpath , self.stdin], shell=False , stderr=subprocess.STDOUT, timeout=50)
             except subprocess.CalledProcessError as e:
                 outdata = e.output
+                self.runtime = "TimeOut"
+
         elif self.codetype == "text/x-swift":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='swift_') 
@@ -112,6 +129,8 @@ class compiler:
                 outdata = subprocess.check_output(["swift", fpath , self.stdin], shell=False , stderr=subprocess.STDOUT, timeout=50)
             except subprocess.CalledProcessError as e:
                 outdata = e.output
+                self.runtime = "TimeOut"
+
         elif self.codetype == "text/x-csharp":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='cs_') 
@@ -126,6 +145,8 @@ class compiler:
 
             except subprocess.CalledProcessError as e:
                 outdata = e.output
+                self.runtime = "TimeOut"
+
         elif self.codetype == "text/x-fortran":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='f_') 
@@ -142,6 +163,8 @@ class compiler:
 
             except subprocess.CalledProcessError as e:
                 outdata = e.output
+                self.runtime = "TimeOut"
+
         elif self.codetype == "text/x-pascal":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='pas_') 
@@ -158,6 +181,8 @@ class compiler:
 
             except subprocess.CalledProcessError as e:
                 outdata = e.output
+                self.runtime = "TimeOut"
+
         elif self.codetype == "text/x-objectivec":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='m_') 
@@ -174,14 +199,18 @@ class compiler:
 
             except subprocess.CalledProcessError as e:
                 outdata = e.output
-        return outdata.decode('utf-8')
+                self.runtime = "TimeOut"
+        
+        return {'runtime':self.runtime,'outdata':outdata.decode('utf-8')}
 
     def submit(self):
+        #获取问题
         issueobj = models.Issue.objects.filter(id=self.issue)
         totalcost = 0
         curcost = 0
         if(issueobj.exists()):
             curIssue = issueobj[0]
+            #先保存提交的信息
             submit = curIssue.Submit.objects.create(
                         codetype=self.codetype,
                         code = self.code,
@@ -189,17 +218,19 @@ class compiler:
                         cost = totalcost,
                         issue = curIssue)
             for check in curIssue.check_set.all():
+                #验证提交的代码是否执行正确
                 self.stdin = check.input
-                checksubmit = self.equaloutput(check.output, self.run())
+                checksubmit = self.equaloutput(check.output, self.run()['outdata'])
                 log.info(checksubmit)
                 curcost = curIssue.cost*check.percent/100 if checksubmit else 0 
                 totalcost = totalcost + curcost
+                #保存验证结果
                 curIssue.SubmitCheck.objects.create(
                         submitid = submit,
                         checkid = check,
                         ispass = checksubmit,
                         cost =  curcost)
-            
+            #更新提交的信息中的总分
             curIssue.Submit.objects.filter(id=submit.id).update(
                         cost = totalcost)                        
     

@@ -39,7 +39,7 @@ def running(request):
     user     = request.session['user']
     #log.info(request.POST)
     result   = compiler.compiler(codetype,code,stdin,issue,user)
-    result.submit()
+    #result.submit()
     context['stdout']   = result.run()
     context['code']     = code
     context['codetype'] = codetype

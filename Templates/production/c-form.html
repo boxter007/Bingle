@@ -79,11 +79,7 @@
             <label class="control-label col-md-4" >输入： 
             </label>
             <div class="col-md-12">
-              <textarea class="editor-wrapper form-control" id="stdin" >
-1
-2
-3
-              </textarea></div>
+              <textarea class="editor-wrapper form-control" id="stdin" ></textarea></div>
           </div>
           <div class="form-group">
             <label class="control-label col-md-4" >输出：
@@ -191,9 +187,11 @@
             <div class="x_content">
               <div class="form-group">
                 <div class="col-md-12 col-sm-12 col-xs-12">
+                  <button class="btn btn-success pull-left" type="button" id="run">运行</button>
+                  <button type="reset" class="btn btn-danger pull-left" id="reset">重置</button>
+                  <button class="btn btn-primary pull-left" type="button">保存</button>
+                  <label class="control-label " id="runtime"></label>
                   <button class="btn btn-success pull-right" type="button" id="submit">提交</button>
-                  <button type="reset" class="btn btn-danger pull-right">重置</button>
-                  <button class="btn btn-primary pull-right" type="button">保存</button>
                   <span id="issue" style="visibility: hidden">1</span>
                 </div>
               </div>
@@ -252,8 +250,9 @@
       }
       $('#codetype').change(changcode);
       changcode();
-      //提交代码
-      $('#submit').click(function(){
+      //run代码
+      $('#run').click(function(){
+        $('#run').enable = false;
         $('#submit').enable = false;
         //console.log($('#issue').text());
         $.post("../running/", { codetype: $('#codetype').val(), 
@@ -261,8 +260,10 @@
                                 code: editor.getValue(),
                                 issue: $('#issue').text()},
           function(data){
+            $('#run').enable = true;
             $('#submit').enable = true;
-            $('#stdout').val(data['stdout']);
+            $('#stdout').val(data['stdout']['outdata']);
+            $('#runtime').text('运行时间:' + data['stdout']['runtime']+'秒');
           });
       });
       //更改主题
@@ -270,7 +271,10 @@
         var input = document.getElementById("theme");
         var theme = input.options[input.selectedIndex].textContent;
         editor.setOption("theme", theme);
-        
       });
+      //重置运行时间
+      $('#reset').click(function(){
+        $('#runtime').text('');
+      })
     </script>
 {% endblock %}
