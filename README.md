@@ -24,3 +24,7 @@ python3 manage.py runserver
   - compiler.py 处理编译和运行代码的主类
 - Background 为后台处理数据库、模型相关模块
   - models.py 定义了数据库模型
+
+### 可视化算法
+- 来源自 https://github.com/algorithm-visualizer/algorithm-visualizer 
+- 对其中的代码跟踪进行了修改，展示的代码和运行的代码进行了分离。
