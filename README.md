@@ -28,3 +28,7 @@ python3 manage.py runserver
 ### 可视化算法
 - 来源自 https://github.com/algorithm-visualizer/algorithm-visualizer 
 - 对其中的代码跟踪进行了修改，展示的代码和运行的代码进行了分离。
+
+### 问题页面Markdown展示
+- 来源自 https://github.com/commonmark/commonmark.js
+- 编辑页面直接撰写Markdown代码保存到数据库，前台通过commonmark.js转化成HTML。
