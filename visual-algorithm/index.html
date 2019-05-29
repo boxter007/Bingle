@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="算法可视化工具"/>
+    <meta property="og:title" content="算法可视化"/>
+    <meta property="og:description" content="算法可视化工具"/>
+    <meta property="og:image" content="img/image.png"/>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+    <title>算法可视化</title>
+    <link rel="stylesheet" href="public/algorithm_visualizer.min.css">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+        });
+    </script>
+    <script type="text/javascript" src="js/MathJax.js?config=TeX-AMS_HTML">
+    </script>
+</head>
+
+<body>
+<div id="loading-slider">
+    <div class="line"></div>
+    <div class="break dot1"></div>
+    <div class="break dot2"></div>
+    <div class="break dot3"></div>
+</div>
+<nav>
+    <button id="navigation">
+        <h3>
+            <span id="category"></span>
+            <i class="fa fa-angle-right nav-arrow" aria-hidden="true"></i>
+            <span id="algorithm"></span>
+            <i class="fa fa-caret-down nav-dropdown" aria-hidden="true"></i>
+        </h3>
+    </button>
+    <div class="top-menu-buttons">
+        <!-- <div class="btn" id="btn_generate">
+            <div class="wrapper">
+                <i class='fa fa-pencil' aria-hidden='true'></i>
+                <span class="btn-text">Generate</span>
+            </div>
+        </div>
+        <div class="btn" id="btn_share">
+            <div class="wrapper">
+                <i class="fa fa-share" aria-hidden="true"></i> Share <input type="text" class="collapse" id="shared">
+            </div>
+        </div> -->
+        <button id="btn_run">
+            <i class="fa fa-play" aria-hidden="true"></i>
+            <span class="btn-text"></span>
+        </button>
+        <button id="btn_prev">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            <span class="btn-text">Prev</span>
+        </button>
+        <button id="btn_pause">
+            <i class="fa fa-pause" aria-hidden="true"></i>
+            <span class="btn-text"></span>
+        </button>
+        <button id="btn_next">
+            <span class="btn-text">Next</span>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </button>
+        <div class="btn">
+            <div class="wrapper">
+                延时: <input type="number" value="" id="interval"> 秒
+            </div>
+        </div>
+        <div class="btn" id="btn_fullscreen">
+            <div class="wrapper">
+                <i class="fa fa-arrows-alt"></i>
+                <span class="btn-text">全屏</span>
+            </div>
+        </div>
+    </div>
+</nav>
+<section class="sidemenu active">
+    <div class="search_bar_container">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input type="text" id="search-bar" autofocus/>
+    </div>
+    <div id="list">
+    </div>
+    
+</section>
+<div class="workspace">
+    <div class="viewer_container">
+        <section class="tab_bar">
+            <button class="tab_button active" id="btn_desc" data-target="#tab_desc">简介</button>
+            <button class="tab_button" id="btn_trace" data-target="#tab_module">视图</button>
+        </section>
+        <section class="tab_container">
+            <div class="tab active" id="tab_desc">
+                <div class="wrapper">
+                </div>
+            </div>
+            <div class="tab module_container" id="tab_module">
+            </div>
+        </section>
+    </div>
+    <div class="editor_container">
+        <section class="files_bar">
+            <button class="tab_button btn-left"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+            <button class="tab_button btn-right"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+            <div class="wrapper"></div>
+        </section>
+        <section class="explanation_container">
+            <span id="explanation"></span>
+        </section>
+        <section class="data_container">
+            <pre id="data"></pre>
+        </section>
+        <section class="code_container">
+            <pre id="codeshow"></pre>
+        </section>
+        <pre id="code" style="display: none"></pre>
+    </div>
+</div>
+<div class="toast_container">
+</div>
+<script src="public/lib/jquery-2.2.3.min.js"></script>
+<script src="public/lib/showdown.min.js"></script>
+<script src="public/lib/ace/ace.js"></script>
+<script src="public/lib/ace/ext-language_tools.js"></script>
+<script src="public/lib/babel.min.js"></script>
+<script src="public/lib/sigma/sigma.min.js"></script>
+<script src="public/lib/sigma/plugins/sigma.plugins.dragNodes.min.js"></script>
+<script src="public/lib/Chart-2.1.3.min.js"></script>
+<script src="public/algorithm_visualizer.js"></script>
+
+</body>
+
+</html>

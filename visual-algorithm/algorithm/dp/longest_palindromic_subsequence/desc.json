@@ -1,0 +1,13 @@
+{
+  "最长回文子序列": "在给定的字符串中找到最长的回文子序列",
+  "复杂度": {
+"时间": "$O(n^2)$",
+"空间": "$O(n^2)$"
+  },
+  "引用": [
+    "<a href='http://www.geeksforgeeks.org/dynamic-programming-set-12-longest-palindromic-subsequence/'>GeeksForGeeks</a>"
+  ],
+  "files": {
+    "基础代码": "最长回文子序列"
+  }
+}

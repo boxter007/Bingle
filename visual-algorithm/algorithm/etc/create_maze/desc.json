@@ -1,0 +1,9 @@
+{
+  "创建迷宫": "创建一个不相交的迷宫",
+  "引用": [
+    "<a href='https://en.wikipedia.org/wiki/Disjoint-set_data_structure'>Disjoint Sets Wikipedia</a>"
+  ],
+  "files": {
+    "创建迷宫": ""
+  }
+}

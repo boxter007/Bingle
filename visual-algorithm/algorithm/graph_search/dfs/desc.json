@@ -1,0 +1,30 @@
+{
+  "深度优先算法": "Depth-first search (DFS) is an algorithm for traversing or searching tree or graph data structures. One starts at the root (selecting some arbitrary node as the root in the case of a graph) and explores as far as possible along each branch before backtracking.",
+  "应用": [
+    "Finding connected components.",
+    "Topological sorting.",
+    "Finding 2-(edge or vertex)-connected components.",
+    "Finding 3-(edge or vertex)-connected components.",
+    "Finding the bridges of a graph.",
+    "Generating words in order to plot the Limit Set of a Group.",
+    "Finding strongly connected components.",
+    "Planarity testing",
+    "Solving puzzles with only one solution, such as mazes. (DFS can be adapted to find all solutions to a maze by only including nodes on the current path in the visited set.)",
+    "Maze generation may use a randomized depth-first search.",
+    "Finding biconnectivity in graphs."
+  ],
+  "复杂度": {
+    "时间": "worst $O(|V|+|E|)$",
+    "空间": "worst $O(|V|)$"
+  },
+  "引用": [
+    "<a href='https://en.wikipedia.org/wiki/Depth-first_search'>Wikipedia</a>"
+  ],
+  "files": {
+    "搜索树": "搜索一棵树",
+    "所有路径": "没有任何回路的搜索所有路径",
+    "矢量图": "深度优先矢量图",
+    "最短路径": "找到最短路径",
+    "探索": "探索无向图，判断是否链接"
+  }
+}

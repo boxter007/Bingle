@@ -1,0 +1,16 @@
+{
+  "Floyd-Warshall算法": "Floyd-Warshall算法是解决任意两点间的最短路径的一种算法。通常可以在任何图中使用，包括有向图、带负权边的图。",
+  "应用": [
+    ""
+  ],
+  "复杂度": {
+    "时间": "最坏情况 $O(|V|^3)$",
+    "空间": "最坏情况 $O(|V|^2)$"
+  },
+  "引用": [
+    "<a href='https://en.wikipedia.org/wiki/Floyd–Warshall_algorithm'>Wikipedia</a>"
+  ],
+  "files": {
+    "最短路径": "在所有节点中找到最短的路径"
+  }
+}

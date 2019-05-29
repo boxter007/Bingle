@@ -1,0 +1,13 @@
+{
+  "埃拉托色尼筛选法": "在一个给定的区间内寻找所有素数",
+  "复杂度": {
+    "时间": "$O(n\\,(log\\,n)(log\\,log\\,n))$",
+    "空间": "$O(n^{\\frac{1}{2}})$"
+  },
+  "引用": [
+    "<a href='https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes'>Wikipedia</a>"
+  ],
+  "files": {
+    "基础代码": "埃拉托色尼筛选法"
+  }
+}

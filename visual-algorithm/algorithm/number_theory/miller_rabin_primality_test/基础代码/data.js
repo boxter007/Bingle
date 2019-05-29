@@ -1,0 +1,1 @@
+var logger = new LogTracer('控制台');

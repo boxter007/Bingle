@@ -1,0 +1,16 @@
+{
+  "KMP算法": "searches for occurrences of a substring W with length K within a main string S with Length N by employing the observation that when a mismatch occurs, the word itself embodies sufficient information to determine where the next match could begin, thus bypassing re-examination of previously matched characters",
+  "应用": [
+    "子串查询"
+  ],
+  "复杂度": {
+    "时间": "最坏情况 $O(|N|+|K|)$",
+    "空间": "最坏情况 $O(|K|)$"
+  },
+  "引用": [
+    "<a href='https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm'>Wikipedia</a>"
+  ],
+  "files": {
+    "基础代码": "在字符串中高效查询"
+  }
+}

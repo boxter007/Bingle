@@ -1,0 +1,132 @@
+{
+   "dec":{
+      "list":{
+         "dec":"说明"
+      },
+      "name":"说明"
+   },
+   "sorting": {
+      "list": {
+         "jing": "豪斯排序",
+         "bucket": "桶排序",
+         "bubble": "冒泡排序",
+         "comb": "梳排序",
+         "counting": "计数排序",
+         "cycle": "圈排序",
+         "heap": "堆排序",
+         "insertion": "插入排序",
+         "merge": "归并排序",
+         "pigeonhole": "鸽巢排序",
+         "quick": "快速排序",
+         "radix": "基数排序",
+         "selection": "选择排序",
+         "shell": "希尔排序",
+         "pancake": "煎饼排序"
+      },
+      "name": "排序"
+   },
+   "backtracking": {
+      "list": {
+         "knight's_tour": "跳马问题",
+         "n_queens": "N 皇后问题"
+      },
+      "name": "回溯算法"
+   },
+   "cryptography": {
+      "list": {
+         "affine_cipher": "仿射加密",
+         "caesar_cipher": "凯撒密码"
+      },
+      "name": "加密算法"
+   },
+   "dp": {
+      "list": {
+         "catalan_number": "卡塔兰数",
+         "fibonacci": "斐波那契数列",
+         "integer_partition": "整数拆分",
+         "knapsack_problem": "背包问题",
+         "longest_common_subsequence": "最长公共子序列",
+         "longest_increasing_subsequence": "最长递增子序列",
+         "longest_palindromic_subsequence": "最长回文子序列",
+         "max_subarray": "最大子序列和",
+         "max_sum_path": "最大路径和",
+         "pascal_triangle": "杨辉三角",
+         "shortest_common_supersequence": "最短公共序列",
+         "sliding_window": "滑动窗口算法",
+         "ugly_numbers": "丑数"
+      },
+      "name": "动态规划"
+   },
+   "graph_search": {
+      "list": {
+         "bellman_ford": "贝尔曼-福特算法",
+         "bfs": "广度优先算法",
+         "bridges": "桥",
+         "dfs": "深度优先算法",
+         "dls": "有限深度搜索",
+         "dijkstra": "迪杰斯特拉算法",
+         "floyd_warshall": "Floyd-Warshall算法",
+         "topological_sort": "拓扑排序",
+         "tarjan": "Tarjan算法"
+      },
+      "name": "图"
+   },
+   "greedy": {
+      "list": {
+         "job_scheduling": "作业调度问题",
+         "majority_element": "摩尔投票算法"
+      },
+      "name": "贪心算法"
+   },
+   "mst": {
+      "list": {
+         "kruskal": "克鲁斯卡尔算法",
+         "prim": "普林演算法"
+      },
+      "name": "最小生成树"
+   },
+   "number_theory": {
+      "list": {
+        "euclidean_algorithm": "欧几里德算法",
+        "sieve_of_eratosthenes": "埃拉托色尼筛选法",
+        "freivalds_algorithm": "弗赖瓦尔兹算法",
+        "miller_rabin_primality_test": "米勒-拉宾检验"
+      },
+      "name": "数论"
+   },
+   "search": {
+      "list": {
+         "binary_search": "二分法查找"
+      },
+      "name": "检索"
+   },
+   "string": {
+      "list": {
+         "edit_distance": "编辑距离算法",
+         "k": "KMP算法",
+         "rabin_karp_algorithm": "拉宾卡普算法",
+         "suffix_array": "后缀数组",
+         "z_algorithm": "Z 算法"
+      },
+      "name": "字符串"
+   },
+   "tree": {
+      "list": {
+         "binary_search_tree": "二叉搜索树",
+         "binary_tree_traversal": "二叉树遍历",
+         "lowest_common_ancestor": "最近公共祖先"
+      },
+      "name": "树"
+   },
+   "etc": {
+      "list": {
+         "flood_fill": "泛洪填充算法",
+         "cellular_automata": "细胞自动机",
+         "create_maze": "生成迷宫",
+         "magic_square": "幻方",
+         "stable_matching": "稳定匹配",
+         "sudoku": "数独"
+      },
+      "name": "未分类"
+   }
+}

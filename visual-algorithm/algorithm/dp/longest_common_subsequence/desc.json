@@ -1,0 +1,13 @@
+{
+  "最长公共子序列": "最长公共子序列，英文缩写为LCS（Longest Common Subsequence）。其定义是，一个序列 S ，如果分别是两个或多个已知序列的子序列，且是所有符合此条件序列中最长的，则 S 称为已知序列的最长公共子序列。而最长公共子串(要求连续)和最长公共子序列是不同的。" ,
+  "复杂度": {
+    "时间": "$O(m\\cdot n)$",
+    "空间": "$O(m\\cdot n)$"
+  },
+  "引用": [
+    "<a href='https://en.wikipedia.org/wiki/Longest_common_subsequence_problem'>维基百科</a>"
+  ],
+  "files": {
+    "基础代码": "最长公共子序列"
+  }
+}

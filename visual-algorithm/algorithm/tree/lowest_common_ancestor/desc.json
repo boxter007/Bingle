@@ -1,0 +1,15 @@
+{
+  "二叉树遍历": "对于有根树T的两个结点u、v，最近公共祖先LCA(T,u,v)表示一个结点x，满足x是u、v的祖先且x的深度尽可能大。",
+  "应用": [
+  ],
+  "复杂度": {
+    "时间": "最坏情况: $O(N)$",
+    "空间": "最坏情况: $O(1)$"
+  },
+  "引用": [
+    "<a href='http://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/'>GeeksForGeeks</a>"
+  ],
+  "files": {
+    "二叉树": "最近公共祖先"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "米勒-拉宾素数检测": "检测是否是素数",
+  "复杂度": {
+    "时间": "$O(klog^{3}(n)))$",
+    "可能性": "$1 - (1/(4^{k}))$"
+  },
+  "引用": [
+    "<a href='https://www.wikiwand.com/en/Miller%E2%80%93Rabin_primality_test'>Wikipedia</a>"
+  ],
+  "files": {
+    "基础代码": "米勒-拉宾素数检测"
+  }
+}

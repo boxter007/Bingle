@@ -1,0 +1,19 @@
+{
+  "拓扑排序": "Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices such that for every directed edge uv, vertex u comes before v in the ordering. Topological Sorting for a graph is not possible if the graph is not a DAG. NOTE: when the graph is represented as an Adjacency Matrix, the Calculation of in-degree Array becomes O(|V|<sup>2</sup>)",
+  "应用": [
+    "工作计划",
+    "指令计划",
+    "综合逻辑"
+  ],
+  "复杂度": {
+    "时间": "最坏情况 $O(|V|+|E|)$",
+    "空间": "最坏情况 $O(|V|)$"
+  },
+  "引用": [
+    "<a href='http://www.geeksforgeeks.org/topological-sorting-indegree-based-solution/'>GeeksForGeeks</a>",
+    "<a href='http://www.geeksforgeeks.org/topological-sorting/'>GeeksForGeeks</a>"
+  ],
+  "files": {
+    "Kahn算法": "采用邻接表的方式来存储有向无权图，并实现对图的拓扑排序"
+  }
+}

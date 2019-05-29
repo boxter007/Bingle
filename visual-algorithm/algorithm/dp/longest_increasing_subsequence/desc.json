@@ -1,0 +1,13 @@
+{
+  "最长递增子序列": "最长递增子序列（Longest Increasing Subsequence）是指找到一个给定序列的最长子序列的长度，使得子序列中的所有元素单调递增。",
+  "复杂度": {
+    "时间": "$O(n(log\\,n))$",
+    "空间": "$O(n)$"
+  },
+  "引用": [
+    "<a href='https://en.wikipedia.org/wiki/Longest_increasing_subsequence'>维基百科</a>"
+  ],
+  "files": {
+    "基础代码": "最长递增子序列"
+  }
+}

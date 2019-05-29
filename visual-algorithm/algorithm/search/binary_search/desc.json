@@ -1,0 +1,18 @@
+{
+  "二分法查找": "Binary Search is a search algorithm that finds the position of a target value within a sorted array. It works by comparing the target value to the middle element of the array; if they are unequal, the lower or upper half of the array is eliminated depending on the result and the search is repeated in the remaining subarray until it is successful.",
+  "应用": [
+    "Finding values in a sorted collection",
+    "Traversing binary search trees"
+  ],
+  "复杂度": {
+    "时间": "最坏情况 $O(log(N))$, 最优情况 $O(1)$, 平均 $O(log(N))$",
+    "空间": "最坏情况 $O(log(N))$ - 递归法, $O(1)$ - 迭代法"
+  },
+  "引用": [
+    "<a href='https://en.wikipedia.org/wiki/Binary_search_algorithm'>Wikipedia</a>"
+  ],
+  "files": {
+    "递归法": "使用递归法在有序数列中查找",
+    "迭代法": "使用迭代法在有序数列中查找"
+  }
+}

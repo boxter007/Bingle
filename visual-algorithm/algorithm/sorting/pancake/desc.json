@@ -1,0 +1,14 @@
+{
+  "煎饼排序": "比尔盖茨发明的方法",
+  "复杂度": {
+    "时间": "最坏情况 $O(n^2)$",
+    "空间": "最坏情况 $O(1)$"
+  },
+  "引用": [
+    "<a href='https://en.wikipedia.org/wiki/Pancake_sorting'>Wikipedia</a>",
+    "<a href='http://www.geeksforgeeks.org/pancake-sorting/'>Geeksforgeeks</a>"
+  ],
+  "files": {
+    "基础代码": "煎饼排序"
+  }
+}
