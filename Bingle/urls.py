@@ -30,3 +30,8 @@ urlpatterns = [
     path('viewsolution/', view.viewsolution),
     path('profile/', view.profile),
 ]
+
+
+from django.views.static import serve
+ 
+urlpatterns += [ url(r'visualalgorithm/(?P<path>.*)$', serve, {'document_root': 'visualalgorithm/',}), ]
