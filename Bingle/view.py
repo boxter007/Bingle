@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from . import compiler
+from . import compiler,issue
 from django.http import HttpResponse, HttpRequest
 import json
 import logging
+
 log = logging.getLogger("collect")
 def coding(request):
     request.session['user'] = '1'
@@ -13,15 +14,40 @@ def coding(request):
 def qlist(request):
     context          = {}
     return render(request, 'c-list.html', context)
+#获取试题明细
 def detail(request):
-    context          = {}
+    id       = request.GET['id']
+    user     = request.session['user']
+    issueobj = issue.getIssue(id)
+    context  = {}
+    if issueobj != None:
+        context['title']    = issueobj.title
+        context['content']  = issueobj.content
+        context['user']     = issueobj.user.name
+        context['createdate']   = issueobj.createdate
+        context['timelimit']    = issueobj.timelimit
+        context['codelimit']    = issueobj.codelimit
+        context['cost']         = issueobj.cost
+        context['submit']       = issueobj.submit_set.all()[0:10]
     return render(request, 'c-detail.html', context)
 def answers(request):
     context          = {}
     return render(request, 'c-answers.html', context)
+#获取指定代码提交的内容
 def viewsolution(request):
-    context          = {}
+    id          = request.GET['id']
+    user        = request.session['user']
+    submitobj   = issue.getSolution(id)
+    context     = {}
+    if submitobj != None:
+        context['codetype']     = submitobj.codetype
+        context['code']         = submitobj.code
+        context['checks']       = submitobj.submitcheck_set.all()
+        context['createdate']   = submitobj.createdate
+        context['cost']         = submitobj.cost
+        context['issue']        = submitobj.issue
     return render(request, 'c-viewsolution.html', context)
+
 def index(request):
     context          = {}
     return render(request, 'c-index.html', context)

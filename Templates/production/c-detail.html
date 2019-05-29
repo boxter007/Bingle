@@ -11,7 +11,7 @@
       <div class="col-md-8 col-sm-8 col-xs-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>题目：排列拆分</h2>
+          <h2>题目：{{ title }}</h2>
           <ul class="nav navbar-right panel_toolbox">
               <li><a href="../coding"><button type="button" class="btn btn-success btn-sm">开始答题</button></a>
               </li>
@@ -25,7 +25,7 @@
                     <tbody>
                       <tr>
                         <th style="width:20%">作者:</th>
-                        <td>兰兰</td>
+                        <td>{{ user }}</td>
                       </tr>
                       <tr>
                         <th>标签</th>
@@ -33,22 +33,23 @@
                       </tr>
                       <tr>
                         <th>创建日期:</th>
-                        <td>2018-01-01</td>
+                        <td>{{ createdate }}</td>
                       </tr>
                       <tr>
                         <th>时间限制</th>
-                        <td>1s</td>
+                        <td>{{ timelimit }}s</td>
                       </tr>
                       <tr>
                           <th>代码限制</th>
-                          <td>50000 Bytes</td>
+                          <td>{{ codelimit }} Bytes</td>
                       </tr>
                       <tr>
-                          <th>语言</th>
-                          <td>C, CPP14, JAVA, PYTH, PYTH 3.6, PYPY, CS2, PAS fpc, PAS gpc, RUBY, PHP, GO, NODEJS, HASK, SCALA, D, PERL, FORT, WSPC, ADA, CAML, ICK, BF, ASM, CLPS, PRLG, ICON, SCM qobi, PIKE, ST, NICE, LUA, BASH, NEM, LISP sbcl, LISP clisp, SCM guile, JS, ERL, TCL, PERL6, TEXT, SCM chicken, CLOJ, FS</td>
+                          <th>得分</th>
+                          <td>{{ cost }}</td>
                       </tr>
                     </tbody>
                   </table>
+                  <textarea id="hcontent" style="display: none">{{ content }}</textarea>
                 </div>
               </div>
         </div>
@@ -65,95 +66,25 @@
                     <tr>
                       <th>#</th>
                       <th>大神</th>
-                      <th>时间</th>
-                      <th>内存</th>
+                      <th>得分</th>
                       <th>语言</th>
-                      <th>方案</th>
+                      <th>时间</th>
                     </tr>
                   </thead>
                   <tbody>
+                   {% for row in submit %}
                     <tr>
-                      <th scope="row">1</th>
-                      <td>比尔</td>
-                      <td>0.00m</td>
-                      <td>9M</td>
-                      <td>Basic</td>
-                      <td><a href="../viewsolution"><button type="button" class="btn btn-info btn-xs">看</button></a></td>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td>{{ row.user.name }}</td>
+                      <td>{{ row.cost }}</td>
+                      <td>{{ row.codetype }}</td>
+                      <td>{{ row.createdate|date:'Y /m /d' }}</td>
+                      <td><a href="../viewsolution/?id={{ row.id }}"><button type="button" class="btn btn-info btn-xs">看</button></a></td>
                     </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>盖茨</td>
-                      <td>0.00m</td>
-                      <td>9M</td>
-                      <td>C++</td>
-                      <td><button type="button" class="btn btn-info btn-xs">看</button></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>川普</td>
-                      <td>0.00m</td>
-                      <td>9M</td>
-                      <td>JAVA</td>
-                      <td><button type="button" class="btn btn-info btn-xs">看</button></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>奥巴马</td>
-                      <td>0.00m</td>
-                      <td>9M</td>
-                      <td>Python3</td>
-                      <td><button type="button" class="btn btn-info btn-xs">看</button></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">5</th>
-                      <td>乔布斯</td>
-                      <td>0.00m</td>
-                      <td>9M</td>
-                      <td>Swift</td>
-                      <td><button type="button" class="btn btn-info btn-xs">看</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">6</th>
-                        <td>乔布斯</td>
-                        <td>0.00m</td>
-                        <td>9M</td>
-                        <td>Swift</td>
-                        <td><button type="button" class="btn btn-info btn-xs">看</button></td>
-                      </tr>
-                      <tr>
-                          <th scope="row">7</th>
-                          <td>乔布斯</td>
-                          <td>0.00m</td>
-                          <td>9M</td>
-                          <td>Swift</td>
-                          <td><button type="button" class="btn btn-info btn-xs">看</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">8</th>
-                            <td>乔布斯</td>
-                            <td>0.00m</td>
-                            <td>9M</td>
-                            <td>Swift</td>
-                            <td><button type="button" class="btn btn-info btn-xs">看</button></td>
-                          </tr>
-                          <tr>
-                              <th scope="row">9</th>
-                              <td>乔布斯</td>
-                              <td>0.00m</td>
-                              <td>9M</td>
-                              <td>Swift</td>
-                              <td><button type="button" class="btn btn-info btn-xs">看</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">10</th>
-                                <td>乔布斯</td>
-                                <td>0.00m</td>
-                                <td>9M</td>
-                                <td>Swift</td>
-                                <td><button type="button" class="btn btn-info btn-xs">看</button></td>
-                              </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
+                
           </div>
         </div>
       </div>
@@ -166,58 +97,8 @@
 <script>
 var reader = new commonmark.Parser({smart: true});
 var writer = new commonmark.HtmlRenderer({sourcepos: true});
-var parsed = reader.parse('给定整数序列 A1, A2, . . . , AN。对序列的修改分为两类：在序列任意位置（包括开头和末尾）\n\
-  插入一个新元素，以及删去序列的一个元素。注意，当序列为空时，无法从中删去元素。\n\
-  \n\
-  请计算，至少要进行多少次修改，才能使得修改后的序列可以被拆分成若干排列。形式化地，\n\
-  修改后序列的所有元素应当能被拆分成零个或更多的集合，使得每个元素恰好属于一个集合。\n\
-  \n\
-  对于每个集合，如果其中包含 L 个元素，那么这 L 个元素应当恰好为 1 ∼ L 的整数，出现各一次。\n\
-  \n\
-  ---- \n\
-  \n\
-  #### 输入格式\n\
-  \n\
-  输入的第一行包含一个整数 T，代表测试数据的组数。接下来是 T 组数据。\n\
-  每组数据的第一行包含一个整数 N。\n\
-  第二行包含 N 个整数 A1, A2, . . . , AN。\n\
-  \n\
-  ---- \n\
-  \n\
-  #### 输出格式\n\
-  \n\
-  对于每组数据，输出一行，包含一个整数，代表最少需要进行的修改次数。\n\
-  \n\
-  ---- \n\
-  \n\
-  #### 数据范围\n\
-  \n\
-  - 1 ≤ T ≤ 1, 000\n\
-  - 1 ≤ N ≤ 106\n\
-  - 1 ≤ Ai ≤ 109\n\
-  \n\
-  ---- \n\
-  #### 样例输入\n\
-  \n\
-  2\n\
-  \n\
-  5\n\
-  \n\
-  1 4 1 2 2\n\
-  \n\
-  4\n\
-  \n\
-  2 3 2 3\n\
-  \n\
-  ---- \n\
-  #### 样例输出\n\
-  \n\
-  1\n\
-  \n\
-  2\n\
-'); // parsed is a 'Node' tree
-// transform parsed if you like...
-var result = writer.render(parsed); // result is a String
+var parsed = reader.parse($('#hcontent').val()); 
+var result = writer.render(parsed); 
 document.querySelector('#content').innerHTML = result;
 </script>
 {% endblock %}

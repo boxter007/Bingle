@@ -3,7 +3,14 @@
 {% block css %}
   <link rel="stylesheet" href="{% static '/codemirror/lib/codemirror.css' %}">
   <script src="{% static '/codemirror/lib/codemirror.js' %}"></script>
+  <script src="{% static '/codemirror/mode/python/python.js' %}"></script>
+  <script src="{% static '/codemirror/mode/go/go.js' %}"></script>
   <script src="{% static '/codemirror/mode/clike/clike.js' %}"></script>
+  <script src="{% static '/codemirror/mode/ruby/ruby.js' %}"></script>
+  <script src="{% static '/codemirror/mode/perl/perl.js' %}"></script>
+  <script src="{% static '/codemirror/mode/swift/swift.js' %}"></script>
+  <script src="{% static '/codemirror/mode/pascal/pascal.js' %}"></script>
+  <script src="{% static '/codemirror/mode/fortran/fortran.js' %}"></script>
   <style>.CodeMirror {border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;height: auto;}</style>
 {% endblock %}
 {% block content %}
@@ -11,83 +18,51 @@
       <div class="right_col" role="main">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
-                <div class="x_content">
-                        <h3><i class="fa fa-check"></i>解决方案<small class="pull-right">题目：排列拆分&nbsp&nbsp|&nbsp&nbsp难度等级：容易&nbsp&nbsp|&nbsp&nbsp作者：盖茨</small></h3> 
-                        <div class="ln_solid"></div>
-               </div>
-                <div class="x_content">
-                   <h4>语言：C++<small class="pull-right">2019-03-31 15:15:06&nbsp&nbsp|&nbsp&nbsp52 Lines&nbsp&nbsp|&nbsp&nbsp0.08 sec&nbsp&nbsp|&nbsp&nbsp 16.4M&nbsp&nbsp|&nbsp&nbspScore: 100(100pts)</small></h4>
-                        <textarea id="code" class="form-control" name="code">
-#include <bits/stdc++.h>
-using namespace std;
-
-int main() {
-  ios::sync_with_stdio(false);
-  int t;
-  cin >> t;
-  while (t--) {
-      int n;
-      cin >> n;
-      vector<int> x;
-      int ans=0;
-      for (int i=0; i<n; i++) {
-          int tmp;
-          cin >> tmp;
-          tmp--;
-          if (tmp >= 2*n+100) ans++;
-          else x.push_back(tmp);
-      }
-      if (x.empty()) {
-          cout << ans << '\n';
-          continue;
-      }
-      int maxval = *max_element(x.begin(), x.end());
-      vector<int> cnt(maxval+1);
-      for (int val:x) cnt[val]++;
-      for (int a=cnt.size()-1; a>=0; a--) {
-          while (cnt[a]) {
-              static vector<int> todo;
-              todo.clear();
-              todo.push_back(a);
-              int profit=1;
-              int cost=0;
-              bool take=1;
-              for (int b=a-1; b>=0; b--) {
-                  if (!cnt[b]) {
-                      cost++;
-                      if (cost>profit) {
-                          take=0;
-                          break;
-                      }
-                  }
-                  else todo.push_back(b), profit++;
-              }
-              for (int val:todo) cnt[val]--;
-              ans += take? cost : todo.size();
-          }
-      }
-      cout << ans << '\n';
-  }
-}
-                            
+                    <div class="x_content">
+                            <h3><i class="fa fa-check"></i>解决方案<small class="pull-right">题目：<a href="../detail/?id={{ issue.id }}" target="blank">{{ issue.title }}</a>&nbsp&nbsp|&nbsp&nbsp难度等级：容易&nbsp&nbsp|&nbsp&nbsp作者：{{ issue.user.name }}&nbsp&nbsp|&nbsp&nbsp得分：{{ cost }}</small></h3> 
+                            <div class="ln_solid"></div>
+                    </div>
+                    <div class="x_content">
+                        <h4>语言：{{ codetype }}<small class="pull-right">{{ createdate }}&nbsp&nbsp|&nbsp&nbsp<span id ="lines"></span>&nbsp&nbspLines</small></h4>
+                        <textarea id="code" class="form-control" name="code">{{ code }}
                         </textarea>  
-                      </div>
-                  
+                    </div>
               </div>
+            <div class="x_panel">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                        <th>测试序号</th>
+                        <th>运行时间</th>
+                        <th>是否通过</th>
+                        <th>得分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in checks %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ row.runtime }}</td>
+                            <td>{{ row.ispass }}</td>
+                            <td>{{ row.cost }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
+        </div>
       </div>
 <!-- /page content -->
 {% endblock %}
 {% block js %}
     <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-            mode: "text/x-c++src",
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            mode: "{{ codetype }}",
                   lineNumbers: true,
-
                   indentUnit: 4,
                   matchBrackets: true,
                   readOnly: true
         });
-
+        $('#lines').text(editor.lineCount())
     </script>
 {% endblock %}
