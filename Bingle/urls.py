@@ -34,4 +34,4 @@ urlpatterns = [
 
 from django.views.static import serve
  
-urlpatterns += [ url(r'visualalgorithm/(?P<path>.*)$', serve, {'document_root': 'visualalgorithm/',}), ]
+urlpatterns += [ url(r'visual-algorithm/(?P<path>.*)$', serve, {'document_root': 'visual-algorithm/',}), ]
