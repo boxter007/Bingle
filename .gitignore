@@ -6,3 +6,4 @@ Bingle/__pycache__/*
 BackGround/__pycache__/*
 BackGround/migrations/*
 .DS_Store
+db1.sqlite3
