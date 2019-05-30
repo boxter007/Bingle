@@ -7,8 +7,12 @@ import logging
 
 log = logging.getLogger("collect")
 def coding(request):
-    request.session['user'] = '1'
     context          = {}
+    id       = request.GET['id']
+    issueobj = issue.getIssue(id)
+    context['issueid']    = id
+    context['title']    = issueobj.title
+    
     return render(request, 'c-form.html', context)
 
 def qlist(request):
@@ -21,6 +25,7 @@ def detail(request):
     issueobj = issue.getIssue(id)
     context  = {}
     if issueobj != None:
+        context['id']    = id
         context['title']    = issueobj.title
         context['content']  = issueobj.content
         context['user']     = issueobj.user.name
@@ -49,6 +54,7 @@ def viewsolution(request):
     return render(request, 'c-viewsolution.html', context)
 
 def index(request):
+    request.session['user'] = '1'
     context          = {}
     return render(request, 'c-index.html', context)
 def profile(request):
@@ -85,3 +91,27 @@ def submit(request):
     context['code']     = code
     context['codetype'] = codetype
     return  HttpResponse(json.dumps(context), content_type='application/json')
+
+@csrf_exempt
+def makequestion(request):  
+    request.session['user'] = '1'
+    context         = {}
+    if request.method == 'POST' :
+        title           = request.POST['title']
+        timelimit       = request.POST['timelimit']
+        codelimit       = request.POST['codelimit']
+        cost            = request.POST['issuecost']
+        issuecontent    = request.POST['issuecontent']
+        user            = request.session['user']
+        checks =  []
+        
+        l = len(request.POST.getlist('checkinput'))
+        for i in range(0,l):
+            check = {}
+            check['input']  =   request.POST.getlist('checkinput')[i]
+            check['output'] =   request.POST.getlist('checkoutput')[i]
+            check['cost']   =   request.POST.getlist('cost')[i].split(';')[1] if ';' in request.POST.getlist('cost')[i] else 0
+            checks.append(check)
+
+        issue.makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks)
+    return render(request, 'c-makequestion.html', context)
