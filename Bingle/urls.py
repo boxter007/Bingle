@@ -29,6 +29,7 @@ urlpatterns = [
     path('answers/', view.answers),
     path('viewsolution/', view.viewsolution),
     path('profile/', view.profile),
+    path('makequestion/', view.makequestion),
 ]
 
 
