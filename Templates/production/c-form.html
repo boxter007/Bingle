@@ -94,7 +94,7 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
       <div class="x_panel">
         <div class="x_title">
-          <h4><a href="../detail" target="blank">题目：排列拆分</a></h4>
+          <h4><a href="../detail/?id={{ issueid }}" target="blank">题目：{{ title }}</a></h4>
           <div class="clearfix"></div>
         </div>
           {% csrf_token %}
@@ -192,7 +192,7 @@
                   <button class="btn btn-primary pull-left" type="button">保存</button>
                   <label class="control-label " id="runtime"></label>
                   <button class="btn btn-success pull-right" type="button" id="submit">提交</button>
-                  <span id="issue" style="visibility: hidden">1</span>
+                  <span id="issue" style="visibility: hidden">{{ issueid }}</span>
                 </div>
               </div>
             </div>

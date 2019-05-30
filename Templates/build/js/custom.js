@@ -1523,26 +1523,36 @@ if (typeof NProgress != 'undefined') {
 			  prefix: "$",
 			  grid: true
 			});
-			$("#range_25").ionRangeSlider({
-			  type: "double",
-			  min: 1000000,
-			  max: 2000000,
-			  grid: true
-			});
-			$("#range_26").ionRangeSlider({
-			  type: "double",
-			  min: 0,
-			  max: 10000,
-			  step: 500,
-			  grid: true,
-			  grid_snap: true
-			});
-			$("#range_31").ionRangeSlider({
+			$("#range_1").ionRangeSlider({
 			  type: "double",
 			  min: 0,
 			  max: 100,
-			  from: 30,
-			  to: 70,
+			  from: 0,
+			  to: 25,
+			  from_fixed: true
+			});
+			$("#range_2").ionRangeSlider({
+			  type: "double",
+			  min: 0,
+			  max: 100,
+			  from: 0,
+			  to: 25,
+			  from_fixed: true
+			});
+			$("#range_3").ionRangeSlider({
+			  type: "double",
+			  min: 0,
+			  max: 100,
+			  from: 0,
+			  to: 25,
+			  from_fixed: true
+			});
+			$("#range_4").ionRangeSlider({
+			  type: "double",
+			  min: 0,
+			  max: 100,
+			  from: 0,
+			  to: 25,
 			  from_fixed: true
 			});
 			$(".range_min_max").ionRangeSlider({
