@@ -106,7 +106,17 @@ class compiler:
             except subprocess.CalledProcessError as e:
                 outdata = e.output
                 self.runtime = "TimeOut"
-
+        elif self.codetype == "text/typescript":
+            try:
+                TempFile = tempfile.mkdtemp(suffix='_test', prefix='js_') 
+                FileNum = "%d.js" % int(time.time() * 1000) 
+                fpath = os.path.join(TempFile, FileNum) 
+                with open(fpath, 'w', encoding='utf-8') as f: 
+                    f.write(self.code) 
+                outdata = subprocess.check_output(["node", fpath , self.stdin], shell=False , stderr=subprocess.STDOUT, timeout=50)
+            except subprocess.CalledProcessError as e:
+                outdata = e.output
+                self.runtime = "TimeOut"
         elif self.codetype == "text/x-perl":
             try:
                 TempFile = tempfile.mkdtemp(suffix='_test', prefix='pl_') 

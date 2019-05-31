@@ -11,6 +11,7 @@
   <script src="{% static '/codemirror/mode/swift/swift.js' %}"></script>
   <script src="{% static '/codemirror/mode/pascal/pascal.js' %}"></script>
   <script src="{% static '/codemirror/mode/fortran/fortran.js' %}"></script>
+  <script src="{% static '/codemirror/mode/javascript/javascript.js' %}"></script>
   <link rel="stylesheet" href="{% static '/codemirror/theme/3024-day.css' %}">
   <link rel="stylesheet" href="{% static '/codemirror/theme/3024-night.css' %}">
   <link rel="stylesheet" href="{% static '/codemirror/theme/abcdef.css' %}">
@@ -115,6 +116,7 @@
                         <option value="text/x-perl">Perl</option>
                         <option value="text/x-fortran">Fortran</option>
                         <option value="text/x-pascal">Pascal</option>
+                        <option value="text/typescript">JS</option>
                       </select>
                     </div>
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">主题</label>
@@ -243,6 +245,8 @@
           c = 'PROGRAM test_get_command_argument\nInteger :: i,n\nCharacter(len=128) :: arg\ni = 0\nDO\nCALL get_command_argument(i, arg)\nIF (LEN_TRIM(arg) == 0) EXIT\nWRITE (*,*) i,arg\ni = i+1\nEND DO\nEND PROGRAM\n'
         }else if(t == "text/x-pascal"){
           c = 'program hello;\nbegin\n	writeln(\'hhh\')\nend.'
+        }else if(t == "text/typescript"){
+          c = 'function hello() {\nconsole.log(\'Hello World!\');\n}\nhello();'
         }
         
         editor.setOption("mode",t);
