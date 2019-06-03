@@ -12,7 +12,7 @@ def getSolution(id):
     submitobj = models.Issue.Submit.objects.filter(id=id).first()
     return submitobj
 
-def makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks):
+def makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks,issuetype,level):
     
     newissue =  models.Issue.objects.create(
                         title = title,
@@ -20,7 +20,9 @@ def makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks):
                         user = models.User.objects.filter(id=user)[0],
                         timelimit = timelimit,
                         codelimit = codelimit,
-                        cost = cost)
+                        cost = cost,
+                        issuetype = models.IssueType.objects.filter(id=issuetype)[0],
+                        level = level)
     
     for item in checks:
         if item['input'] != '' and item['output'] != '' and item['cost'] != '' and float(item['cost']) > 0:

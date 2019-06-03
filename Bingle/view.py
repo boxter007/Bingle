@@ -14,7 +14,7 @@ def coding(request):
     context['title']    = issueobj.title
     
     return render(request, 'c-form.html', context)
-
+#获取试题列表
 def qlist(request):
     context          = {}
     return render(request, 'c-list.html', context)
@@ -103,6 +103,8 @@ def makequestion(request):
         cost            = request.POST['issuecost']
         issuecontent    = request.POST['issuecontent']
         user            = request.session['user']
+        level           = request.POST['level']
+        issuetype       = request.POST['issuetype']
         checks =  []
         
         l = len(request.POST.getlist('checkinput'))
@@ -113,5 +115,5 @@ def makequestion(request):
             check['cost']   =   request.POST.getlist('cost')[i].split(';')[1] if ';' in request.POST.getlist('cost')[i] else 0
             checks.append(check)
 
-        issue.makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks)
+        issue.makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks,issuetype,level)
     return render(request, 'c-makequestion.html', context)
