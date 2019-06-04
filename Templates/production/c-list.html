@@ -16,21 +16,14 @@
 
                     <div class="" role="tabpanel" data-example-id="togglable-tabs">
                       <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#tab_content1" id="profile-tab1" role="tab" data-toggle="tab" aria-expanded="true">初学者</a>
+                      {% for item in codelevel %}
+                        <li role="presentation" {% ifequal level item.id %}class="active"{% endifequal %}><a href="#tab_content{{ item.id }}" id="profile-tab{{ item.id }}" role="tab" data-toggle="tab" aria-expanded="true">{{ item.name }}</a>
                         </li>
-                        <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">简单</a>
-                        </li>
-                        <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">普通</a>
-                        </li>
-                        <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab4" data-toggle="tab" aria-expanded="false">困难</a>
-                        </li>
-                        <li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab5" data-toggle="tab" aria-expanded="false">挑战</a>
-                        </li>
-                        <li role="presentation" class=""><a href="#tab_content6" role="tab" id="profile-tab6" data-toggle="tab" aria-expanded="false">无敌</a>
-                        </li>
+                      {% endfor %}
                       </ul>
                       <div id="myTabContent" class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                      {% for l,page in lists.items %}
+                        <div role="tabpanel" class="tab-pane fade {% ifequal level l %} active in{%endifequal%}" id="tab_content{{ l }}" aria-labelledby="profile-tab">
                           <table id="datatable" class="table table-striped table-bordered">
                             <thead>
                               <tr>
@@ -40,452 +33,52 @@
                                 <th>准确率</th>
                               </tr>
                             </thead>
-      
-      
                             <tbody>
+                            {% for x in page %}
                               <tr>
-                                <td><a href="../detail">1</a></td>
-                                <td><a href="../detail">BST Operations</a></td>
-                                <td><a href="answers">126</a></td>
-                                <td><a href="answers">10.8%</a></td>
+                                <td><a href="../detail">{{x.0.id}}</a></td>
+                                <td><a href="../detail">{{x.0.title}}</a></td>
+                                <td><a href="answers">{{ x.1 }}</a></td>
+                                <td><a href="answers">{{ x.2 }}%</a></td>
                               </tr>
-                              <tr>
-                                <td><a href="../detail">2</a></td>
-                                <td><a href="../detail">When to take medicine</a></td>
-                                <td><a href="answers">263</a></td>
-                                <td><a href="answers">20.99%</a></td>
-                              </tr>
-                              <tr>
-                                  <td><a href="../detail">1</a></td>
-                                  <td><a href="../detail">BST Operations</a></td>
-                                  <td><a href="answers">126</a></td>
-                                  <td><a href="answers">10.8%</a></td>
-                                </tr>
-                                <tr>
-                                  <td><a href="../detail">2</a></td>
-                                  <td><a href="../detail">When to take medicine</a></td>
-                                  <td><a href="answers">263</a></td>
-                                  <td><a href="answers">20.99%</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="../detail">1</a></td>
-                                    <td><a href="../detail">BST Operations</a></td>
-                                    <td><a href="answers">126</a></td>
-                                    <td><a href="answers">10.8%</a></td>
-                                  </tr>
-                                  <tr>
-                                    <td><a href="../detail">2</a></td>
-                                    <td><a href="../detail">When to take medicine</a></td>
-                                    <td><a href="answers">263</a></td>
-                                    <td><a href="answers">20.99%</a></td>
-                                  </tr>
-                                  <tr>
-                                      <td><a href="../detail">1</a></td>
-                                      <td><a href="../detail">BST Operations</a></td>
-                                      <td><a href="answers">126</a></td>
-                                      <td><a href="answers">10.8%</a></td>
-                                    </tr>
-                                    <tr>
-                                      <td><a href="../detail">2</a></td>
-                                      <td><a href="../detail">When to take medicine</a></td>
-                                      <td><a href="answers">263</a></td>
-                                      <td><a href="answers">20.99%</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="../detail">1</a></td>
-                                        <td><a href="../detail">BST Operations</a></td>
-                                        <td><a href="answers">126</a></td>
-                                        <td><a href="answers">10.8%</a></td>
-                                      </tr>
-                                      <tr>
-                                        <td><a href="../detail">2</a></td>
-                                        <td><a href="../detail">When to take medicine</a></td>
-                                        <td><a href="answers">263</a></td>
-                                        <td><a href="answers">20.99%</a></td>
-                                      </tr>
+                            {%endfor%}
+                              
                             </tbody>
                           </table>
+                          <div class="row">
+                            <div class="col-sm-5">
+                              <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
+                                Showing 1 to 10 of 57 entries
+                                Page {{ page.number }} of {{ page.paginator.num_pages }}.
+                              </div>
+                            </div>
+                            <div class="col-sm-7">
+                              <div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
+                                <ul class="pagination">
+                                  <li class="paginate_button previous {% if not contacts.has_previous %}disabled{% endif %}" id="datatable_previous">
+                                    <a href="#" aria-controls="datatable" data-dt-idx="0" tabindex="0">Previous</a>
+                                  </li>
+                                  {% for pg in page.paginator.page_range %}
+                                  {%if pg == page.number %}
+                                  <li class="paginate_button active">
+                                    <a href="#" aria-controls="datatable" data-dt-idx="2" tabindex="0">{{ page.number }}</a>
+                                  </li>
+                                  {% else %}
+                                  <li class="paginate_button">
+                                    <a href="/qlist/?level={{ l }}&page={{ page.number}}" aria-controls="datatable" data-dt-idx="2" tabindex="0">{{ page.number }}</a>
+                                  </li>
+                                  {% endif %}
+                                  {% endfor %}
+                                  <li class="paginate_button next {% if not contacts.has_next %}disabled{% endif %}" id="datatable_next">
+                                    <a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0">Next</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                            <table id="datatable" class="table table-striped table-bordered">
-                                <thead>
-                                  <tr>
-                                    <th>序号</th>
-                                    <th>标题</th>
-                                    <th>成功提交次数</th>
-                                    <th>准确率</th>
-                                  </tr>
-                                </thead>
-          
-          
-                                <tbody>
-                                  <tr>
-                                    <td><a href="../detail">1</a></td>
-                                    <td><a href="../detail">BST Operations</a></td>
-                                    <td><a href="answers">126</a></td>
-                                    <td><a href="answers">10.8%</a></td>
-                                  </tr>
-                                  <tr>
-                                    <td><a href="../detail">2</a></td>
-                                    <td><a href="../detail">When to take medicine</a></td>
-                                    <td><a href="answers">263</a></td>
-                                    <td><a href="answers">20.99%</a></td>
-                                  </tr>
-                                  <tr>
-                                      <td><a href="../detail">1</a></td>
-                                      <td><a href="../detail">BST Operations</a></td>
-                                      <td><a href="answers">126</a></td>
-                                      <td><a href="answers">10.8%</a></td>
-                                    </tr>
-                                    <tr>
-                                      <td><a href="../detail">2</a></td>
-                                      <td><a href="../detail">When to take medicine</a></td>
-                                      <td><a href="answers">263</a></td>
-                                      <td><a href="answers">20.99%</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="../detail">1</a></td>
-                                        <td><a href="../detail">BST Operations</a></td>
-                                        <td><a href="answers">126</a></td>
-                                        <td><a href="answers">10.8%</a></td>
-                                      </tr>
-                                      <tr>
-                                        <td><a href="../detail">2</a></td>
-                                        <td><a href="../detail">When to take medicine</a></td>
-                                        <td><a href="answers">263</a></td>
-                                        <td><a href="answers">20.99%</a></td>
-                                      </tr>
-                                      <tr>
-                                          <td><a href="../detail">1</a></td>
-                                          <td><a href="../detail">BST Operations</a></td>
-                                          <td><a href="answers">126</a></td>
-                                          <td><a href="answers">10.8%</a></td>
-                                        </tr>
-                                        <tr>
-                                          <td><a href="../detail">2</a></td>
-                                          <td><a href="../detail">When to take medicine</a></td>
-                                          <td><a href="answers">263</a></td>
-                                          <td><a href="answers">20.99%</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="../detail">1</a></td>
-                                            <td><a href="../detail">BST Operations</a></td>
-                                            <td><a href="answers">126</a></td>
-                                            <td><a href="answers">10.8%</a></td>
-                                          </tr>
-                                          <tr>
-                                            <td><a href="../detail">2</a></td>
-                                            <td><a href="../detail">When to take medicine</a></td>
-                                            <td><a href="answers">263</a></td>
-                                            <td><a href="answers">20.99%</a></td>
-                                          </tr>
-                                </tbody>
-                              </table>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                            <table id="datatable" class="table table-striped table-bordered">
-                                <thead>
-                                  <tr>
-                                    <th>序号</th>
-                                    <th>标题</th>
-                                    <th>成功提交次数</th>
-                                    <th>准确率</th>
-                                  </tr>
-                                </thead>
-          
-          
-                                <tbody>
-                                  <tr>
-                                    <td><a href="../detail">1</a></td>
-                                    <td><a href="../detail">BST Operations</a></td>
-                                    <td><a href="answers">126</a></td>
-                                    <td><a href="answers">10.8%</a></td>
-                                  </tr>
-                                  <tr>
-                                    <td><a href="../detail">2</a></td>
-                                    <td><a href="../detail">When to take medicine</a></td>
-                                    <td><a href="answers">263</a></td>
-                                    <td><a href="answers">20.99%</a></td>
-                                  </tr>
-                                  <tr>
-                                      <td><a href="../detail">1</a></td>
-                                      <td><a href="../detail">BST Operations</a></td>
-                                      <td><a href="answers">126</a></td>
-                                      <td><a href="answers">10.8%</a></td>
-                                    </tr>
-                                    <tr>
-                                      <td><a href="../detail">2</a></td>
-                                      <td><a href="../detail">When to take medicine</a></td>
-                                      <td><a href="answers">263</a></td>
-                                      <td><a href="answers">20.99%</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="../detail">1</a></td>
-                                        <td><a href="../detail">BST Operations</a></td>
-                                        <td><a href="answers">126</a></td>
-                                        <td><a href="answers">10.8%</a></td>
-                                      </tr>
-                                      <tr>
-                                        <td><a href="../detail">2</a></td>
-                                        <td><a href="../detail">When to take medicine</a></td>
-                                        <td><a href="answers">263</a></td>
-                                        <td><a href="answers">20.99%</a></td>
-                                      </tr>
-                                      <tr>
-                                          <td><a href="../detail">1</a></td>
-                                          <td><a href="../detail">BST Operations</a></td>
-                                          <td><a href="answers">126</a></td>
-                                          <td><a href="answers">10.8%</a></td>
-                                        </tr>
-                                        <tr>
-                                          <td><a href="../detail">2</a></td>
-                                          <td><a href="../detail">When to take medicine</a></td>
-                                          <td><a href="answers">263</a></td>
-                                          <td><a href="answers">20.99%</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="../detail">1</a></td>
-                                            <td><a href="../detail">BST Operations</a></td>
-                                            <td><a href="answers">126</a></td>
-                                            <td><a href="answers">10.8%</a></td>
-                                          </tr>
-                                          <tr>
-                                            <td><a href="../detail">2</a></td>
-                                            <td><a href="../detail">When to take medicine</a></td>
-                                            <td><a href="answers">263</a></td>
-                                            <td><a href="answers">20.99%</a></td>
-                                          </tr>
-                                </tbody>
-                              </table>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
-                            <table id="datatable" class="table table-striped table-bordered">
-                                <thead>
-                                  <tr>
-                                    <th>序号</th>
-                                    <th>标题</th>
-                                    <th>成功提交次数</th>
-                                    <th>准确率</th>
-                                  </tr>
-                                </thead>
-          
-          
-                                <tbody>
-                                  <tr>
-                                    <td><a href="../detail">1</a></td>
-                                    <td><a href="../detail">BST Operations</a></td>
-                                    <td><a href="answers">126</a></td>
-                                    <td><a href="answers">10.8%</a></td>
-                                  </tr>
-                                  <tr>
-                                    <td><a href="../detail">2</a></td>
-                                    <td><a href="../detail">When to take medicine</a></td>
-                                    <td><a href="answers">263</a></td>
-                                    <td><a href="answers">20.99%</a></td>
-                                  </tr>
-                                  <tr>
-                                      <td><a href="../detail">1</a></td>
-                                      <td><a href="../detail">BST Operations</a></td>
-                                      <td><a href="answers">126</a></td>
-                                      <td><a href="answers">10.8%</a></td>
-                                    </tr>
-                                    <tr>
-                                      <td><a href="../detail">2</a></td>
-                                      <td><a href="../detail">When to take medicine</a></td>
-                                      <td><a href="answers">263</a></td>
-                                      <td><a href="answers">20.99%</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="../detail">1</a></td>
-                                        <td><a href="../detail">BST Operations</a></td>
-                                        <td><a href="answers">126</a></td>
-                                        <td><a href="answers">10.8%</a></td>
-                                      </tr>
-                                      <tr>
-                                        <td><a href="../detail">2</a></td>
-                                        <td><a href="../detail">When to take medicine</a></td>
-                                        <td><a href="answers">263</a></td>
-                                        <td><a href="answers">20.99%</a></td>
-                                      </tr>
-                                      <tr>
-                                          <td><a href="../detail">1</a></td>
-                                          <td><a href="../detail">BST Operations</a></td>
-                                          <td><a href="answers">126</a></td>
-                                          <td><a href="answers">10.8%</a></td>
-                                        </tr>
-                                        <tr>
-                                          <td><a href="../detail">2</a></td>
-                                          <td><a href="../detail">When to take medicine</a></td>
-                                          <td><a href="answers">263</a></td>
-                                          <td><a href="answers">20.99%</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="../detail">1</a></td>
-                                            <td><a href="../detail">BST Operations</a></td>
-                                            <td><a href="answers">126</a></td>
-                                            <td><a href="answers">10.8%</a></td>
-                                          </tr>
-                                          <tr>
-                                            <td><a href="../detail">2</a></td>
-                                            <td><a href="../detail">When to take medicine</a></td>
-                                            <td><a href="answers">263</a></td>
-                                            <td><a href="answers">20.99%</a></td>
-                                          </tr>
-                                </tbody>
-                              </table>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
-                            <table id="datatable" class="table table-striped table-bordered">
-                                <thead>
-                                  <tr>
-                                    <th>序号</th>
-                                    <th>标题</th>
-                                    <th>成功提交次数</th>
-                                    <th>准确率</th>
-                                  </tr>
-                                </thead>
-          
-          
-                                <tbody>
-                                  <tr>
-                                    <td><a href="../detail">1</a></td>
-                                    <td><a href="../detail">BST Operations</a></td>
-                                    <td><a href="answers">126</a></td>
-                                    <td><a href="answers">10.8%</a></td>
-                                  </tr>
-                                  <tr>
-                                    <td><a href="../detail">2</a></td>
-                                    <td><a href="../detail">When to take medicine</a></td>
-                                    <td><a href="answers">263</a></td>
-                                    <td><a href="answers">20.99%</a></td>
-                                  </tr>
-                                  <tr>
-                                      <td><a href="../detail">1</a></td>
-                                      <td><a href="../detail">BST Operations</a></td>
-                                      <td><a href="answers">126</a></td>
-                                      <td><a href="answers">10.8%</a></td>
-                                    </tr>
-                                    <tr>
-                                      <td><a href="../detail">2</a></td>
-                                      <td><a href="../detail">When to take medicine</a></td>
-                                      <td><a href="answers">263</a></td>
-                                      <td><a href="answers">20.99%</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="../detail">1</a></td>
-                                        <td><a href="../detail">BST Operations</a></td>
-                                        <td><a href="answers">126</a></td>
-                                        <td><a href="answers">10.8%</a></td>
-                                      </tr>
-                                      <tr>
-                                        <td><a href="../detail">2</a></td>
-                                        <td><a href="../detail">When to take medicine</a></td>
-                                        <td><a href="answers">263</a></td>
-                                        <td><a href="answers">20.99%</a></td>
-                                      </tr>
-                                      <tr>
-                                          <td><a href="../detail">1</a></td>
-                                          <td><a href="../detail">BST Operations</a></td>
-                                          <td><a href="answers">126</a></td>
-                                          <td><a href="answers">10.8%</a></td>
-                                        </tr>
-                                        <tr>
-                                          <td><a href="../detail">2</a></td>
-                                          <td><a href="../detail">When to take medicine</a></td>
-                                          <td><a href="answers">263</a></td>
-                                          <td><a href="answers">20.99%</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="../detail">1</a></td>
-                                            <td><a href="../detail">BST Operations</a></td>
-                                            <td><a href="answers">126</a></td>
-                                            <td><a href="answers">10.8%</a></td>
-                                          </tr>
-                                          <tr>
-                                            <td><a href="../detail">2</a></td>
-                                            <td><a href="../detail">When to take medicine</a></td>
-                                            <td><a href="answers">263</a></td>
-                                            <td><a href="answers">20.99%</a></td>
-                                          </tr>
-                                </tbody>
-                              </table>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab">
-                            <table id="datatable" class="table table-striped table-bordered">
-                                <thead>
-                                  <tr>
-                                    <th>序号</th>
-                                    <th>标题</th>
-                                    <th>成功提交次数</th>
-                                    <th>准确率</th>
-                                  </tr>
-                                </thead>
-          
-          
-                                <tbody>
-                                  <tr>
-                                    <td><a href="../detail">1</a></td>
-                                    <td><a href="../detail">BST Operations</a></td>
-                                    <td><a href="answers">126</a></td>
-                                    <td><a href="answers">10.8%</a></td>
-                                  </tr>
-                                  <tr>
-                                    <td><a href="../detail">2</a></td>
-                                    <td><a href="../detail">When to take medicine</a></td>
-                                    <td><a href="answers">263</a></td>
-                                    <td><a href="answers">20.99%</a></td>
-                                  </tr>
-                                  <tr>
-                                      <td><a href="../detail">1</a></td>
-                                      <td><a href="../detail">BST Operations</a></td>
-                                      <td><a href="answers">126</a></td>
-                                      <td><a href="answers">10.8%</a></td>
-                                    </tr>
-                                    <tr>
-                                      <td><a href="../detail">2</a></td>
-                                      <td><a href="../detail">When to take medicine</a></td>
-                                      <td><a href="answers">263</a></td>
-                                      <td><a href="answers">20.99%</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="../detail">1</a></td>
-                                        <td><a href="../detail">BST Operations</a></td>
-                                        <td><a href="answers">126</a></td>
-                                        <td><a href="answers">10.8%</a></td>
-                                      </tr>
-                                      <tr>
-                                        <td><a href="../detail">2</a></td>
-                                        <td><a href="../detail">When to take medicine</a></td>
-                                        <td><a href="answers">263</a></td>
-                                        <td><a href="answers">20.99%</a></td>
-                                      </tr>
-                                      <tr>
-                                          <td><a href="../detail">1</a></td>
-                                          <td><a href="../detail">BST Operations</a></td>
-                                          <td><a href="answers">126</a></td>
-                                          <td><a href="answers">10.8%</a></td>
-                                        </tr>
-                                        <tr>
-                                          <td><a href="../detail">2</a></td>
-                                          <td><a href="../detail">When to take medicine</a></td>
-                                          <td><a href="answers">263</a></td>
-                                          <td><a href="answers">20.99%</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="../detail">1</a></td>
-                                            <td><a href="../detail">BST Operations</a></td>
-                                            <td><a href="answers">126</a></td>
-                                            <td><a href="answers">10.8%</a></td>
-                                          </tr>
-                                          <tr>
-                                            <td><a href="../detail">2</a></td>
-                                            <td><a href="../detail">When to take medicine</a></td>
-                                            <td><a href="answers">263</a></td>
-                                            <td><a href="answers">20.99%</a></td>
-                                          </tr>
-                                </tbody>
-                              </table>
-                        </div>
+                      {% endfor %}
+
                       </div>
                     </div>
 

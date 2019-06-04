@@ -1,5 +1,6 @@
 from BackGround import models
 import logging
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 log = logging.getLogger("collect")
 def getIssue(id):
     issueobj = models.Issue.objects.filter(id=id)
@@ -11,6 +12,27 @@ def getIssue(id):
 def getSolution(id):
     submitobj = models.Issue.Submit.objects.filter(id=id).first()
     return submitobj
+def getLevels():
+    levels = models.Issue.IssueLevel.objects.all()
+    return levels
+def getIssuesByLevel(levelid,page):
+    issues = models.Issue.objects.filter(level=levelid)
+    lines = []
+    for item in issues:
+        line=[]
+        line.append(item)
+        line.append(item.Submit.objects.filter(cost=item.cost).count())
+        line.append(100*round(item.Submit.objects.filter(cost=item.cost).count()/item.Submit.objects.all().count(),2))
+        lines.append(line)
+    issuesPage = Paginator(lines, 10)
+    try:
+        result = issuesPage.page(page)
+    except PageNotAnInteger:
+        result = issuesPage.page(1)
+    except EmptyPage:
+        result = issuesPage.page(issuesPage.num_pages)
+    return result
+
 
 def makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks,issuetype,level):
     

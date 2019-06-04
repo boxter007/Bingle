@@ -17,6 +17,19 @@ def coding(request):
 #获取试题列表
 def qlist(request):
     context          = {}
+    level = int(request.GET.get('level', 0))
+    page = request.GET.get('page','1')
+    codelevel = issue.getLevels()
+    lists = {}
+    
+    for item in codelevel:
+        issues = issue.getIssuesByLevel(item.id, page)
+        lists[item.id] = issues
+        
+    context['level'] = level
+    context['codelevel'] = codelevel
+    context['lists'] = lists
+    
     return render(request, 'c-list.html', context)
 #获取试题明细
 def detail(request):
