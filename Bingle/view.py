@@ -17,7 +17,7 @@ def coding(request):
 #获取试题列表
 def qlist(request):
     context          = {}
-    level = int(request.GET.get('level', 0))
+    level = int(request.GET.get('id', 1))
     page = request.GET.get('page','1')
     codelevel = issue.getLevels()
     lists = {}
@@ -68,7 +68,18 @@ def viewsolution(request):
 
 def index(request):
     request.session['user'] = '1'
-    context          = {}
+    context = {}
+    level = 1
+    codelevel = issue.getLevels()
+    lists = {}
+    
+    for item in codelevel:
+        issues = issue.getIssuesByLevel(item.id, 1)
+        lists[item.id] = issues
+        
+    context['level'] = level
+    context['codelevel'] = codelevel
+    context['lists'] = lists
     return render(request, 'c-index.html', context)
 def profile(request):
     context          = {}
