@@ -21,7 +21,7 @@ class Issue(models.Model):
     codelimit = models.IntegerField(default=1000)
     cost = models.FloatField(default=100.00)
     level = models.ForeignKey('IssueLevel',on_delete=models.CASCADE,default=0)
-    #issuetype = models.ForeignKey('IssueType',on_delete=models.CASCADE,default=0)
+    champion = models.ManyToManyField('Champion', through='IssueChampion',through_fields=('issueid', 'championid'),)
 
     def __str__(self):
         return self.title
@@ -60,8 +60,6 @@ class Issue(models.Model):
         memory = models.FloatField(default=0.00)
         runtime = models.FloatField(default=0.00)
 
-        def __str__(self):
-            return self.id + ',submitid:' + self.submitid + ',checkid:' + self.checkid
 
     class IssueLevel(models.Model):
         id = models.AutoField(primary_key=True)
@@ -69,3 +67,26 @@ class Issue(models.Model):
 
         def __str__(self):
             return self.name
+
+class IssueChampion(models.Model):
+    id = models.AutoField(primary_key=True)
+    issueid = models.ForeignKey('Issue',on_delete=models.CASCADE)
+    championid = models.ForeignKey('Champion', on_delete=models.CASCADE)
+
+    
+class Champion(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    starttime = models.DateTimeField(auto_now_add=False)
+    endtime = models.DateTimeField(auto_now_add=False)
+    enterprise = models.ForeignKey('Enterprise',on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+class Enterprise(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

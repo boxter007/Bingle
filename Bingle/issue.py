@@ -44,7 +44,7 @@ def makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks,issuetype,
                         codelimit = codelimit,
                         cost = cost,
                         issuetype = models.IssueType.objects.filter(id=issuetype)[0],
-                        level = level)
+                        level = models.Issue.IssueLevel.objects.filter(id=int(level)).first())
     
     for item in checks:
         if item['input'] != '' and item['output'] != '' and item['cost'] != '' and float(item['cost']) > 0:
