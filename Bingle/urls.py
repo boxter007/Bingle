@@ -30,6 +30,7 @@ urlpatterns = [
     path('viewsolution/', view.viewsolution),
     path('profile/', view.profile),
     path('makequestion/', view.makequestion),
+    path('makequestionsurvey/', view.makequestionsurvey),
 ]
 
 

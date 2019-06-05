@@ -51,6 +51,9 @@ def detail(request):
 def answers(request):
     context          = {}
     return render(request, 'c-answers.html', context)
+def makequestionsurvey(request):
+    context          = {}
+    return render(request, 'c-makequestionsurvey.html', context)
 #获取指定代码提交的内容
 def viewsolution(request):
     id          = request.GET['id']

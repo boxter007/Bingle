@@ -1,0 +1,30 @@
+{% extends 'c-base.html' %}
+{% load static %}
+{% block css %}
+<script src="{% static 'js/knockout-min.js' %}"></script>
+<script src="{% static 'js/survey.ko.min.js'%}"></script>
+<link href="{% static 'css/survey-creator.min.css' %}" type="text/css" rel="stylesheet"/>
+<script src="{% static 'js/survey-creator.min.js' %}"></script>
+
+{% endblock %}
+{% block content %}
+<div class="right_col" role="main">
+    <div class="">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content" id="content">
+                <div id="surveyContainer">
+                    <div id="creatorElement"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    SurveyCreator.localization.currentLocale = "zh-cn";
+    var creatorOptions = {designerHeight: "700px"};
+    var creator = new SurveyCreator.SurveyCreator("creatorElement", creatorOptions);
+</script>
+{% endblock %}

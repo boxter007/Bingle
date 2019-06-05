@@ -32,3 +32,9 @@ python3 manage.py runserver
 ### 问题页面Markdown展示
 - 来源自 https://github.com/commonmark/commonmark.js
 - 编辑页面直接撰写Markdown代码保存到数据库，前台通过commonmark.js转化成HTML。
+
+### MarkDown 编辑器
+- 来源于https://github.com/pandao/editor.md
+
+### 测试题编辑展示
+- 来源于https://github.com/surveyjs/survey-library
