@@ -55,7 +55,7 @@ ROOT_URLCONF = 'Bingle.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR+"/templates/production",],
+        'DIRS': [BASE_DIR+"/templates/production",BASE_DIR+"/templates/administration",],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,7 +125,8 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (BASE_DIR+"/Templates/vendors",
 BASE_DIR+"/Templates/build",
-BASE_DIR+"/Templates/production",) 
+BASE_DIR + "/Templates/production",
+BASE_DIR + "/Templates/Aministration",) 
 
 
 BASE_LOG_DIR = os.path.join(BASE_DIR, "log")

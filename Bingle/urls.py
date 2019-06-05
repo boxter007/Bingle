@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import view
+from . import view,adminview
+
 from django.conf.urls import url,include
 
 urlpatterns = [
@@ -30,7 +31,7 @@ urlpatterns = [
     path('viewsolution/', view.viewsolution),
     path('profile/', view.profile),
     path('makequestion/', view.makequestion),
-    path('makequestionsurvey/', view.makequestionsurvey),
+    path('getSurveyIssues/', adminview.getSurveyIssues),
 ]
 
 
