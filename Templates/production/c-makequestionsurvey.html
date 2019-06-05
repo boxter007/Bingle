@@ -26,5 +26,11 @@
     SurveyCreator.localization.currentLocale = "zh-cn";
     var creatorOptions = {designerHeight: "700px"};
     var creator = new SurveyCreator.SurveyCreator("creatorElement", creatorOptions);
+    creator.saveSurveyFunc = function () {
+        
+        //var jsonEl = document.getElementById('surveyJSON');
+        //jsonEl.value = creator.text;
+        alert(creator.text);
+    }
 </script>
 {% endblock %}
