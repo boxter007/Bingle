@@ -6,6 +6,7 @@ import json
 import logging
 
 log = logging.getLogger("collect")
+#代码编写页
 def coding(request):
     context          = {}
     id       = request.GET['id']
@@ -48,12 +49,10 @@ def detail(request):
         context['cost']         = issueobj.cost
         context['submit']       = issueobj.submit_set.all()[0:10]
     return render(request, 'c-detail.html', context)
+#所有代码提交页面
 def answers(request):
     context          = {}
     return render(request, 'c-answers.html', context)
-def makequestionsurvey(request):
-    context          = {}
-    return render(request, 'c-makequestionsurvey.html', context)
 #获取指定代码提交的内容
 def viewsolution(request):
     id          = request.GET['id']
@@ -68,7 +67,7 @@ def viewsolution(request):
         context['cost']         = submitobj.cost
         context['issue']        = submitobj.issue
     return render(request, 'c-viewsolution.html', context)
-
+#首页
 def index(request):
     request.session['user'] = '1'
     context = {}
@@ -84,10 +83,11 @@ def index(request):
     context['codelevel'] = codelevel
     context['lists'] = lists
     return render(request, 'c-index.html', context)
+#个人首页
 def profile(request):
     context          = {}
     return render(request, 'c-profile.html', context)
-
+#处理代码运行
 @csrf_exempt
 def running(request):    
     context          = {}
@@ -103,7 +103,7 @@ def running(request):
     context['code']     = code
     context['codetype'] = codetype
     return  HttpResponse(json.dumps(context), content_type='application/json')
-
+#处理代码提交
 @csrf_exempt
 def submit(request):    
     context          = {}
@@ -118,7 +118,7 @@ def submit(request):
     context['code']     = code
     context['codetype'] = codetype
     return  HttpResponse(json.dumps(context), content_type='application/json')
-
+#制作编程试题
 @csrf_exempt
 def makequestion(request):  
     request.session['user'] = '1'

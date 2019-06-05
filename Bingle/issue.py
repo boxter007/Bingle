@@ -15,6 +15,12 @@ def getSolution(id):
 def getLevels():
     levels = models.Issue.IssueLevel.objects.all()
     return levels
+def getSurveyIssueStatuses():
+    statuses = models.SurveyIssueStatus.objects.all()
+    return statuses
+def getChampions():
+    statuses = models.Champion.objects.all()
+    return statuses
 def getIssuesByLevel(levelid,page):
     issues = models.Issue.objects.filter(level=levelid)
     lines = []
@@ -25,6 +31,24 @@ def getIssuesByLevel(levelid,page):
         line.append(100*round(item.Submit.objects.filter(cost=item.cost).count()/item.Submit.objects.all().count(),2))
         lines.append(line)
     issuesPage = Paginator(lines, 10)
+    try:
+        result = issuesPage.page(page)
+    except PageNotAnInteger:
+        result = issuesPage.page(1)
+    except EmptyPage:
+        result = issuesPage.page(issuesPage.num_pages)
+    return result
+
+def getSurveyIssues(levelid,championid,statusid,page):
+    issues = models.SurveyIssues.objects.all()
+    if levelid > 0:
+        issues = issues.filter(level=levelid)
+    if championid > 0:
+        issues = issues.filter(champion=championid)
+    if statusid > 0:
+        issues = issues.filter(status=statusid)
+
+    issuesPage = Paginator(issues, 10)
     try:
         result = issuesPage.page(page)
     except PageNotAnInteger:
