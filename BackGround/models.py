@@ -90,3 +90,26 @@ class Enterprise(models.Model):
 
     def __str__(self):
         return self.name
+
+class SurveyIssues(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=100)
+    content = models.CharField(max_length=50000)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,default=0)
+    createdate = models.DateTimeField(auto_now_add=True)
+    timelimit = models.IntegerField(default=1)
+    cost = models.FloatField(default=100.00)
+    level = models.ForeignKey('IssueLevel',on_delete=models.CASCADE,default=0)
+    champion = models.ManyToManyField('Champion', through='SurveyIssueChampion',through_fields=('surveyissueid', 'championid'),)
+    status = models.ForeignKey('SurveyIssueStatus',on_delete=models.CASCADE,default=0)
+    def __str__(self):
+        return self.title
+
+class SurveyIssueChampion(models.Model):
+    id = models.AutoField(primary_key=True)
+    surveyissueid = models.ForeignKey('SurveyIssues',on_delete=models.CASCADE)
+    championid = models.ForeignKey('Champion', on_delete=models.CASCADE)
+
+class SurveyIssueStatus(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)

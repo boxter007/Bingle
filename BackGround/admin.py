@@ -11,5 +11,5 @@ admin.site.register(models.Issue.IssueLevel)
 admin.site.register(models.IssueChampion)
 admin.site.register(models.Champion)
 admin.site.register(models.Enterprise)
-
-
+admin.site.register(models.SurveyIssues)
+admin.site.register(models.SurveyIssueChampion)
