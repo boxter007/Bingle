@@ -32,6 +32,7 @@ urlpatterns = [
     path('profile/', view.profile),
     path('makequestion/', view.makequestion),
     path('getSurveyIssues/', adminview.getSurveyIssues),
+    path('debug/', view.debug),
 ]
 
 

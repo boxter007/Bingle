@@ -3,6 +3,7 @@
 {% block css %}
   <link rel="stylesheet" href="{% static '/codemirror/lib/codemirror.css' %}">
   <script src="{% static '/codemirror/lib/codemirror.js' %}"></script>
+  <script src="{% static '/codemirror/addon/selection/active-line.js' %}"></script>
   <script src="{% static '/codemirror/mode/python/python.js' %}"></script>
   <script src="{% static '/codemirror/mode/go/go.js' %}"></script>
   <script src="{% static '/codemirror/mode/clike/clike.js' %}"></script>
@@ -67,7 +68,12 @@
   <link rel="stylesheet" href="{% static '/codemirror/theme/darcula.css' %}">
   <link rel="stylesheet" href="{% static '/codemirror/theme/yonce.css' %}">
   <link rel="stylesheet" href="{% static '/codemirror/theme/zenburn.css' %}">
-  <style>.CodeMirror {border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;height:415px}</style>
+  <style>
+    .CodeMirror {border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;height:415px}
+    .breakpoints {width: .8em;}
+    .breakpoint { color: #822; }
+    .CodeMirror {border: 1px solid #aaa;}
+  </style>
 {% endblock %}
 {% block content %}
 <!-- page content -->
@@ -189,9 +195,13 @@
             <div class="x_content">
               <div class="form-group">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <button class="btn btn-success pull-left" type="button" id="run">运行</button>
+                  <button class="btn btn-primary pull-left" type="button" id="save">保存</button>
                   <button type="reset" class="btn btn-danger pull-left" id="reset">重置</button>
-                  <button class="btn btn-primary pull-left" type="button">保存</button>
+                  <button class="btn btn-success pull-left" type="button" id="run">运行</button>
+                  <button class="btn btn-warning pull-left" type="button" id="debug"><i class="fa fa-play"></i>调试</button>
+                  <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugstop"><i class="fa fa-stop"></i>停止</button>
+                  <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugup"><i class="fa fa-arrow-up"></i>单步跳出</button>
+                  <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugdown"><i class="fa fa-arrow-down"></i>单步进入</button>
                   <label class="control-label " id="runtime"></label>
                   <button class="btn btn-success pull-right" type="button" id="submit">提交</button>
                   <span id="issue" style="visibility: hidden">{{ issueid }}</span>
@@ -209,14 +219,27 @@
       var editor = CodeMirror.fromTextArea(document.getElementById("codeid"), {
             mode: {name: $('#codetype').val(),
                   version: 3,
-                  singleLineStringErrors: false},
+                  singleLineStringErrors: true},
                   lineNumbers: true,
+                  gutters: ["CodeMirror-linenumbers", "breakpoints"],
                   indentUnit: 4,
+                  styleActiveLine: true,
                   height: "100%",
                   smartIndent: true, // 智能缩进
                   indentWithTabs: true, // 使用制表符进行智能缩进
                   matchBrackets: true
         });
+      editor.on("gutterClick", function(cm, n) {
+        var info = cm.lineInfo(n);
+        cm.setGutterMarker(n, "breakpoints", info.gutterMarkers ? null : makeMarker());
+      });
+      function makeMarker() {
+        var marker = document.createElement("div");
+        marker.style.color = "#822";
+        marker.style.left = "-29px";
+        marker.innerHTML = "●";
+        return marker;
+      }
       //更改语言
       function changcode() {
         var t = $('#codetype').val();
@@ -288,6 +311,90 @@
             $('#stdout').val(data['stdout']);
           });
       });
+      //开始调试
+      $('#debug').click(function(){
+        $.post("../debug/", { codetype: $('#codetype').val(), 
+                                stdin: $('#stdin').val() ,
+                                code: editor.getValue(),
+                                action:'debug'
+                              },
+          function(data){
+            console.log(data);
+            if( data['result'] == true){
+              $('#debugstop').show();
+              $('#debugup').show();
+              $('#debugdown').show();
+
+              $('#save').hide();
+              $('#reset').hide();
+              $('#run').hide();
+              $('#submit').hide();
+            }
+          });
+      });
+      //停止调试
+      $('#debugstop').click(function(){
+          $.post("../debug/", { 
+                                action:'stop'
+                              },
+          function(data){
+            console.log(data);
+            if( data['result']  == 'true'){
+              $('#debugstop').hide();
+              $('#debugup').hide();
+              $('#debugdown').hide();
+
+              $('#save').show();
+              $('#reset').show();
+              $('#run').show();
+              $('#submit').show();
+            }
+          });
+      });
+      //单步进入
+      $('#debugdown').click(function(){
+          $.post("../debug/", { 
+                                action:'stepinto'
+                              },
+          function(data){
+            console.log(data);
+            if( data == 'True'){
+              $('#debugstop').hide();
+              $('#debugup').hide();
+              $('#debugdown').hide();
+
+              $('#save').show();
+              $('#reset').show();
+              $('#run').show();
+              $('#submit').show();
+            }
+          });
+      });
+      //单步跳过
+      $('#debugup').click(function(){
+          $.post("../debug/", { 
+                                action:'stepover'
+                              },
+          function(data){
+            console.log(data);
+            if( data['result'] == true){
+              old = $('#stdout').val();
+              $('#stdout').val( old + data['appresult']);
+              editor.setCursor(Number(data['pdbresult'])-1);
+              if(data['pdbresult'] == 'return'){
+                $('#debugstop').hide();
+                $('#debugup').hide();
+                $('#debugdown').hide();
+
+                $('#save').show();
+                $('#reset').show();
+                $('#run').show();
+                $('#submit').show();
+              }
+            }
+          });
+      });
+
       //更改主题
       $('#theme').change(function(){
         var input = document.getElementById("theme");

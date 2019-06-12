@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from . import compiler,issue
+from . import compiler,issue,debugger
 from django.http import HttpResponse, HttpRequest
 import json
 import logging
@@ -144,3 +144,35 @@ def makequestion(request):
 
         issue.makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks,issuetype,level)
     return render(request, 'c-makequestion.html', context)
+
+@csrf_exempt
+def debug(request):
+    context = {}
+    request.session['user'] = '1'
+    result = True
+    appresult = ''
+    pdbresult = ''
+    if request.method == 'POST' :
+        codetype    = request.POST.get('codetype','python')
+        code        = request.POST.get('code','')
+        stdin       = request.POST.get('stdin','')
+        action      = request.POST.get('action','')
+        mydebugger = None
+
+        if (action == 'debug'):
+            mydebugger = debugger.getdebugger(codetype)
+            context["result"] = mydebugger.startdebug(code,stdin)
+        elif (action == 'stepinto'):
+            mydebugger = debugger.getdebugger(codetype)
+            result = mydebugger.stepinto()
+        elif (action == 'stepover'):
+            mydebugger = debugger.getdebugger(codetype)
+            result, appresult, pdbresult = mydebugger.stepover()
+            context["result"] = result
+            context["appresult"] = appresult
+            context["pdbresult"] = pdbresult
+        elif (action == 'stop'):
+            mydebugger = debugger.getdebugger(codetype)
+            context["result"] = mydebugger.stop()
+   
+    return  HttpResponse(json.dumps(context), content_type='application/json')
