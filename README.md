@@ -2,6 +2,9 @@
 ### 运行环境
 Python3+Django
 
+### 依赖
+pip install pexpect
+
 ### 语言编译环境
 - C:gcc
 - C++:g++
@@ -22,6 +25,7 @@ python3 manage.py runserver
   - urls.py 分发url请求
   - view.py 处理urls.py分发的请求
   - compiler.py 处理编译和运行代码的主类
+  - debugger.py 在线调试代码的主类
 - Background 为后台处理数据库、模型相关模块
   - models.py 定义了数据库模型
 
