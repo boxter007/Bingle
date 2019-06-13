@@ -48,9 +48,9 @@ class pythondebugger(debugger):
             fpath = os.path.join(TempFile, FileNum) 
             with open(fpath, 'w', encoding='utf-8') as f: 
                 f.write(self.code) 
-            self.process = subprocess.Popen([sys.executable,"-m","pdb" ,fpath,self.stdin],stdin = subprocess.PIPE,stdout=subprocess.PIPE, stderr=subprocess.STDOUT,bufsize=1)
-            self.process.wait()
-            char = self.process.stdout.read()
+            #self.process = subprocess.Popen([sys.executable,"-m","pdb" ,fpath,self.stdin],stdin = subprocess.PIPE,stdout=subprocess.PIPE, stderr=subprocess.STDOUT,bufsize=1)
+            #self.process.wait()
+            #char = self.process.stdout.read()
             
             
             
