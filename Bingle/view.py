@@ -161,18 +161,21 @@ def debug(request):
 
         if (action == 'debug'):
             mydebugger = debugger.getdebugger(codetype)
-            context["result"] = mydebugger.startdebug(code,stdin)
+            result, appresult, pdbresult  = mydebugger.startdebug(code, stdin)
+
         elif (action == 'stepinto'):
             mydebugger = debugger.getdebugger(codetype)
-            result = mydebugger.stepinto()
+            result, appresult, pdbresult =  mydebugger.stepinto()
         elif (action == 'stepover'):
             mydebugger = debugger.getdebugger(codetype)
             result, appresult, pdbresult = mydebugger.stepover()
-            context["result"] = result
-            context["appresult"] = appresult
-            context["pdbresult"] = pdbresult
+
         elif (action == 'stop'):
             mydebugger = debugger.getdebugger(codetype)
-            context["result"] = mydebugger.stop()
-   
+            result, appresult, pdbresult= mydebugger.stop()
+
+        context["result"] = result
+        context["appresult"] = appresult
+        context["pdbresult"] = pdbresult
+
     return  HttpResponse(json.dumps(context), content_type='application/json')

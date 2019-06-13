@@ -199,6 +199,7 @@
                   <button type="reset" class="btn btn-danger pull-left" id="reset">重置</button>
                   <button class="btn btn-success pull-left" type="button" id="run">运行</button>
                   <button class="btn btn-warning pull-left" type="button" id="debug"><i class="fa fa-play"></i>调试</button>
+                  <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugcontinue"><i class="fa fa-stop"></i>继续</button>
                   <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugstop"><i class="fa fa-stop"></i>停止</button>
                   <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugup"><i class="fa fa-arrow-up"></i>单步跳出</button>
                   <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugdown"><i class="fa fa-arrow-down"></i>单步进入</button>
@@ -321,10 +322,13 @@
           function(data){
             console.log(data);
             if( data['result'] == true){
+              editor.setCursor(Number(data['pdbresult'])-1);
               $('#debugstop').show();
               $('#debugup').show();
               $('#debugdown').show();
+              $('#debugcontinue').show();
 
+              $('#debug').hide();
               $('#save').hide();
               $('#reset').hide();
               $('#run').hide();
@@ -343,7 +347,9 @@
               $('#debugstop').hide();
               $('#debugup').hide();
               $('#debugdown').hide();
-
+              $('#debugcontinue').hide();
+              
+              $('#debug').show();
               $('#save').show();
               $('#reset').show();
               $('#run').show();
@@ -358,15 +364,25 @@
                               },
           function(data){
             console.log(data);
-            if( data == 'True'){
-              $('#debugstop').hide();
-              $('#debugup').hide();
-              $('#debugdown').hide();
+            if( data['result']  == true){
+              old = $('#stdout').val();
+              $('#stdout').val( old + data['appresult']);
 
-              $('#save').show();
-              $('#reset').show();
-              $('#run').show();
-              $('#submit').show();
+              if(data['pdbresult'] == 'end'){
+                editor.setCursor(0)
+                $('#debugstop').hide();
+                $('#debugup').hide();
+                $('#debugdown').hide();
+                $('#debugcontinue').hide();
+                
+                $('#debug').show();
+                $('#save').show();
+                $('#reset').show();
+                $('#run').show();
+                $('#submit').show();
+              }else{
+                editor.setCursor(Number(data['pdbresult'])-1);
+              }
             }
           });
       });
@@ -380,16 +396,21 @@
             if( data['result'] == true){
               old = $('#stdout').val();
               $('#stdout').val( old + data['appresult']);
-              editor.setCursor(Number(data['pdbresult'])-1);
-              if(data['pdbresult'] == 'return'){
+              
+              if(data['pdbresult'] == 'end'){
+                editor.setCursor(0)
                 $('#debugstop').hide();
                 $('#debugup').hide();
                 $('#debugdown').hide();
+                $('#debugcontinue').hide();
 
+                $('#debug').show();
                 $('#save').show();
                 $('#reset').show();
                 $('#run').show();
                 $('#submit').show();
+              }else{
+                editor.setCursor(Number(data['pdbresult'])-1);
               }
             }
           });

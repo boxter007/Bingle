@@ -33,52 +33,118 @@ class debugger():
 class pythondebugger(debugger):
 
     process = None
-    outlog = ""
     def __init__(self):
         debugger.__init__(self, "python", "", "")
+
     def startdebug(self, c, s):
         self.code = c
         self.stdin = s
-
+        result = False
+        appresult = ""
+        pdbresult = ""
         try:
             TempFile = tempfile.mkdtemp(suffix='_test', prefix='python_') 
             FileNum = "%d.py" % int(time.time() * 1000) 
             fpath = os.path.join(TempFile, FileNum) 
             with open(fpath, 'w', encoding='utf-8') as f: 
                 f.write(self.code) 
-            #self.process = subprocess.Popen([sys.executable,"-m","pdb" ,fpath,self.stdin],stdin = subprocess.PIPE,stdout=subprocess.PIPE, stderr=subprocess.STDOUT,bufsize=1)
+            self.process = subprocess.Popen([sys.executable,"-m","pdb" ,fpath,self.stdin],stdin = subprocess.PIPE,stdout=subprocess.PIPE, stderr=subprocess.STDOUT,bufsize=1)
+            self.process.wait()
+            char = self.process.stdout.read()
+            
+            
+            
+            
             self.process = pexpect.spawn(sys.executable,["-m","pdb" ,fpath,self.stdin],encoding='utf-8')
             ret = self.process.expect('\(Pdb\)')
-            if ret < 0:
-                return False
-            else:
-                return True
+            if ret >= 0:
+                r = self.process.before.strip()
+                r = r.replace('\x07','').replace(self.process.args[3].decode(),'').replace('<module>()','')
+                r = r[0:r.find('->')]
+                pdbresult = r[r.find('>')+1:].replace('(','').replace(')','').strip()
+                result = True
         except Exception as e:
-            return False
+            result = False
+        return result, appresult, pdbresult    
 
     def stepover(self):
+        result = False
+        appresult = ""
+        pdbresult = ""
         try:
             self.process.sendline('n')
             ret = self.process.expect('\(Pdb\)')
-            result = self.process.before.strip()
-            result = result.replace('\x07','').replace(self.process.args[3].decode(),'').replace('<module>()','')
-            result = result[0:result.find('->')]
-            result = result[result.find('\r\n') + 2:].strip()
-            appresult = result[0:result.find('>')]
-            pdbresult = result[result.find('>')+1:].replace('(','').replace(')','').strip()
-            if (appresult.find('--Return--')>0):
-                pdbresult = 'return'
-                appresult = appresult.replace('--Return--', '')
+            r = self.process.before.strip()
+            log.info(r)
+            if (r.find('<module>()->None') <= 0):
+                r = r.replace('\x07','').replace(self.process.args[3].decode(),'').replace('<module>()','')
+                r = r[0:r.find('->')]
+                r = r[r.find('\r\n') + 2:].strip()
+                appresult = r[0:r.find('>')].replace('--Call--\r\n','')
+                r = r[r.find('>') + 1:].strip()
+                pdbresult = r[r.find('(')+1:r.find(')')].strip()
+                if (appresult.find('--Return--')>=0):
+                    return self.stepover()
+            else:
+                pdbresult = "end"
+                appresult = ""
                 self.process.close()
-            return True, appresult, pdbresult
+            result = True
         except:
-            return False, '', ''
+            result = False
+        return result, appresult, pdbresult
+
+    def stepinto(self):
+        result = False
+        appresult = ""
+        pdbresult = ""
+        try:
+            self.process.sendline('s')
+            ret = self.process.expect('\(Pdb\)')
+            if (len(self.process.buffer) > 0):
+                log.info(self.process.before)
+                log.info(self.process.after)
+                log.info(self.process.buffer)
+                self.process.buffer = ''
+            else:
+                log.info(self.process.before)
+            r = self.process.before.strip()
+            #log.info(r)
+
+            #分离应用输出和PDB输出
+            index = r.find('> ' + self.process.args[3].decode())  #index之前基本上为应用输出，之后为PDB输出
+            
+            if (r.find('> <string>(1)<module>()->None') <= 0):
+                r = r.replace('\x07','').replace(self.process.args[3].decode(),'').replace('<module>()','')
+                r = r[0:r.find('->')]
+                r = r[r.find('\r\n') + 2:].strip()
+                appresult = r[0:r.find('>')].replace('--Call--\r\n','')
+                r = r[r.find('>') + 1:].strip()
+                pdbresult = r[r.find('(')+1:r.find(')')].strip()
+                if (appresult.find('--Return--')>=0):
+                    return self.stepinto()
+            else:
+                pdbresult = "end"
+                appresult = ""
+                self.process.close()
+            result = True
+        except Exception as e:
+            result = False
+        
+        return result, appresult, pdbresult
 
     def stop(self):
+        result = False
+        appresult = ""
+        pdbresult = ""
         try:
             self.process.terminate()
-            return "true"
+            result = True
+            
         except:
-            return "false"
+            result = False
+        
+        return result, appresult, pdbresult
+        
 
 pythondebuggers = {"python":pythondebugger()}
