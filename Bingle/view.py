@@ -145,6 +145,9 @@ def makequestion(request):
         issue.makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks,issuetype,level)
     return render(request, 'c-makequestion.html', context)
 
+def makequestionsurvey(request):
+    context         = {}
+    return render(request, 'c-makequestionsurvey.html', context)
 @csrf_exempt
 def debug(request):
     context = {}
