@@ -3,7 +3,8 @@
 Python3+Django
 
 ### 依赖
-pip install pexpect
+pip3 install pexpect
+pip3 install demjson
 
 ### 语言编译环境
 - C:gcc

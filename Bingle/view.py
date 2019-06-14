@@ -155,6 +155,7 @@ def debug(request):
     result = True
     appresult = ''
     pdbresult = ''
+    localvars = {}
     if request.method == 'POST' :
         codetype    = request.POST.get('codetype','python')
         code        = request.POST.get('code','')
@@ -169,19 +170,20 @@ def debug(request):
 
         elif (action == 'stepinto'):
             mydebugger = debugger.getdebugger(codetype)
-            result, appresult, pdbresult =  mydebugger.stepinto()
+            result, appresult, pdbresult, localvars = mydebugger.stepinto()
+            context["localvars"] = localvars
         elif (action == 'stepover'):
             mydebugger = debugger.getdebugger(codetype)
-            result, appresult, pdbresult = mydebugger.stepover()
-
+            result, appresult, pdbresult,localvars = mydebugger.stepover()
+            context["localvars"] = localvars
         elif (action == 'stop'):
             mydebugger = debugger.getdebugger(codetype)
             result, appresult, pdbresult = mydebugger.stop()
         
         elif (action == 'continue'):
             mydebugger = debugger.getdebugger(codetype)
-            result, appresult, pdbresult = mydebugger.continuedebug()
-        
+            result, appresult, pdbresult,localvars = mydebugger.continuedebug()
+            context["localvars"] = localvars
         elif (action == 'addbreak'):
             line = json.loads(request.POST.get('line',''))
             if len(line) > 0:                

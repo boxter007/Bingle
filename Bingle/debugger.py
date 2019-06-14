@@ -3,6 +3,8 @@ from BackGround import models
 import logging
 import time
 import pexpect
+import demjson
+import re
 log = logging.getLogger("collect")
 
 
@@ -67,7 +69,6 @@ class pythondebugger(debugger):
                 r = r.replace('\x07','').replace(self.process.args[3].decode(),'').replace('<module>()','')
                 r = r[0:r.find('->')]
                 pdbresult = r[r.find('>')+1:].replace('(','').replace(')','').strip()
-                
                 #设置断点
                 self.addbreak(b)
                 result = True
@@ -80,6 +81,7 @@ class pythondebugger(debugger):
         result = False
         appresult = ""
         pdbresult = ""
+        localvars = None
         try:
             self.process.sendline('n')
             ret = self.process.expect('\(Pdb\)')
@@ -97,6 +99,7 @@ class pythondebugger(debugger):
 
             pdbresult = r.replace('> ' + self.process.args[3].decode(),'').replace(appresult,'')
             pdbresult = pdbresult[pdbresult.find('(') + 1:pdbresult.find(')')].strip()
+            localvars = self.getvar()
 
             if (r.find('<module>()->None') >= 0):
                 pdbresult = "end"
@@ -105,12 +108,13 @@ class pythondebugger(debugger):
             result = True
         except:
             result = False
-        return result, appresult, pdbresult
+        return result, appresult, pdbresult,localvars
     #单步进入
     def stepinto(self):
         result = False
         appresult = ""
         pdbresult = ""
+        localvars = None
         try:
             self.process.sendline('s')
             ret = self.process.expect('\(Pdb\)')
@@ -129,7 +133,8 @@ class pythondebugger(debugger):
                 
             pdbresult = r.replace('> ' + self.process.args[3].decode(),'').replace(appresult,'')
             pdbresult = pdbresult[pdbresult.find('(') + 1:pdbresult.find(')')].strip()
-            
+            localvars = self.getvar()
+
             if (r.find('> <string>(1)<module>()->None') >= 0):
                 pdbresult = "end"
                 appresult = ""
@@ -139,7 +144,7 @@ class pythondebugger(debugger):
         except Exception as e:
             result = False
         
-        return result, appresult, pdbresult
+        return result, appresult, pdbresult,localvars
     #停止调试
     def stop(self):
         result = False
@@ -158,6 +163,7 @@ class pythondebugger(debugger):
         result = False
         appresult = ""
         pdbresult = ""
+        localvars = None
         try:
             self.process.sendline('c')
             ret = self.process.expect('\(Pdb\)')
@@ -174,12 +180,12 @@ class pythondebugger(debugger):
             else:
                 pdbresult = r.replace('> ' + self.process.args[3].decode(),'').replace(appresult,'')
                 pdbresult = pdbresult[pdbresult.find('(') + 1:pdbresult.find(')')].strip()
-           
+            localvars = self.getvar()
             result = True
         except Exception as e:
             result = False
         
-        return result, appresult, pdbresult
+        return result, appresult, pdbresult,localvars
     #添加断点
     def addbreak(self,l):
         result = False
@@ -199,7 +205,6 @@ class pythondebugger(debugger):
             result = False
         
         return result, appresult, pdbresult
-
     #取消断点
     def removebreak(self,l):
         result = False
@@ -217,6 +222,31 @@ class pythondebugger(debugger):
             result = False
         
         return result, appresult, pdbresult
+    #获取变量
+    def getvar(self):
+        sig = "for interactive help, or help(object) for help about object.}"
+        localvars = None
+        try:
+            self.process.sendline('locals()')
+            ret = self.process.expect('\(Pdb\)')
+            r = self.process.before.strip()
+            if (r.startswith('locals()\r\n')):
+                r = r.replace('locals()\r\n', '').strip()
+            if (r.find(sig) >= 0):
+                r = r[r.find(sig) + len(sig):]
+                if r.startswith(','):
+                    r = '{' + r[2:]
+                if r == '}':
+                    r='{}'
+
+            bold = re.compile(r'\<function(.*?)\>')
+            x = bold.sub(r'"\(function\1\)"', r)
+            localvars = demjson.decode(x)
+        except Exception as e:
+            pass
+        
+        return localvars
+
 
 
 

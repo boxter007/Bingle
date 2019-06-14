@@ -69,7 +69,7 @@
   <link rel="stylesheet" href="{% static '/codemirror/theme/yonce.css' %}">
   <link rel="stylesheet" href="{% static '/codemirror/theme/zenburn.css' %}">
   <style>
-    .CodeMirror {border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;height:415px}
+    .CodeMirror {border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;height:370px}
     .breakpoints {width: .8em;}
     .breakpoint { color: #822; }
     .CodeMirror {border: 1px solid #aaa;}
@@ -80,35 +80,53 @@
 <form class="form-horizontal form-label-left" method="post" action="../running/">
   <div class="right_col" role="main">
     <div class="col-md-3 col-sm-3 col-xs-12">
-      <div class="x_panel">
-        <div class="x_content">
-          <div class="form-group">
-            <label class="control-label col-md-4" >输入： 
-            </label>
-            <div class="col-md-12">
-              <textarea class="editor-wrapper form-control" id="stdin" ></textarea></div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-4" >输出：
-            </label>
-            <div class="col-md-12">
-                <textarea class="editor-wrapper form-control" id="stdout" ></textarea>
-            </div>
-          </div>
-        </div>
+      <div class="x_panel" id="debugpanel" style="display: none">
+        <table class="table" id='vartable'>
+          <thead>
+            <tr>
+              <th width="20px"></th>
+              <th>本地变量</th>
+            </tr>
+          </thead>
+          <tbody>
+          
+            
+          </tbody>
+        </table>
+        <table class="table" id="watchtable">
+          <thead>
+            <tr>
+              <th width="20px"></th>
+              <th>监视变量</th>
+            </tr>
+          </thead>
+          <tbody>
+          
+            
+          </tbody>
+        </table>
+        <table class="table">
+          <thead>
+            <tr>
+              <th width="20px"></th>
+              <th>堆栈信息</th>
+            </tr>
+          </thead>
+          <tbody>
+          
+            
+          </tbody>
+        </table>
       </div>
     </div>
-    <div class="col-md-9 col-sm-9 col-xs-12">
+    <div class="col-md-12 col-sm-12 col-xs-12" id="maindiv">
       <div class="x_panel">
-        <div class="x_title">
-          <h4><a href="../detail/?id={{ issueid }}" target="blank">题目：{{ title }}</a></h4>
-          <div class="clearfix"></div>
-        </div>
           {% csrf_token %}
             <div class="x_content">
                 <div class="form-group">
+                    <h4  class="col-md-4 col-sm-4 col-xs-12"><a href="../detail/?id={{ issueid }}" target="blank">题目：{{ title }}</a></h4>
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">语言</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
                       <select class="form-control" id="codetype" name="codetype">
                         <option value="python">Python</option>
                         <option value="text/x-go">GO</option>
@@ -126,7 +144,7 @@
                       </select>
                     </div>
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">主题</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
                       <select class="form-control" id="theme">
                         <option selected="">default</option>
                         <option>3024-day</option>
@@ -187,10 +205,24 @@
                         <option>zenburn</option>
                       </select>
                     </div>
-                  </div>
+                </div>
                 <textarea id="codeid" class="form-control" name="code">
 
                 </textarea>  
+            </div>
+            <div class="x_content">
+              <div class="form-group">
+                <label class="control-label col-md-1" >输入： 
+                </label>
+                <div class="col-md-5">
+                  <textarea class="editor-wrapper form-control" id="stdin" ></textarea></div>
+
+                <label class="control-label col-md-1" >输出：
+                </label>
+                <div class="col-md-5">
+                    <textarea class="editor-wrapper form-control" id="stdout" ></textarea>
+                </div>
+              </div>
             </div>
             <div class="x_content">
               <div class="form-group">
@@ -199,7 +231,7 @@
                   <button type="reset" class="btn btn-danger pull-left" id="reset">重置</button>
                   <button class="btn btn-success pull-left" type="button" id="run">运行</button>
                   <button class="btn btn-warning pull-left" type="button" id="debug"><i class="fa fa-play"></i>调试</button>
-                  <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugcontinue"><i class="fa fa-stop"></i>继续</button>
+                  <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugcontinue"><i class="fa fa-play"></i>继续</button>
                   <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugstop"><i class="fa fa-stop"></i>停止</button>
                   <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugup"><i class="fa fa-arrow-up"></i>单步跳出</button>
                   <button style="display: none" class="btn btn-warning pull-left" type="button" id="debugdown"><i class="fa fa-arrow-down"></i>单步进入</button>
@@ -328,6 +360,7 @@
       $('#debug').click(function(){
         $('#stdout').val('');
         $('#runtime').text('');
+        $("#vartable tr:not(:first)").remove();
         debugging=true;
         $.post("../debug/", { codetype: $('#codetype').val(), 
                                 stdin: $('#stdin').val() ,
@@ -343,6 +376,9 @@
               $('#debugup').show();
               $('#debugdown').show();
               $('#debugcontinue').show();
+              $('#maindiv').toggleClass('col-md-12 col-sm-12');
+              $('#maindiv').toggleClass('col-md-9 col-sm-9');
+              $('#debugpanel').show();
 
               $('#debug').hide();
               $('#save').hide();
@@ -368,6 +404,10 @@
               $('#debugup').hide();
               $('#debugdown').hide();
               $('#debugcontinue').hide();
+              $('#debugpanel').hide();
+              $('#maindiv').toggleClass('col-md-9 col-sm-9');
+              $('#maindiv').toggleClass('col-md-12 col-sm-12');
+              
               
               $('#debug').show();
               $('#save').show();
@@ -395,6 +435,9 @@
                 $('#debugup').hide();
                 $('#debugdown').hide();
                 $('#debugcontinue').hide();
+                $('#debugpanel').hide();
+                $('#maindiv').toggleClass('col-md-9 col-sm-9');
+                $('#maindiv').toggleClass('col-md-12 col-sm-12');
                 
                 $('#debug').show();
                 $('#save').show();
@@ -403,6 +446,7 @@
                 $('#submit').show();
               }else{
                 editor.setCursor(Number(data['pdbresult'])-1);
+                showvars(data['localvars'])
               }
             }
           });
@@ -425,6 +469,9 @@
                 $('#debugup').hide();
                 $('#debugdown').hide();
                 $('#debugcontinue').hide();
+                $('#debugpanel').hide();
+                $('#maindiv').toggleClass('col-md-9 col-sm-9');
+                $('#maindiv').toggleClass('col-md-12 col-sm-12');
 
                 $('#debug').show();
                 $('#save').show();
@@ -433,6 +480,7 @@
                 $('#submit').show();
               }else{
                 editor.setCursor(Number(data['pdbresult'])-1);
+                showvars(data['localvars'])
               }
             }
           });
@@ -455,6 +503,9 @@
                 $('#debugup').hide();
                 $('#debugdown').hide();
                 $('#debugcontinue').hide();
+                $('#debugpanel').hide();
+                $('#maindiv').toggleClass('col-md-9 col-sm-9');
+                $('#maindiv').toggleClass('col-md-12 col-sm-12');
 
                 $('#debug').show();
                 $('#save').show();
@@ -463,6 +514,7 @@
                 $('#submit').show();
               }else{
                 editor.setCursor(Number(data['pdbresult'])-1);
+                showvars(data['localvars'])
               }
             }
           });
@@ -480,6 +532,12 @@
           } 
         }
         return lines;
+      }
+      function showvars(data){
+        $("#vartable tr:not(:first)").remove();
+        for(var key in data){
+          $("#vartable tr:last").after('<tr><td>*</td><td>'+key+'：'+data[key]+'</td></tr>');
+        }
       }
       //更改主题
       $('#theme').change(function(){

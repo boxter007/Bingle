@@ -3636,7 +3636,7 @@ header {
     border-left-color: #1ABB9C
 }
 .editor-wrapper {
-    min-height: 250px;
+    min-height: 50px;
     background-color: white;
     border-collapse: separate;
     border: 1px solid #ccc;
