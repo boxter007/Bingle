@@ -49,9 +49,8 @@ class pythondebugger(debugger):
             with open(fpath, 'w', encoding='utf-8') as f: 
                 f.write(self.code) 
             #先编译一下再开始调试，否则开始调试时很难分离编译错误
-            outdata = subprocess.check_output([sys.executable, '-m','py_compile',fpath], stderr=subprocess.STDOUT, timeout=50)
-            
-            
+            subprocess.check_output([sys.executable, '-m','py_compile',fpath], stderr=subprocess.STDOUT, timeout=50)
+            #启动调试进程
             self.process = pexpect.spawn(sys.executable,["-m","pdb" ,fpath,self.stdin],encoding='utf-8')
             ret = self.process.expect('\(Pdb\)')
             if ret >= 0:
@@ -64,7 +63,7 @@ class pythondebugger(debugger):
             result = False
             appresult = e.stdout.decode()
         return result, appresult, pdbresult    
-
+    #单步跳过
     def stepover(self):
         result = False
         appresult = ""
@@ -74,24 +73,26 @@ class pythondebugger(debugger):
             ret = self.process.expect('\(Pdb\)')
             r = self.process.before.strip()
             log.info(r)
-            if (r.find('<module>()->None') <= 0):
-                r = r.replace('\x07','').replace(self.process.args[3].decode(),'').replace('<module>()','')
-                r = r[0:r.find('->')]
-                r = r[r.find('\r\n') + 2:].strip()
-                appresult = r[0:r.find('>')].replace('--Call--\r\n','')
-                r = r[r.find('>') + 1:].strip()
-                pdbresult = r[r.find('(')+1:r.find(')')].strip()
-                if (appresult.find('--Return--')>=0):
-                    return self.stepover()
-            else:
+
+            #分离应用输出和PDB输出
+            index = r.find('> ' + self.process.args[3].decode())  #index之前基本上为应用输出，之后为PDB输出
+            appresult = r[0:index]
+            appresult = appresult.replace('\x07n\r\n', '')
+            if appresult == '--Return--\r\n':
+                return self.stepover()
+            if appresult.find('--Return--\r\n') >= 0:
+                appresult = appresult[0:appresult.index('--Return--\r\n')]
+
+            pdbresult = r.replace('> ' + self.process.args[3].decode(),'').replace(appresult,'')
+            pdbresult = pdbresult[pdbresult.find('(') + 1:pdbresult.find(')')].strip()
+
+            if (r.find('<module>()->None') >= 0):
                 pdbresult = "end"
-                appresult = ""
                 self.process.close()
             result = True
         except:
             result = False
         return result, appresult, pdbresult
-
     #单步进入
     def stepinto(self):
         result = False
@@ -100,15 +101,7 @@ class pythondebugger(debugger):
         try:
             self.process.sendline('s')
             ret = self.process.expect('\(Pdb\)')
-            if (len(self.process.buffer) > 0):
-                log.info(self.process.before)
-                log.info(self.process.after)
-                log.info(self.process.buffer)
-                self.process.buffer = ''
-            else:
-                log.info(self.process.before)
             r = self.process.before.strip()
-            #log.info(r)
 
             #分离应用输出和PDB输出
             index = r.find('> ' + self.process.args[3].decode())  #index之前基本上为应用输出，之后为PDB输出
