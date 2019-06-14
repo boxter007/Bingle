@@ -293,6 +293,7 @@
             $('#run').attr("disabled",false); 
             $('#submit').attr("disabled",false); 
             $('#stdout').val(data['stdout']['outdata']);
+            
             $('#runtime').text('运行时间:' + data['stdout']['runtime']+'秒');
           });
       });
@@ -314,6 +315,8 @@
       });
       //开始调试
       $('#debug').click(function(){
+        $('#stdout').val('');
+        $('#runtime').text('');
         $.post("../debug/", { codetype: $('#codetype').val(), 
                                 stdin: $('#stdin').val() ,
                                 code: editor.getValue(),
@@ -334,6 +337,7 @@
               $('#run').hide();
               $('#submit').hide();
             }
+            $('#stdout').val(data['appresult']);
           });
       });
       //停止调试
@@ -343,7 +347,7 @@
                               },
           function(data){
             console.log(data);
-            if( data['result']  == 'true'){
+
               $('#debugstop').hide();
               $('#debugup').hide();
               $('#debugdown').hide();
@@ -354,7 +358,7 @@
               $('#reset').show();
               $('#run').show();
               $('#submit').show();
-            }
+            
           });
       });
       //单步进入
