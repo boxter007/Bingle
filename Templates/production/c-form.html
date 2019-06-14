@@ -232,12 +232,22 @@
         });
       editor.on("gutterClick", function(cm, n) {
         var info = cm.lineInfo(n);
-        cm.setGutterMarker(n, "breakpoints", info.gutterMarkers ? null : makeMarker());
+        var obj = info.gutterMarkers ? null : makeMarker()
+        var lines = [];
+        lines.push(n+1);
+
+        cm.setGutterMarker(n, "breakpoints", obj);
+        if(debugging){
+          $.post("../debug/", { 
+                                  line:JSON.stringify(lines),
+                                  action: obj ? 'addbreak':'removebreak'},
+            function(data){
+            });
+        }
       });
       function makeMarker() {
         var marker = document.createElement("div");
         marker.style.color = "#822";
-        marker.style.left = "-29px";
         marker.innerHTML = "●";
         return marker;
       }
@@ -280,6 +290,7 @@
       }
       $('#codetype').change(changcode);
       changcode();
+      debugging = false;
       //run代码
       $('#run').click(function(){
         $('#run').attr("disabled",true); 
@@ -317,10 +328,12 @@
       $('#debug').click(function(){
         $('#stdout').val('');
         $('#runtime').text('');
+        debugging=true;
         $.post("../debug/", { codetype: $('#codetype').val(), 
                                 stdin: $('#stdin').val() ,
                                 code: editor.getValue(),
-                                action:'debug'
+                                action:'debug',
+                                breaks:JSON.stringify(getbreaks())
                               },
           function(data){
             console.log(data);
@@ -336,12 +349,15 @@
               $('#reset').hide();
               $('#run').hide();
               $('#submit').hide();
+            }else{
+              debugging=false;
             }
             $('#stdout').val(data['appresult']);
           });
       });
       //停止调试
       $('#debugstop').click(function(){
+        debugging=false;
           $.post("../debug/", { 
                                 action:'stop'
                               },
@@ -373,6 +389,7 @@
               $('#stdout').val( old + data['appresult']);
 
               if(data['pdbresult'] == 'end'){
+                debugging=false;
                 editor.setCursor(0)
                 $('#debugstop').hide();
                 $('#debugup').hide();
@@ -402,6 +419,7 @@
               $('#stdout').val( old + data['appresult']);
               
               if(data['pdbresult'] == 'end'){
+                debugging=false;
                 editor.setCursor(0)
                 $('#debugstop').hide();
                 $('#debugup').hide();
@@ -419,7 +437,50 @@
             }
           });
       });
+      //继续
+      $('#debugcontinue').click(function(){
+          $.post("../debug/", { 
+                                action:'continue'
+                              },
+          function(data){
+            console.log(data);
+            if( data['result'] == true){
+              old = $('#stdout').val();
+              $('#stdout').val( old + data['appresult']);
+              
+              if(data['pdbresult'] == 'end'){
+                debugging=false;
+                editor.setCursor(0)
+                $('#debugstop').hide();
+                $('#debugup').hide();
+                $('#debugdown').hide();
+                $('#debugcontinue').hide();
 
+                $('#debug').show();
+                $('#save').show();
+                $('#reset').show();
+                $('#run').show();
+                $('#submit').show();
+              }else{
+                editor.setCursor(Number(data['pdbresult'])-1);
+              }
+            }
+          });
+
+
+      });
+      //添加断点
+      function getbreaks(){
+        var lines=[];
+        linecount = editor.lineCount();
+        for( i = 0 ;i<linecount;i++){
+          var info = editor.lineInfo(i);
+          if (info.gutterMarkers){
+            lines.push(i+1);
+          } 
+        }
+        return lines;
+      }
       //更改主题
       $('#theme').change(function(){
         var input = document.getElementById("theme");

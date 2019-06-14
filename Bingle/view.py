@@ -163,8 +163,9 @@ def debug(request):
         mydebugger = None
 
         if (action == 'debug'):
+            breaks      = json.loads(request.POST.get('breaks',''))
             mydebugger = debugger.getdebugger(codetype)
-            result, appresult, pdbresult  = mydebugger.startdebug(code, stdin)
+            result, appresult, pdbresult  = mydebugger.startdebug(code, stdin,breaks)
 
         elif (action == 'stepinto'):
             mydebugger = debugger.getdebugger(codetype)
@@ -175,7 +176,22 @@ def debug(request):
 
         elif (action == 'stop'):
             mydebugger = debugger.getdebugger(codetype)
-            result, appresult, pdbresult= mydebugger.stop()
+            result, appresult, pdbresult = mydebugger.stop()
+        
+        elif (action == 'continue'):
+            mydebugger = debugger.getdebugger(codetype)
+            result, appresult, pdbresult = mydebugger.continuedebug()
+        
+        elif (action == 'addbreak'):
+            line = json.loads(request.POST.get('line',''))
+            if len(line) > 0:                
+                mydebugger = debugger.getdebugger(codetype)
+                result, appresult, pdbresult= mydebugger.addbreak(line)
+        elif (action == 'removebreak'):
+            line = json.loads(request.POST.get('line',''))
+            if len(line) > 0:                
+                mydebugger = debugger.getdebugger(codetype)
+                result, appresult, pdbresult= mydebugger.removebreak(line)
 
         context["result"] = result
         context["appresult"] = appresult
