@@ -213,7 +213,7 @@ class pythondebugger(debugger):
         try:
             for item in l:
                 if(item  in self.breaks):
-                    self.process.sendline('cl %d'%item)
+                    self.process.sendline('cl ' + self.breaks[item])
                     ret = self.process.expect('\(Pdb\)')
                     self.breaks.pop(item)
                 log.info(self.process.before)
