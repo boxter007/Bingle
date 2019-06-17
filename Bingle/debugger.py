@@ -117,6 +117,7 @@ class pythondebugger(debugger):
         appresult = ""
         pdbresult = ""
         localvars = None
+        stacks = None
         try:
             self.process.sendline('s')
             ret = self.process.expect('\(Pdb\)')
@@ -136,7 +137,7 @@ class pythondebugger(debugger):
             pdbresult = r.replace('> ' + self.process.args[3].decode(),'').replace(appresult,'')
             pdbresult = pdbresult[pdbresult.find('(') + 1:pdbresult.find(')')].strip()
             localvars = self.getvar()
-
+            stacks = self.getstack()
             if (r.find('> <string>(1)<module>()->None') >= 0):
                 pdbresult = "end"
                 appresult = ""
@@ -146,7 +147,7 @@ class pythondebugger(debugger):
         except Exception as e:
             result = False
         
-        return result, appresult, pdbresult,localvars
+        return result, appresult, pdbresult,localvars,stacks
     #停止调试
     def stop(self):
         result = False
@@ -166,6 +167,7 @@ class pythondebugger(debugger):
         appresult = ""
         pdbresult = ""
         localvars = None
+        stacks = None
         try:
             self.process.sendline('c')
             ret = self.process.expect('\(Pdb\)')
@@ -183,11 +185,12 @@ class pythondebugger(debugger):
                 pdbresult = r.replace('> ' + self.process.args[3].decode(),'').replace(appresult,'')
                 pdbresult = pdbresult[pdbresult.find('(') + 1:pdbresult.find(')')].strip()
             localvars = self.getvar()
+            stacks = self.getstack()
             result = True
         except Exception as e:
             result = False
         
-        return result, appresult, pdbresult,localvars
+        return result, appresult, pdbresult,localvars,stacks
     #添加断点
     def addbreak(self,l):
         result = False

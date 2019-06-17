@@ -447,7 +447,7 @@
               }else{
                 editor.setCursor(Number(data['pdbresult'])-1);
                 showvars(data['localvars'])
-                
+                showstacks(data['stacks'])
               }
             }
           });
@@ -517,6 +517,7 @@
               }else{
                 editor.setCursor(Number(data['pdbresult'])-1);
                 showvars(data['localvars'])
+                showstacks(data['stacks'])
               }
             }
           });

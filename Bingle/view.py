@@ -170,8 +170,9 @@ def debug(request):
 
         elif (action == 'stepinto'):
             mydebugger = debugger.getdebugger(codetype)
-            result, appresult, pdbresult, localvars = mydebugger.stepinto()
+            result, appresult, pdbresult, localvars,stacks = mydebugger.stepinto()
             context["localvars"] = localvars
+            context["stacks"] = stacks
         elif (action == 'stepover'):
             mydebugger = debugger.getdebugger(codetype)
             result, appresult, pdbresult,localvars,stacks = mydebugger.stepover()
@@ -183,8 +184,9 @@ def debug(request):
         
         elif (action == 'continue'):
             mydebugger = debugger.getdebugger(codetype)
-            result, appresult, pdbresult,localvars = mydebugger.continuedebug()
+            result, appresult, pdbresult,localvars,stacks = mydebugger.continuedebug()
             context["localvars"] = localvars
+            context["stacks"] = stacks
         elif (action == 'addbreak'):
             line = json.loads(request.POST.get('line',''))
             if len(line) > 0:                
