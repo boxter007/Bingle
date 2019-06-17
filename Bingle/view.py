@@ -174,8 +174,9 @@ def debug(request):
             context["localvars"] = localvars
         elif (action == 'stepover'):
             mydebugger = debugger.getdebugger(codetype)
-            result, appresult, pdbresult,localvars = mydebugger.stepover()
+            result, appresult, pdbresult,localvars,stacks = mydebugger.stepover()
             context["localvars"] = localvars
+            context["stacks"] = stacks
         elif (action == 'stop'):
             mydebugger = debugger.getdebugger(codetype)
             result, appresult, pdbresult = mydebugger.stop()

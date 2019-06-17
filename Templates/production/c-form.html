@@ -105,7 +105,7 @@
             
           </tbody>
         </table>
-        <table class="table">
+        <table class="table" id="stacktable">
           <thead>
             <tr>
               <th width="20px"></th>
@@ -447,6 +447,7 @@
               }else{
                 editor.setCursor(Number(data['pdbresult'])-1);
                 showvars(data['localvars'])
+                
               }
             }
           });
@@ -481,6 +482,7 @@
               }else{
                 editor.setCursor(Number(data['pdbresult'])-1);
                 showvars(data['localvars'])
+                showstacks(data['stacks'])
               }
             }
           });
@@ -537,6 +539,12 @@
         $("#vartable tr:not(:first)").remove();
         for(var key in data){
           $("#vartable tr:last").after('<tr><td>*</td><td>'+key+'：'+data[key]+'</td></tr>');
+        }
+      }
+      function showstacks(data){
+        $("#stacktable tr:not(:first)").remove();
+        for(var item = data.length - 1 ; item >=0 ; item--){
+          $("#stacktable tr:last").after('<tr><td>*</td><td>'+data[item]['line']+'：'+data[item]['function']+'</td></tr>');
         }
       }
       //更改主题

@@ -43,6 +43,7 @@ class debugger():
 class pythondebugger(debugger):
 
     process = None
+    filename = ''
     def __init__(self):
         debugger.__init__(self, "python", "", "")
     #开始调试
@@ -56,13 +57,13 @@ class pythondebugger(debugger):
         try:
             TempFile = tempfile.mkdtemp(suffix='_test', prefix='python_') 
             FileNum = "%d.py" % int(time.time() * 1000) 
-            fpath = os.path.join(TempFile, FileNum) 
-            with open(fpath, 'w', encoding='utf-8') as f: 
+            self.filename = os.path.join(TempFile, FileNum) 
+            with open(self.filename, 'w', encoding='utf-8') as f: 
                 f.write(self.code) 
             #先编译一下再开始调试，否则开始调试时很难分离编译错误
-            subprocess.check_output([sys.executable, '-m','py_compile',fpath], stderr=subprocess.STDOUT, timeout=50)
+            subprocess.check_output([sys.executable, '-m','py_compile',self.filename], stderr=subprocess.STDOUT, timeout=50)
             #启动调试进程
-            self.process = pexpect.spawn(sys.executable,["-m","pdb" ,fpath,self.stdin],encoding='utf-8')
+            self.process = pexpect.spawn(sys.executable,["-m","pdb" ,self.filename,self.stdin],encoding='utf-8')
             ret = self.process.expect('\(Pdb\)')
             if ret >= 0:
                 r = self.process.before.strip()
@@ -82,6 +83,7 @@ class pythondebugger(debugger):
         appresult = ""
         pdbresult = ""
         localvars = None
+        stacks = None
         try:
             self.process.sendline('n')
             ret = self.process.expect('\(Pdb\)')
@@ -100,7 +102,7 @@ class pythondebugger(debugger):
             pdbresult = r.replace('> ' + self.process.args[3].decode(),'').replace(appresult,'')
             pdbresult = pdbresult[pdbresult.find('(') + 1:pdbresult.find(')')].strip()
             localvars = self.getvar()
-
+            stacks = self.getstack()
             if (r.find('<module>()->None') >= 0):
                 pdbresult = "end"
                 self.process.close()
@@ -108,7 +110,7 @@ class pythondebugger(debugger):
             result = True
         except:
             result = False
-        return result, appresult, pdbresult,localvars
+        return result, appresult, pdbresult,localvars,stacks
     #单步进入
     def stepinto(self):
         result = False
@@ -246,8 +248,41 @@ class pythondebugger(debugger):
             pass
         
         return localvars
+    #获取堆栈
+    def getstack(self):
+        sig = "<string>(1)<module>()"
+        stacks = []
+        try:
+            self.process.sendline('w')
+            ret = self.process.expect('\(Pdb\)')
+            r = self.process.before.strip()
+            if (r.startswith('w\r\n')):
+                r = r.replace('w\r\n', '').strip()
+            if (r.find(sig) >= 0):
+                r = r[r.find(sig) + len(sig):]
+                r = r.replace(self.filename, '').strip()
+                r = r.split('\r\n')
+            
+            for item in r:
+                if item.startswith('->'):
+                    continue
+                if item.startswith('>'):
+                    item = item[1:]
+                item = item.strip()
+                stack = {}
+                stack['line'] = item[0:item.find(')')+1]
+                stack['function'] = item[item.find(')')+1:]
+                stacks.append(stack)
 
-
+        except Exception as e:
+            pass
+        
+        return stacks
+        pass
+    #计算表达式
+    def evalexpress(self):
+        #当手动修改变量值的时候后再调用赋值命令！，否则直接打印表达式p
+        pass
 
 
 pythondebuggers = {"python":pythondebugger()}
