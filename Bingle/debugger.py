@@ -41,7 +41,6 @@ class debugger():
     def continuedebug(self):
         pass
 class pythondebugger(debugger):
-
     process = None
     filename = ''
     def __init__(self):
@@ -243,10 +242,11 @@ class pythondebugger(debugger):
                     r = '{' + r[2:]
                 if r == '}':
                     r='{}'
-
-            bold = re.compile(r'\<function(.*?)\>')
-            x = bold.sub(r'"\(function\1\)"', r)
+            
+            bold = re.compile(r'\<(.*?)\>')
+            x = bold.sub(r'"\(\1\)"', r)
             localvars = demjson.decode(x)
+
         except Exception as e:
             pass
         
