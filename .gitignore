@@ -1,6 +1,5 @@
 .vscode/*
 *.pyc
-log/*
 *.log
 Bingle/__pycache__/*
 BackGround/__pycache__/*
