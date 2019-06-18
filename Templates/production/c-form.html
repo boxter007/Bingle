@@ -74,12 +74,14 @@
     .breakpoint { color: #822; }
     .CodeMirror {border: 1px solid #aaa;}
   </style>
+        <link href="http://vitalets.github.io/x-editable/assets/x-editable/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+        
 {% endblock %}
 {% block content %}
 <!-- page content -->
 <form class="form-horizontal form-label-left" method="post" action="../running/">
   <div class="right_col" role="main">
-    <div class="col-md-3 col-sm-3 col-xs-12">
+    <div class="col-md-4 col-sm-4 col-xs-12">
       <div class="x_panel" id="debugpanel" style="display: none">
         <table class="table" id='vartable'>
           <thead>
@@ -101,7 +103,8 @@
             </tr>
           </thead>
           <tbody>
-          
+            <td><a href="#" id="username" data-type="text" data-pk="1" data-url="../debug/" data-title="Enter username">superuser</a></td>
+            <td>2</td>
             
           </tbody>
         </table>
@@ -248,7 +251,22 @@
 <!-- /page content -->
 {% endblock %}
 {% block js %}
+<script src="{% static '/js/bootstrap-editable.min.js' %}"></script>
+
     <script>
+      $(function(){
+        //$.fn.editable.defaults.mode = 'inline'; 
+        $('#username').editable({
+            url: '../debug/',
+            type: 'text',
+            pk: 1,
+            name: 'username',
+            title: 'Enter username',
+            success: function(response, newValue) {
+                if(response.status == 'error') return response.msg; 
+            }
+        });
+      });
       var editor = CodeMirror.fromTextArea(document.getElementById("codeid"), {
             mode: {name: $('#codetype').val(),
                   version: 3,
@@ -361,13 +379,14 @@
         $('#stdout').val('');
         $('#runtime').text('');
         $("#vartable tr:not(:first)").remove();
+        $("#stacktable tr:not(:first)").remove();
         debugging=true;
         $.post("../debug/", { codetype: $('#codetype').val(), 
                                 stdin: $('#stdin').val() ,
                                 code: editor.getValue(),
                                 action:'debug',
                                 breaks:JSON.stringify(getbreaks())
-                              },
+                            },
           function(data){
             console.log(data);
             if( data['result'] == true){
@@ -377,7 +396,7 @@
               $('#debugdown').show();
               $('#debugcontinue').show();
               $('#maindiv').toggleClass('col-md-12 col-sm-12');
-              $('#maindiv').toggleClass('col-md-9 col-sm-9');
+              $('#maindiv').toggleClass('col-md-8 col-sm-8');
               $('#debugpanel').show();
 
               $('#debug').hide();
@@ -405,7 +424,7 @@
               $('#debugdown').hide();
               $('#debugcontinue').hide();
               $('#debugpanel').hide();
-              $('#maindiv').toggleClass('col-md-9 col-sm-9');
+              $('#maindiv').toggleClass('col-md-8 col-sm-8');
               $('#maindiv').toggleClass('col-md-12 col-sm-12');
               
               
@@ -436,7 +455,7 @@
                 $('#debugdown').hide();
                 $('#debugcontinue').hide();
                 $('#debugpanel').hide();
-                $('#maindiv').toggleClass('col-md-9 col-sm-9');
+                $('#maindiv').toggleClass('col-md-8 col-sm-8');
                 $('#maindiv').toggleClass('col-md-12 col-sm-12');
                 
                 $('#debug').show();
@@ -471,7 +490,7 @@
                 $('#debugdown').hide();
                 $('#debugcontinue').hide();
                 $('#debugpanel').hide();
-                $('#maindiv').toggleClass('col-md-9 col-sm-9');
+                $('#maindiv').toggleClass('col-md-8 col-sm-8');
                 $('#maindiv').toggleClass('col-md-12 col-sm-12');
 
                 $('#debug').show();
@@ -506,7 +525,7 @@
                 $('#debugdown').hide();
                 $('#debugcontinue').hide();
                 $('#debugpanel').hide();
-                $('#maindiv').toggleClass('col-md-9 col-sm-9');
+                $('#maindiv').toggleClass('col-md-8 col-sm-8');
                 $('#maindiv').toggleClass('col-md-12 col-sm-12');
 
                 $('#debug').show();

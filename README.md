@@ -43,3 +43,6 @@ python3 manage.py runserver
 
 ### 测试题编辑展示
 - 来源于https://github.com/surveyjs/survey-library
+
+### 监视变量可编辑表格
+- 来源于https://github.com/vitalets/x-editable
