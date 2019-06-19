@@ -67,7 +67,6 @@ def makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks,issuetype,
                         timelimit = timelimit,
                         codelimit = codelimit,
                         cost = cost,
-                        issuetype = models.IssueType.objects.filter(id=issuetype)[0],
                         level = models.Issue.IssueLevel.objects.filter(id=int(level)).first())
     
     for item in checks:
