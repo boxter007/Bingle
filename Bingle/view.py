@@ -197,7 +197,14 @@ def debug(request):
             if len(line) > 0:                
                 mydebugger = debugger.getdebugger(codetype)
                 result, appresult, pdbresult= mydebugger.removebreak(line)
-
+        name = request.POST.get('name', '')
+        if (name == 'setwatch'):
+            varname = request.POST.get('value', '')
+            if (len(varname) > 0):
+                mydebugger = debugger.getdebugger(codetype)
+                result,pdbresult = mydebugger.setwatch(varname)
+            else:
+                result = False
         context["result"] = result
         context["appresult"] = appresult
         context["pdbresult"] = pdbresult

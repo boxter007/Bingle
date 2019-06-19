@@ -59,8 +59,8 @@
               <div class="panel-body">
                   <table class="table" id="watchtable">
                     <tbody>
-                      <td><a href="#" id="username" data-type="text" data-pk="1" data-url="../debug/" data-title="Enter username">superuser</a></td>
-                      <td>2</td>
+                      <td><a href="#" id="var1" data-type="text" data-pk="1" data-url="../debug/" data-title="Enter username">superuser</a></td>
+                      <td><a href="#" id="var1value" data-type="text" data-pk="2" data-url="../debug/" data-title="Enter username"></a></td>
                       
                     </tbody>
                   </table>
@@ -174,14 +174,24 @@
         //$.fn.editable.defaults.mode = 'inline'; 
         $('.nav_menu').hide();
         
-        $('#username').editable({
+        $('#var1').editable({
             url: '../debug/',
             type: 'text',
-            pk: 1,
-            name: 'username',
-            title: 'Enter username',
+            name: 'setwatch',
             success: function(response, newValue) {
-                if(response.status == 'error') return response.msg; 
+              if(response.result == true){
+                $('#var1value').text(response.pdbresult);
+              }
+            }
+        });
+        $('#var1value').editable({
+            url: '../debug/',
+            type: 'text',
+            name: 'setwatch',
+            success: function(response, newValue) {
+              if(response.result == true){
+                $('#var1value').text(response.pdbresult);
+              }
             }
         });
       });

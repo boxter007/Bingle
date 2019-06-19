@@ -287,5 +287,23 @@ class pythondebugger(debugger):
         #当手动修改变量值的时候后再调用赋值命令！，否则直接打印表达式p
         pass
 
+    def setwatch(self, varname):
+        result = False
+        r = ''
+        try:
+            sig = '*** NameError:'
+            self.process.sendline('pp ' + varname)
+            ret = self.process.expect('\(Pdb\)')
+            r = self.process.before.strip()
+            if (r.startswith('pp ' + varname + '\r\n')):
+                r = r.replace('pp ' + varname + '\r\n', '').strip()
+            if (r.find(sig) >= 0):
+                r = r[r.find(sig) + len(sig):].strip()
+            
+            result = True
+
+        except Exception as e:
+            pass
+        return result,r
 
 pythondebuggers = {"python":pythondebugger()}
