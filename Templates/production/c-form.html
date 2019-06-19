@@ -13,121 +13,99 @@
   <script src="{% static '/codemirror/mode/pascal/pascal.js' %}"></script>
   <script src="{% static '/codemirror/mode/fortran/fortran.js' %}"></script>
   <script src="{% static '/codemirror/mode/javascript/javascript.js' %}"></script>
-  <link rel="stylesheet" href="{% static '/codemirror/theme/3024-day.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/3024-night.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/abcdef.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/ambiance.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/base16-dark.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/bespin.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/base16-light.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/blackboard.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/cobalt.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/colorforth.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/dracula.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/duotone-dark.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/duotone-light.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/eclipse.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/elegant.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/erlang-dark.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/gruvbox-dark.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/hopscotch.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/icecoder.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/isotope.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/lesser-dark.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/liquibyte.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/lucario.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/material.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/mbo.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/mdn-like.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/midnight.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/monokai.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/neat.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/neo.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/night.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/nord.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/oceanic-next.css' %}">
+ 
   <link rel="stylesheet" href="{% static '/codemirror/theme/panda-syntax.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/paraiso-dark.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/paraiso-light.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/pastel-on-dark.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/railscasts.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/rubyblue.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/seti.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/shadowfox.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/solarized.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/the-matrix.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/tomorrow-night-bright.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/tomorrow-night-eighties.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/ttcn.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/twilight.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/vibrant-ink.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/xq-dark.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/xq-light.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/yeti.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/idea.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/darcula.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/yonce.css' %}">
-  <link rel="stylesheet" href="{% static '/codemirror/theme/zenburn.css' %}">
+  
   <style>
     .CodeMirror {border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;height:370px}
     .breakpoints {width: .8em;}
     .breakpoint { color: #822; }
     .CodeMirror {border: 1px solid #aaa;}
   </style>
-        <link href="http://vitalets.github.io/x-editable/assets/x-editable/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+  <link href="{% static '/css/bootstrap-editable.css' %}" rel="stylesheet">
         
 {% endblock %}
 {% block content %}
 <!-- page content -->
 <form class="form-horizontal form-label-left" method="post" action="../running/">
   <div class="right_col" role="main">
-    <div class="col-md-4 col-sm-4 col-xs-12">
-      <div class="x_panel" id="debugpanel" style="display: none">
-        <table class="table" id='vartable'>
-          <thead>
-            <tr>
-              <th width="20px"></th>
-              <th>本地变量</th>
-            </tr>
-          </thead>
-          <tbody>
-          
-            
-          </tbody>
-        </table>
-        <table class="table" id="watchtable">
-          <thead>
-            <tr>
-              <th width="20px"></th>
-              <th>监视变量</th>
-            </tr>
-          </thead>
-          <tbody>
-            <td><a href="#" id="username" data-type="text" data-pk="1" data-url="../debug/" data-title="Enter username">superuser</a></td>
-            <td>2</td>
-            
-          </tbody>
-        </table>
-        <table class="table" id="stacktable">
-          <thead>
-            <tr>
-              <th width="20px"></th>
-              <th>堆栈信息</th>
-            </tr>
-          </thead>
-          <tbody>
-          
-            
-          </tbody>
-        </table>
+    <div class="col-md-4 col-sm-4 col-xs-12" id="debugdiv" >
+      <div class="x_panel" id="debugpanel" style="display: none;" >
+
+        <div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
+          <div class="panel" id="panel1" style="overflow-y:auto">
+            <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <h4 class="panel-title">本地变量</h4>
+            </a>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" style="">
+              <div class="panel-body">
+                <table class="table" id='vartable'>
+
+                  <tbody>
+                  
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion" id="accordion2" role="tablist" aria-multiselectable="true">
+          <div class="panel" id="panel2" style="overflow-y:auto">
+            <a class="panel-heading " role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+              <h4 class="panel-title">监视变量</h4>
+            </a>
+            <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="true" >
+              <div class="panel-body">
+                  <table class="table" id="watchtable">
+                    <tbody>
+                      <td><a href="#" id="username" data-type="text" data-pk="1" data-url="../debug/" data-title="Enter username">superuser</a></td>
+                      <td>2</td>
+                      
+                    </tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion" id="accordion3" role="tablist" aria-multiselectable="true">
+          <div class="panel" id="panel3" style="overflow-y:auto">
+            <a class="panel-heading " role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+              <h4 class="panel-title">堆栈信息</h4>
+            </a>
+            <div id="collapseThree"  class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree" aria-expanded="true" >
+              <div class="panel-body" >
+                <table class="table" id="stacktable">
+                  <thead>
+                    <tr>
+                      <th>行</th>
+                      <th>位置</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
+                    
+                  </tbody>
+                </table>              
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
       </div>
     </div>
     <div class="col-md-12 col-sm-12 col-xs-12" id="maindiv">
-      <div class="x_panel">
+      <div class="x_panel" id="mainpanel">
           {% csrf_token %}
             <div class="x_content">
                 <div class="form-group">
-                    <h4  class="col-md-4 col-sm-4 col-xs-12"><a href="../detail/?id={{ issueid }}" target="blank">题目：{{ title }}</a></h4>
+                    <h4  class="col-md-8 col-sm-8 col-xs-12"><a href="../detail/?id={{ issueid }}" target="blank">题目：{{ title }}</a></h4>
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">语言</label>
                     <div class="col-md-2 col-sm-2 col-xs-12">
                       <select class="form-control" id="codetype" name="codetype">
@@ -144,68 +122,6 @@
                         <option value="text/x-fortran">Fortran</option>
                         <option value="text/x-pascal">Pascal</option>
                         <option value="text/typescript">JS</option>
-                      </select>
-                    </div>
-                    <label class="control-label col-md-2 col-sm-2 col-xs-12">主题</label>
-                    <div class="col-md-2 col-sm-2 col-xs-12">
-                      <select class="form-control" id="theme">
-                        <option selected="">default</option>
-                        <option>3024-day</option>
-                        <option>3024-night</option>
-                        <option>abcdef</option>
-                        <option>ambiance</option>
-                        <option>base16-dark</option>
-                        <option>base16-light</option>
-                        <option>bespin</option>
-                        <option>blackboard</option>
-                        <option>cobalt</option>
-                        <option>colorforth</option>
-                        <option>darcula</option>
-                        <option>dracula</option>
-                        <option>duotone-dark</option>
-                        <option>duotone-light</option>
-                        <option>eclipse</option>
-                        <option>elegant</option>
-                        <option>erlang-dark</option>
-                        <option>gruvbox-dark</option>
-                        <option>hopscotch</option>
-                        <option>icecoder</option>
-                        <option>idea</option>
-                        <option>isotope</option>
-                        <option>lesser-dark</option>
-                        <option>liquibyte</option>
-                        <option>lucario</option>
-                        <option>material</option>
-                        <option>mbo</option>
-                        <option>mdn-like</option>
-                        <option>midnight</option>
-                        <option>monokai</option>
-                        <option>neat</option>
-                        <option>neo</option>
-                        <option>night</option>
-                        <option>nord</option>
-                        <option>oceanic-next</option>
-                        <option>panda-syntax</option>
-                        <option>paraiso-dark</option>
-                        <option>paraiso-light</option>
-                        <option>pastel-on-dark</option>
-                        <option>railscasts</option>
-                        <option>rubyblue</option>
-                        <option>seti</option>
-                        <option>shadowfox</option>
-                        <option>solarized dark</option>
-                        <option>solarized light</option>
-                        <option>the-matrix</option>
-                        <option>tomorrow-night-bright</option>
-                        <option>tomorrow-night-eighties</option>
-                        <option>ttcn</option>
-                        <option>twilight</option>
-                        <option>vibrant-ink</option>
-                        <option>xq-dark</option>
-                        <option>xq-light</option>
-                        <option>yeti</option>
-                        <option>yonce</option>
-                        <option>zenburn</option>
                       </select>
                     </div>
                 </div>
@@ -256,6 +172,8 @@
     <script>
       $(function(){
         //$.fn.editable.defaults.mode = 'inline'; 
+        $('.nav_menu').hide();
+        
         $('#username').editable({
             url: '../debug/',
             type: 'text',
@@ -378,7 +296,7 @@
       $('#debug').click(function(){
         $('#stdout').val('');
         $('#runtime').text('');
-        $("#vartable tr:not(:first)").remove();
+        $("#vartable tr").remove();
         $("#stacktable tr:not(:first)").remove();
         debugging=true;
         $.post("../debug/", { codetype: $('#codetype').val(), 
@@ -397,6 +315,7 @@
               $('#debugcontinue').show();
               $('#maindiv').toggleClass('col-md-12 col-sm-12');
               $('#maindiv').toggleClass('col-md-8 col-sm-8');
+
               $('#debugpanel').show();
 
               $('#debug').hide();
@@ -404,6 +323,10 @@
               $('#reset').hide();
               $('#run').hide();
               $('#submit').hide();
+              $('#debugpanel').css("height",$('#mainpanel').height()+22);
+              $('#panel1').css("height",$('#debugpanel').height()/3)
+              $('#panel2').css("height",$('#debugpanel').height()/3)
+              $('#panel3').css("height",$('#debugpanel').height()/3)
             }else{
               debugging=false;
             }
@@ -556,23 +479,17 @@
         return lines;
       }
       function showvars(data){
-        $("#vartable tr:not(:first)").remove();
+        $("#vartable tr").remove();
         for(var key in data){
-          $("#vartable tr:last").after('<tr><td>*</td><td>'+key+'：'+data[key]+'</td></tr>');
+          $("#vartable>tbody").after('<tr><td>'+key +'：</td><td>'+data[key]+'</td></tr>');
         }
       }
       function showstacks(data){
         $("#stacktable tr:not(:first)").remove();
         for(var item = data.length - 1 ; item >=0 ; item--){
-          $("#stacktable tr:last").after('<tr><td>*</td><td>'+data[item]['line']+'：'+data[item]['function']+'</td></tr>');
+          $("#stacktable tr:last").after('<tr><td>*'+ data[item]['line'] +'：</td><td>'+data[item]['function']+'</td></tr>');
         }
       }
-      //更改主题
-      $('#theme').change(function(){
-        var input = document.getElementById("theme");
-        var theme = input.options[input.selectedIndex].textContent;
-        editor.setOption("theme", theme);
-      });
       //重置运行时间
       $('#reset').click(function(){
         $('#runtime').text('');

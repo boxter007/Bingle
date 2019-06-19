@@ -1054,7 +1054,7 @@ h2 {
 .accordion .panel {
     margin-bottom: 5px;
     border-radius: 0;
-    border-bottom: 1px solid #efefef
+    
 }
 .accordion .panel-heading {
     background: #F2F5F7;
@@ -1062,9 +1062,7 @@ h2 {
     width: 100%;
     display: block
 }
-.accordion .panel:hover {
-    background: #F2F5F7
-}
+
 .x_panel {
     position: relative;
     width: 100%;
@@ -3636,7 +3634,7 @@ header {
     border-left-color: #1ABB9C
 }
 .editor-wrapper {
-    min-height: 50px;
+    min-height: 110px;
     background-color: white;
     border-collapse: separate;
     border: 1px solid #ccc;
