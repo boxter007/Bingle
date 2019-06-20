@@ -1,0 +1,6 @@
+#include <stdio.h>
+int main(int argn,char **argv)
+{
+    printf("main input is %d %s",argn,*(argv+1));
+    return 0;
+}

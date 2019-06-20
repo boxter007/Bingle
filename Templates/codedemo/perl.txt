@@ -1,0 +1,9 @@
+def factorial(x):
+  if x == 1:
+    print(x)
+    return x
+  y = x * factorial(x-1)
+  print(y)
+  return y
+print()
+factorial(10)

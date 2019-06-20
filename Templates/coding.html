@@ -1,0 +1,486 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" href="{% static '/codemirror/lib/codemirror.css' %}">
+  <script src="{% static '/codemirror/lib/codemirror.js' %}"></script>
+  <script src="{% static '/codemirror/addon/selection/active-line.js' %}"></script>
+  <script src="{% static '/codemirror/mode/python/python.js' %}"></script>
+  <script src="{% static '/codemirror/mode/go/go.js' %}"></script>
+  <script src="{% static '/codemirror/mode/clike/clike.js' %}"></script>
+  <script src="{% static '/codemirror/mode/ruby/ruby.js' %}"></script>
+  <script src="{% static '/codemirror/mode/perl/perl.js' %}"></script>
+  <script src="{% static '/codemirror/mode/swift/swift.js' %}"></script>
+  <script src="{% static '/codemirror/mode/pascal/pascal.js' %}"></script>
+  <script src="{% static '/codemirror/mode/fortran/fortran.js' %}"></script>
+  <script src="{% static '/codemirror/mode/javascript/javascript.js' %}"></script>
+ 
+  <link rel="stylesheet" href="{% static '/codemirror/theme/panda-syntax.css' %}">
+  
+  <style>
+    .CodeMirror {border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;height:400px}
+    .breakpoints {width: .8em;}
+    .breakpoint { color: #822; }
+    .CodeMirror {border: 1px solid #aaa;}
+  </style>
+  <link href="{% static '/css/bootstrap-editable.css' %}" rel="stylesheet">
+       
+{% endblock%}
+{% block banner%}
+<div class="page-header header-filter clear-filter" data-parallax="true"
+  style="background-image: url({% static 'build/img/bg7.jpg' %});">
+
+</div>
+{% endblock%}
+{% block body %}
+<div class="main pagecontent-raised">
+    <!-- 在线刷题-->
+    <div class="section">
+        <div class="container">
+                                       
+            <div class=" collapse navbar-collapse">
+                <div class="col-md-2">
+                     <select id="codetype" name="codetype" class="selectpicker" data-style="btn btn-info" data-size="7" tabindex="-98">
+                        <option value="python" select="">Python</option>
+                        <option value="text/x-go">GO</option>
+                        <option value="text/x-c++src">C++</option>
+                        <option value="text/x-csrc">C</option>
+                        <option value="text/x-java">JAVA</option>
+                        <option value="text/x-csharp">C#</option>
+                        <option value="text/x-objectivec">Objective C</option>
+                        <option value="text/x-swift">Swift</option>
+                        <option value="text/x-ruby">Ruby</option>
+                        <option value="text/x-perl">Perl</option>
+                        <option value="text/x-fortran">Fortran</option>
+                        <option value="text/x-pascal">Pascal</option>
+                        <option value="text/typescript">JS</option>
+                    </select>
+                </div>
+                <nav class="col-md-10 navbar  navbar-info  " >
+                    <ul class="nav navbar-nav navbar-left">
+
+                        <li>
+                            <a href="#">
+                                <i class="material-icons">save</i> 保存
+                            </a>
+
+                        </li>
+
+                        <li>
+                            <a id="run" href="#" class="dropdown-toggle" >
+                                <i class="material-icons">play_arrow</i> 运行
+
+                            </a>
+
+                        </li>
+                        <li>
+                            <a id="submit" href="#" class="dropdown-toggle" >
+                                <i class="material-icons">mail</i> 提交
+
+                            </a>
+
+                        </li>
+                        <li>
+                            <a id="debug" href="#" class="dropdown-toggle" >
+                                <i class="material-icons">bug_report</i> 调试
+
+                            </a>
+
+                        </li>
+                        <li>
+                            <a id="debugstop" href="#" class="dropdown-toggle" >
+                                <i class="material-icons">stop</i> 停止
+
+                            </a>
+
+                        </li>
+                        <li>
+                            <a id="debugdown" href="#" class="dropdown-toggle" >
+                                <i class="material-icons">trending_down</i> StepInto
+
+                            </a>
+
+                        </li>
+                        <li>
+                            <a id="debugup" href="#" class="dropdown-toggle" >
+                                <i class="material-icons">trending_up</i> StepOver
+                            </a>
+                        </li>
+                        <li>
+                            <a id="debugcontinue" href="#" class="dropdown-toggle" >
+                                <i class="material-icons">playlist_play</i> Continue
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <textarea id="codeid" class="form-control" name="code"></textarea>  
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-content ">
+                            <label class="control-label">这里是程序启动输入</label>
+                            <textarea id="stdin" name="stdin" class="form-control" rows="6"></textarea>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content ">
+                            <label class="control-label">这里是程序执行结果输出</label>
+                            <textarea id="stdout" name="stdout" class="form-control" rows="7"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock%}
+{% block bottom %}
+<script src="{% static '/js/bootstrap-editable.min.js' %}"></script>
+<script>
+    $(function(){
+    //$.fn.editable.defaults.mode = 'inline'; 
+    $('.nav_menu').hide();
+    
+    $('#var1').editable({
+        url: '../debug/',
+        type: 'text',
+        name: 'setwatch',
+        success: function(response, newValue) {
+            if(response.result == true){
+            $('#var1value').text(response.pdbresult);
+            }
+        }
+    });
+    $('#var1value').editable({
+        url: '../debug/',
+        type: 'text',
+        name: 'setwatch',
+        success: function(response, newValue) {
+            if(response.result == true){
+            $('#var1value').text(response.pdbresult);
+            }
+        }
+    });
+    });
+    var editor = CodeMirror.fromTextArea(document.getElementById("codeid"), {
+        mode: {name: $('#codetype').val(),
+                version: 3,
+                singleLineStringErrors: true},
+                lineNumbers: true,
+                gutters: ["CodeMirror-linenumbers", "breakpoints"],
+                indentUnit: 4,
+                styleActiveLine: true,
+                height: "100%",
+                smartIndent: true, // 智能缩进
+                indentWithTabs: true, // 使用制表符进行智能缩进
+                matchBrackets: true
+    });
+    editor.on("gutterClick", function(cm, n) {
+    var info = cm.lineInfo(n);
+    var obj = info.gutterMarkers ? null : makeMarker()
+    var lines = [];
+    lines.push(n+1);
+
+    cm.setGutterMarker(n, "breakpoints", obj);
+    if(debugging){
+        $.post("../debug/", { 
+                                line:JSON.stringify(lines),
+                                action: obj ? 'addbreak':'removebreak'},
+        function(data){
+        });
+    }
+    });
+    function makeMarker() {
+    var marker = document.createElement("div");
+    marker.style.color = "#822";
+    marker.innerHTML = "●";
+    return marker;
+    }
+    //更改语言
+    function changecode() {
+        var url = "{% static '/codedemo/' %}" + $('#codetype').find("option:selected").text() + ".txt";
+        var t = $('#codetype').val();
+        $.get(url, { },
+            function(data){
+                editor.setOption("mode",t);
+                editor.setValue(data);
+        });
+
+        return ;
+
+        if(t == "python"){
+            c = 'def factorial(x):\n  if x == 1:\n    print(x)\n    return x\n  y = x * factorial(x-1)\n  print(y)\n  return y\nprint()\nfactorial(10)';
+        }else if(t == "text/x-go"){
+            c = 'package main\n\nimport (\n    "fmt"\n    "os"\n)\n\nfunc main() {\n    fmt.Println(os.Args)\n}';
+        }else if(t == "text/x-c++src"){
+            c = '#include<iostream>\nusing namespace std;\n\nint main(int argc,char *argv[])\n{\n    for(int i=0;i<argc;i++)\n        cout<<argv[i]<<endl;\n}';
+        }else if(t == "text/x-csrc"){
+            c = '#include <stdio.h>\n\nint main(int argn,char **argv)\n{\n    printf("main input is %d %s",argn,*(argv+1));\n    return 0;\n}';
+        }else if(t == "perl"){
+            c = 'def factorial(x):\n  if x == 1:\n    print(x)\n    return x\n  y = x * factorial(x-1)\n  print(y)\n  return y\nprint()\nfactorial(10)';
+        }else if(t == "text/x-ruby"){
+            c = 'def main()\n   puts "Hello," + $*[0]\nend\nmain';
+        }else if(t == "text/x-csharp"){
+            c = 'class HelloMono\n { \n    public static void Main(string[ ] args) \n    {\n         System.Console.WriteLine(args[0]); \n    } \n}';
+        }else if(t == "text/x-java"){
+            c = 'public class VMargs {\n\n    public static void main(String[] args) {\n        String result = args[0];\n        System.out.println("my: " + result);\n    }\n}'
+        }else if(t == "text/x-objectivec"){
+            c = 'int main(int argc, const char * argv[])\n{\n    printf(argv[0]);\n    return 0;\n}';
+        }else if(t == "text/x-swift"){
+            c = 'print("my first swift ")';
+        }else if(t == "text/x-perl"){
+            c = '#!/usr/bin/perl\nsub Average{\n$n = scalar(@_);\n\n$sum = 0;\n   foreach $item (@_){\n      $sum += $item;\n   }\n   $average = $sum / $n;\n   print "传入的参数为 : ","@_\n";           # 打印整个数组\n}\nAverage(10, 20, 30);'
+        }else if(t == "text/x-fortran"){
+            c = 'PROGRAM test_get_command_argument\nInteger :: i,n\nCharacter(len=128) :: arg\ni = 0\nDO\nCALL get_command_argument(i, arg)\nIF (LEN_TRIM(arg) == 0) EXIT\nWRITE (*,*) i,arg\ni = i+1\nEND DO\nEND PROGRAM\n'
+        }else if(t == "text/x-pascal"){
+            c = 'program hello;\nbegin\n	writeln(\'hhh\')\nend.'
+        }else if(t == "text/typescript"){
+            c = 'function hello() {\nconsole.log(\'Hello World!\');\n}\nhello();'
+        }
+        
+        editor.setOption("mode",t);
+        editor.setValue(c);
+    }
+    $('#codetype').change(changecode);
+    changecode();
+    debugging = false;
+    //run代码
+    $('#run').click(function(){
+    $('#run').attr("disabled",true); 
+    $('#submit').attr("disabled",true); 
+    //console.log($('#issue').text());
+    $.post("../running/", { codetype: $('#codetype').val(), 
+                            stdin: $('#stdin').val() ,
+                            code: editor.getValue(),
+                            issue: $('#issue').text()},
+        function(data){
+        $('#run').attr("disabled",false); 
+        $('#submit').attr("disabled",false); 
+        $('#stdout').val(data['stdout']['outdata']);
+        
+        $('#runtime').text('运行时间:' + data['stdout']['runtime']+'秒');
+        });
+    });
+    //提交代码
+    $('#submit').click(function(){
+    $('#run').attr("disabled",true); 
+    $('#submit').attr("disabled",true); 
+    $('#runtime').text('');
+    $.post("../submit/", { codetype: $('#codetype').val(), 
+                            stdin: $('#stdin').val() ,
+                            code: editor.getValue(),
+                            issue: $('#issue').text()},
+        function(data){
+        console.log(data);
+        $('#run').attr("disabled",false); 
+        $('#submit').attr("disabled",false); 
+        $('#stdout').val(data['stdout']);
+        });
+    });
+    //开始调试
+    $('#debug').click(function(){
+    $('#stdout').val('');
+    $('#runtime').text('');
+    $("#vartable tr").remove();
+    $("#stacktable tr:not(:first)").remove();
+    debugging=true;
+    $.post("../debug/", { codetype: $('#codetype').val(), 
+                            stdin: $('#stdin').val() ,
+                            code: editor.getValue(),
+                            action:'debug',
+                            breaks:JSON.stringify(getbreaks())
+                        },
+        function(data){
+        console.log(data);
+        if( data['result'] == true){
+            editor.setCursor(Number(data['pdbresult'])-1);
+            $('#debugstop').show();
+            $('#debugup').show();
+            $('#debugdown').show();
+            $('#debugcontinue').show();
+            $('#maindiv').toggleClass('col-md-12 col-sm-12');
+            $('#maindiv').toggleClass('col-md-8 col-sm-8');
+
+            $('#debugpanel').show();
+
+            $('#debug').hide();
+            $('#save').hide();
+            $('#reset').hide();
+            $('#run').hide();
+            $('#submit').hide();
+            $('#debugpanel').css("height",$('#mainpanel').height()+22);
+            $('#panel1').css("height",$('#debugpanel').height()/3)
+            $('#panel2').css("height",$('#debugpanel').height()/3)
+            $('#panel3').css("height",$('#debugpanel').height()/3)
+        }else{
+            debugging=false;
+        }
+        $('#stdout').val(data['appresult']);
+        });
+    });
+    //停止调试
+    $('#debugstop').click(function(){
+    debugging=false;
+        $.post("../debug/", { 
+                            action:'stop'
+                            },
+        function(data){
+        console.log(data);
+
+            $('#debugstop').hide();
+            $('#debugup').hide();
+            $('#debugdown').hide();
+            $('#debugcontinue').hide();
+            $('#debugpanel').hide();
+            $('#maindiv').toggleClass('col-md-8 col-sm-8');
+            $('#maindiv').toggleClass('col-md-12 col-sm-12');
+            
+            
+            $('#debug').show();
+            $('#save').show();
+            $('#reset').show();
+            $('#run').show();
+            $('#submit').show();
+        
+        });
+    });
+    //单步进入
+    $('#debugdown').click(function(){
+        $.post("../debug/", { 
+                            action:'stepinto'
+                            },
+        function(data){
+        console.log(data);
+        if( data['result']  == true){
+            old = $('#stdout').val();
+            $('#stdout').val( old + data['appresult']);
+
+            if(data['pdbresult'] == 'end'){
+            debugging=false;
+            editor.setCursor(0)
+            $('#debugstop').hide();
+            $('#debugup').hide();
+            $('#debugdown').hide();
+            $('#debugcontinue').hide();
+            $('#debugpanel').hide();
+            $('#maindiv').toggleClass('col-md-8 col-sm-8');
+            $('#maindiv').toggleClass('col-md-12 col-sm-12');
+            
+            $('#debug').show();
+            $('#save').show();
+            $('#reset').show();
+            $('#run').show();
+            $('#submit').show();
+            }else{
+            editor.setCursor(Number(data['pdbresult'])-1);
+            showvars(data['localvars'])
+            showstacks(data['stacks'])
+            }
+        }
+        });
+    });
+    //单步跳过
+    $('#debugup').click(function(){
+        $.post("../debug/", { 
+                            action:'stepover'
+                            },
+        function(data){
+        console.log(data);
+        if( data['result'] == true){
+            old = $('#stdout').val();
+            $('#stdout').val( old + data['appresult']);
+            
+            if(data['pdbresult'] == 'end'){
+            debugging=false;
+            editor.setCursor(0)
+            $('#debugstop').hide();
+            $('#debugup').hide();
+            $('#debugdown').hide();
+            $('#debugcontinue').hide();
+            $('#debugpanel').hide();
+            $('#maindiv').toggleClass('col-md-8 col-sm-8');
+            $('#maindiv').toggleClass('col-md-12 col-sm-12');
+
+            $('#debug').show();
+            $('#save').show();
+            $('#reset').show();
+            $('#run').show();
+            $('#submit').show();
+            }else{
+            editor.setCursor(Number(data['pdbresult'])-1);
+            showvars(data['localvars'])
+            showstacks(data['stacks'])
+            }
+        }
+        });
+    });
+    //继续
+    $('#debugcontinue').click(function(){
+        $.post("../debug/", { 
+                            action:'continue'
+                            },
+        function(data){
+        console.log(data);
+        if( data['result'] == true){
+            old = $('#stdout').val();
+            $('#stdout').val( old + data['appresult']);
+            
+            if(data['pdbresult'] == 'end'){
+            debugging=false;
+            editor.setCursor(0)
+            $('#debugstop').hide();
+            $('#debugup').hide();
+            $('#debugdown').hide();
+            $('#debugcontinue').hide();
+            $('#debugpanel').hide();
+            $('#maindiv').toggleClass('col-md-8 col-sm-8');
+            $('#maindiv').toggleClass('col-md-12 col-sm-12');
+
+            $('#debug').show();
+            $('#save').show();
+            $('#reset').show();
+            $('#run').show();
+            $('#submit').show();
+            }else{
+            editor.setCursor(Number(data['pdbresult'])-1);
+            showvars(data['localvars'])
+            showstacks(data['stacks'])
+            }
+        }
+        });
+
+
+    });
+    //添加断点
+    function getbreaks(){
+    var lines=[];
+    linecount = editor.lineCount();
+    for( i = 0 ;i<linecount;i++){
+        var info = editor.lineInfo(i);
+        if (info.gutterMarkers){
+        lines.push(i+1);
+        } 
+    }
+    return lines;
+    }
+    function showvars(data){
+    $("#vartable tr").remove();
+    for(var key in data){
+        $("#vartable>tbody").after('<tr><td>'+key +'：</td><td>'+data[key]+'</td></tr>');
+    }
+    }
+    function showstacks(data){
+    $("#stacktable tr:not(:first)").remove();
+    for(var item = data.length - 1 ; item >=0 ; item--){
+        $("#stacktable tr:last").after('<tr><td>*'+ data[item]['line'] +'：</td><td>'+data[item]['function']+'</td></tr>');
+    }
+    }
+    //重置运行时间
+    $('#reset').click(function(){
+    $('#runtime').text('');
+    })
+</script>
+{% endblock%}

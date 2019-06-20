@@ -198,7 +198,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     border: none;
     border-radius: 3px;
     position: relative;
-    padding: 12px 30px;
+    padding: 15px 30px;
     margin: 10px 1px;
     font-size: 14px;
     font-weight: 400;
@@ -1440,7 +1440,7 @@ fieldset[disabled]
 .btn-group,
 .btn-group-vertical {
     position: relative;
-    margin: 10px 1px;
+    margin: 0px 1px;
 }
 
 .btn-group .dropdown-menu,
@@ -2364,8 +2364,7 @@ label.control-label {
 }
 
 .form-group {
-    padding-bottom: 7px;
-    margin: 27px 0 0 0;
+    margin-bottom: 0px;
 }
 
 .form-group .form-control {
@@ -2807,7 +2806,7 @@ select.form-control[multiple],
 .navbar {
     border: 0;
     border-radius: 3px;
-    padding: 10px 0;
+    padding: 0px 0;
 }
 
 .navbar .navbar-brand {
@@ -2833,7 +2832,7 @@ select.form-control[multiple],
     color: inherit;
     padding-top: 15px;
     padding-bottom: 15px;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 14px;
     text-transform: uppercase;
     border-radius: 3px;
@@ -4039,7 +4038,7 @@ h2.title {
 }
 
 .card .card-content {
-    padding: 1px 3px;
+    padding: 1px 10px;
 }
 
 .card .card-body {
@@ -8424,11 +8423,15 @@ select.selectpicker {
 }
 
 .main-raised {
-    margin: -160px 20px 0px;
+    margin: -160px 20px 20px;
     border-radius: 6px;
     box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
-
+.pagecontent-raised {
+    margin: -540px 20px 20px;
+    border-radius: 6px;
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
 .gallery .image img {
     width: 100%;
 }

@@ -1,133 +1,38 @@
-<!doctype html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
 
-<head>
-  <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="build/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="build/img/favicon.png">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+{% endblock%}
+{% block banner%}
+<!-- banner-->
+<div class="page-header header-filter clear-filter" data-parallax="true"
+  style="background-image: url({% static 'build/img/bg0.jpg' %});">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="brand">
+          <h1>程序员终生伴侣
+            <div class="pro-badge">
+              ++
+            </div>
+          </h1>
 
-  <title>Home</title>
-
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-
-  <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="build/css/css.css" />
-  <link rel="stylesheet" href="build/css/font-awesome.min.css" />
-
-  <!-- CSS Files -->
-  <link href="build/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="build/css/material-kit.css?v=1.2.1" rel="stylesheet" />
-
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="build/css/vertical-nav.css" rel="stylesheet" />
-  <link href="build/css/demo.css" rel="stylesheet" />
-
-</head>
-
-<body class="index-page">
-  <!-- 菜单-->
-  <nav class="navbar navbar-default navbar-transparent navbar-fixed-top navbar-color-on-scroll" color-on-scroll=" "
-    id="sectionsNav">
-    <div class="container">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="presentation.html">Home of Programmers</a>
-      </div>
-
-      <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="material-icons">apps</i> 基础学习
-              <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu dropdown-with-icons">
-              <li>
-                <a href="sections.html#headers">
-                  <i class="material-icons">dns</i> 教学课程
-                </a>
-              </li>
-              <li>
-                <a href="sections.html#features">
-                  <i class="material-icons">build</i> 算法学习
-                </a>
-              </li>
-
-            </ul>
-          </li>
-
-          <li>
-            <a href="#">
-              <i class="material-icons">view_day</i> 在线编码
-            </a>
-
-          </li>
-
-          <li>
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="material-icons">view_carousel</i> 成长之路
-
-            </a>
-
-          </li>
-          <li>
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="material-icons">view_carousel</i> 参加竞赛
-
-            </a>
-
-          </li>
-          <li>
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="material-icons">view_carousel</i> 面试刷题
-
-            </a>
-
-          </li>
-          <li class="button-container">
-            <a href="#" target="_blank" class="btn btn-warning btn-round">
-              <i class="material-icons">shopping_cart</i> 登录/注册
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- banner-->
-  <div class="page-header header-filter clear-filter" data-parallax="true"
-    style="background-image: url('build/img/bg0.jpg');">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <div class="brand">
-            <h1>程序员终生伴侣
-              <div class="pro-badge">
-                ++
-              </div>
-            </h1>
-
-            <h3 class="title">已有2,019,100个程序员加入。贡献40,909,199,011行代码。获得800,019,100积分</h3>
-          </div>
+          <h3 class="title">已有2,019,100个程序员加入。贡献40,909,199,011行代码。获得800,019,100积分</h3>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="main main-raised">
+</div>
+{% endblock%}
+{% block body %}
+<div class="main main-raised">
     <!-- 导航-->
     <div class="section">
       <div class="container">
         <div class="row">
           <div class="col-sm-2 ">
             <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
-              <div class="jss243" style="background-image:url(build/img/timg.jpg)"></div>
+              <div class="jss243" style="background-image:url({% static 'build/img/timg.jpg' %})"></div>
               <div class="jss244"></div>
               <div class="jss242">
                 <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
@@ -140,7 +45,7 @@
           </div>
           <div class="col-sm-2 ">
             <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
-              <div class="jss243" style="background-image:url(build/img/timg2.jpg)"></div>
+              <div class="jss243" style="background-image:url({% static 'build/img/timg2.jpg' %})"></div>
               <div class="jss244"></div>
               <div class="jss242">
                 <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
@@ -153,7 +58,7 @@
           </div>
           <div class="col-sm-2 ">
             <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
-              <div class="jss243" style="background-image:url(build/img/timg3.jpg)"></div>
+              <div class="jss243" style="background-image:url({% static 'build/img/timg3.jpg' %})"></div>
               <div class="jss244"></div>
               <div class="jss242">
                 <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
@@ -166,7 +71,7 @@
           </div>
           <div class="col-sm-2 ">
             <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
-              <div class="jss243" style="background-image:url(build/img/faces/avatar.jpg)"></div>
+              <div class="jss243" style="background-image:url({% static 'build/img/faces/avatar.jpg' %})"></div>
               <div class="jss244"></div>
               <div class="jss242">
                 <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
@@ -179,7 +84,7 @@
           </div>
           <div class="col-sm-2 ">
             <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
-              <div class="jss243" style="background-image:url(build/img/faces/avatar.jpg)"></div>
+              <div class="jss243" style="background-image:url({% static 'build/img/faces/avatar.jpg' %})"></div>
               <div class="jss244"></div>
               <div class="jss242">
                 <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
@@ -192,7 +97,7 @@
           </div>
           <div class="col-sm-2 ">
             <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
-              <div class="jss243" style="background-image:url(build/img/faces/avatar.jpg)"></div>
+              <div class="jss243" style="background-image:url({% static 'build/img/faces/avatar.jpg' %})"></div>
               <div class="jss244"></div>
               <div class="jss242">
                 <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
@@ -330,7 +235,7 @@
             <div class="card card-blog">
               <div class="card-image">
                 <a href="#pablo">
-                  <img src="build/img/examples/color1.jpg" alt="" />
+                  <img src="{% static 'build/img/examples/color1.jpg' %}" alt="" />
                   <div class="card-title">
                     <h6 class="category text-white">新手上路</h6>
                   </div>
@@ -351,7 +256,7 @@
             <div class="card card-blog">
               <div class="card-image">
                 <a href="#pablo">
-                  <img src="build/img/examples/color2.jpg" alt="" />
+                  <img src="{% static 'build/img/examples/color2.jpg' %}" alt="" />
                   <div class="card-title">
                     <h6 class="category text-white">简单问题</h6>
                   </div>
@@ -372,7 +277,7 @@
             <div class="card card-blog">
               <div class="card-image">
                 <a href="#pablo">
-                  <img src="build/img/examples/color3.jpg" alt="" />
+                  <img src="{% static 'build/img/examples/color3.jpg' %}" alt="" />
                   <div class="card-title">
                     <h6 class="category text-white">常见难题</h6>
                   </div>
@@ -394,7 +299,7 @@
             <div class="card card-blog">
               <div class="card-image">
                 <a href="#pablo">
-                  <img src="build/img/examples/card-project4.jpg" alt="" />
+                  <img src="{% static 'build/img/examples/card-project4.jpg' %}" alt="" />
                   <div class="card-title">
                     <h6 class="category text-white">难度提高</h6>
                   </div>
@@ -415,7 +320,7 @@
             <div class="card card-blog">
               <div class="card-image">
                 <a href="#pablo">
-                  <img src="build/img/examples/card-project5.jpg" alt="" />
+                  <img src="{% static 'build/img/examples/card-project5.jpg' %}" alt="" />
                   <div class="card-title">
                     <h6 class="category text-white">挑战自我</h6>
                   </div>
@@ -435,7 +340,7 @@
             <div class="card card-blog">
               <div class="card-image">
                 <a href="#pablo">
-                  <img src="build/img/examples/card-project6.jpg" alt="" />
+                  <img src="{% static 'build/img/examples/card-project6.jpg' %}" alt="" />
                   <div class="card-title">
                     <h6 class="category text-white">成为大神</h6>
                   </div>
@@ -459,7 +364,7 @@
         <div class="row">
           <div class="col-md-6">
 
-            <div class="card card-background" style="background-image: url('build/img/examples/office1.jpg')">
+            <div class="card card-background" style="background-image: url({% static 'build/img/examples/office1.jpg' %})">
 
               <div class="card-content">
                 <h6 class="category text-info">热门竞赛</h6>
@@ -479,7 +384,8 @@
             </div>
           </div>
           <div class="col-md-6">
-            <div class="card card-background" style="background-image: url('build/img/examples/card-blog3.jpg')">
+            <div class="card card-background"
+              style="background-image: url({% static 'build/img/examples/card-blog3.jpg' %})">
               <div class="card-content">
                 <h6 class="category text-info">热门竞赛</h6>
                 <h3 class="card-title">Competition of Microsoft、Google、Facebook、Twitter</h3>
@@ -496,7 +402,7 @@
         <div class="row">
           <div class="col-md-12">
 
-            <div class="card card-background" style="background-image: url('build/img/examples/office1.jpg')">
+            <div class="card card-background" style="background-image: url({% static 'build/img/examples/office1.jpg' %})">
 
               <div class="card-content">
                 <h6 class="category text-info">热门竞赛</h6>
@@ -648,10 +554,10 @@
               <div class="col-md-5">
                 <div class="card-image">
                   <a href="#pablo">
-                    <img class="img" src="build/img/faces/card-profile1-square.jpg">
+                    <img class="img" src="{% static 'build/img/faces/card-profile1-square.jpg' %}">
                   </a>
                   <div class="colored-shadow"
-                    style="background-image: url(&quot;build/img/faces/card-profile1-square.jpg&quot;); opacity: 1;">
+                    style="background-image: url({% static 'build/img/faces/card-profile1-square.jpg' %}'); opacity: 1;">
                   </div>
                 </div>
               </div>
@@ -676,10 +582,10 @@
               <div class="col-md-5">
                 <div class="card-image">
                   <a href="#pablo">
-                    <img class="img" src="build/img/faces/card-profile6-square.jpg">
+                    <img class="img" src="{% static 'build/img/faces/card-profile6-square.jpg' %}">
                   </a>
                   <div class="colored-shadow"
-                    style="background-image: url(&quot;build/img/faces/card-profile6-square.jpg&quot;); opacity: 1;">
+                    style="background-image: url({% static 'build/img/faces/card-profile6-square.jpg' %}); opacity: 1;">
                   </div>
                 </div>
               </div>
@@ -689,12 +595,10 @@
                   <h6 class="category text-muted">Graphic Designer</h6>
 
                   <div class="footer">
-                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-linkedin"><i
-                        class="fa fa-linkedin"></i></a>
+                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-linkedin"><i class="fa fa-linkedin"></i></a>
                     <a href="#pablo" class="btn btn-just-icon btn-simple btn-facebook"><i
                         class="fa fa-facebook-square"></i></a>
-                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-dribbble"><i
-                        class="fa fa-dribbble"></i></a>
+                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-dribbble"><i class="fa fa-dribbble"></i></a>
 
                   </div>
                 </div>
@@ -707,10 +611,10 @@
               <div class="col-md-5">
                 <div class="card-image">
                   <a href="#pablo">
-                    <img class="img" src="build/img/faces/card-profile4-square.jpg">
+                    <img class="img" src="{% static 'build/img/faces/card-profile4-square.jpg' %}">
                   </a>
                   <div class="colored-shadow"
-                    style="background-image: url(&quot;build/img/faces/card-profile4-square.jpg&quot;); opacity: 1;">
+                    style="background-image: url({% static 'build/img/faces/card-profile4-square.jpg' %}'); opacity: 1;">
                   </div>
                 </div>
               </div>
@@ -720,11 +624,9 @@
                   <h6 class="category text-muted">Web Designer</h6>
 
                   <div class="footer">
-                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-youtube"><i
-                        class="fa fa-youtube-play"></i></a>
+                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-youtube"><i class="fa fa-youtube-play"></i></a>
                     <a href="#pablo" class="btn btn-just-icon btn-simple btn-twitter"><i class="fa fa-twitter"></i></a>
-                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-instagram"><i
-                        class="fa fa-instagram"></i></a>
+                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-instagram"><i class="fa fa-instagram"></i></a>
                   </div>
                 </div>
               </div>
@@ -736,10 +638,10 @@
               <div class="col-md-5">
                 <div class="card-image">
                   <a href="#pablo">
-                    <img class="img" src="build/img/faces/card-profile2-square.jpg">
+                    <img class="img" src="{% static 'build/img/faces/card-profile2-square.jpg' %}">
                   </a>
                   <div class="colored-shadow"
-                    style="background-image: url(&quot;build/img/faces/card-profile2-square.jpg&quot;); opacity: 1;">
+                    style="background-image: url({% static 'build/img/faces/card-profile2-square.jpg' %}'); opacity: 1;">
                   </div>
                 </div>
               </div>
@@ -749,8 +651,7 @@
                   <h6 class="category text-muted">Backend Hacker</h6>
 
                   <div class="footer">
-                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-linkedin"><i
-                        class="fa fa-linkedin"></i></a>
+                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-linkedin"><i class="fa fa-linkedin"></i></a>
                     <a href="#pablo" class="btn btn-just-icon btn-simple btn-facebook"><i
                         class="fa fa-facebook-square"></i></a>
                     <a href="#pablo" class="btn btn-just-icon btn-simple btn-google"><i class="fa fa-google"></i></a>
@@ -765,10 +666,10 @@
               <div class="col-md-5">
                 <div class="card-image">
                   <a href="#pablo">
-                    <img class="img" src="build/img/faces/card-profile1-square.jpg">
+                    <img class="img" src="{% static 'build/img/faces/card-profile1-square.jpg' %}">
                   </a>
                   <div class="colored-shadow"
-                    style="background-image: url(&quot;build/img/faces/card-profile1-square.jpg&quot;); opacity: 1;">
+                    style="background-image: url({% static 'build/img/faces/card-profile1-square.jpg' %}); opacity: 1;">
                   </div>
                 </div>
               </div>
@@ -793,10 +694,10 @@
               <div class="col-md-5">
                 <div class="card-image">
                   <a href="#pablo">
-                    <img class="img" src="build/img/faces/card-profile6-square.jpg">
+                    <img class="img" src="{% static 'build/img/faces/card-profile6-square.jpg' %}">
                   </a>
                   <div class="colored-shadow"
-                    style="background-image: url(&quot;build/img/faces/card-profile6-square.jpg&quot;); opacity: 1;">
+                    style="background-image: url({% static 'build/img/faces/card-profile6-square.jpg' %}); opacity: 1;">
                   </div>
                 </div>
               </div>
@@ -806,12 +707,10 @@
                   <h6 class="category text-muted">Graphic Designer</h6>
 
                   <div class="footer">
-                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-linkedin"><i
-                        class="fa fa-linkedin"></i></a>
+                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-linkedin"><i class="fa fa-linkedin"></i></a>
                     <a href="#pablo" class="btn btn-just-icon btn-simple btn-facebook"><i
                         class="fa fa-facebook-square"></i></a>
-                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-dribbble"><i
-                        class="fa fa-dribbble"></i></a>
+                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-dribbble"><i class="fa fa-dribbble"></i></a>
 
                   </div>
                 </div>
@@ -850,131 +749,9 @@
 
       </div>
     </div>
+</div>
+{% endblock%}
 
-    <!-- 页尾 -->
-    <footer class="footer footer-black footer-big">
-      <div class="container">
+{% block bottom %}
 
-        <div class="content">
-          <div class="row">
-            <div class="col-md-4">
-              <h5>About Us</h5>
-              <p>Creative Tim is a startup that creates design tools that make the web
-                development process faster and easier. </p>
-              <p>We love the web and care deeply for how users interact with a digital
-                product. We power businesses and individuals to create better looking web
-                projects around the world. </p>
-            </div>
-
-            <div class="col-md-4">
-              <h5>Social Feed</h5>
-              <div class="social-feed">
-                <div class="feed-line">
-                  <i class="fa fa-twitter"></i>
-                  <p>How to handle ethical disagreements with your clients.</p>
-                </div>
-                <div class="feed-line">
-                  <i class="fa fa-twitter"></i>
-                  <p>The tangible benefits of designing at 1x pixel density.</p>
-                </div>
-                <div class="feed-line">
-                  <i class="fa fa-facebook-square"></i>
-                  <p>A collection of 25 stunning sites that you can use for inspiration.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <h5>Instagram Feed</h5>
-              <div class="gallery-feed">
-                <img src="build/img/faces/card-profile6-square.jpg" class="img img-raised img-rounded" alt="" />
-                <img src="build/img/faces/christian.jpg" class="img img-raised img-rounded" alt="" />
-                <img src="build/img/faces/card-profile4-square.jpg" class="img img-raised img-rounded" alt="" />
-                <img src="build/img/faces/card-profile1-square.jpg" class="img img-raised img-rounded" alt="" />
-
-                <img src="build/img/faces/marc.jpg" class="img img-raised img-rounded" alt="" />
-                <img src="build/img/faces/kendall.jpg" class="img img-raised img-rounded" alt="" />
-                <img src="build/img/faces/card-profile5-square.jpg" class="img img-raised img-rounded" alt="" />
-                <img src="build/img/faces/card-profile2-square.jpg" class="img img-raised img-rounded" alt="" />
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-
-        <hr />
-
-        <ul class="pull-left">
-          <li>
-            <a href="#pablo">
-              Blog
-            </a>
-          </li>
-          <li>
-            <a href="#pablo">
-              Presentation
-            </a>
-          </li>
-          <li>
-            <a href="#pablo">
-              Discover
-            </a>
-          </li>
-          <li>
-            <a href="#pablo">
-              Payment
-            </a>
-          </li>
-          <li>
-            <a href="#pablo">
-              Contact Us
-            </a>
-          </li>
-        </ul>
-
-        <div class="copyright pull-right">
-          Copyright &copy;
-          <script>document.write(new Date().getFullYear())</script> Creative Tim All Rights
-          Reserved.
-        </div>
-      </div>
-    </footer>
-  </div>
-</body>
-<!--   Core JS Files   -->
-<script src="build/js/jquery.min.js" type="text/javascript"></script>
-<script src="build/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="build/js/material.min.js"></script>
-
-<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
-<script src="build/js/moment.min.js"></script>
-
-<!--	Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script src="build/js/nouislider.min.js" type="text/javascript"></script>
-
-<!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-<script src="build/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
-
-<!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-<script src="build/js/bootstrap-selectpicker.js" type="text/javascript"></script>
-
-<!--	Plugin for Tags, full documentation here: http://xoxco.com/projects/code/tagsinput/  -->
-<script src="build/js/bootstrap-tagsinput.js"></script>
-
-<!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-<script src="build/js/jasny-bootstrap.min.js"></script>
-
-
-
-
-<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
-<script src="build/js/material-kit.js?v=1.2.1" type="text/javascript"></script>
-
-<!-- Fixed Sidebar Nav - JS For Demo Purpose, Don't Include it in your project -->
-<script src="build/js/modernizr.js" type="text/javascript"></script>
-<script src="build/js/vertical-nav.js" type="text/javascript"></script>
-
-
-</html>
+{% endblock%}

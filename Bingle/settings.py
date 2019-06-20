@@ -54,9 +54,14 @@ ROOT_URLCONF = 'Bingle.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR+"/templates/production",BASE_DIR+"/templates/administration",],
-        'APP_DIRS': True,
+        'BACKEND':
+        'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            BASE_DIR + "/templates", BASE_DIR + "/templates/administration",
+            BASE_DIR + "/templates/production"
+        ],
+        'APP_DIRS':
+        True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -64,10 +69,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'libraries':{
-                "extra":"Bingle.templatetags.extra",}
+            'libraries': {
+                "extra": "Bingle.templatetags.extra",
+            }
         },
-
     },
 ]
 
@@ -123,10 +128,13 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (BASE_DIR+"/Templates/vendors",
-BASE_DIR+"/Templates/build",
-BASE_DIR + "/Templates/production",
-BASE_DIR + "/Templates/Aministration",) 
+STATICFILES_DIRS = (
+    BASE_DIR + "/Templates/vendors",
+    BASE_DIR + "/Templates/build",
+    BASE_DIR + "/Templates/production",
+    BASE_DIR + "/Templates",
+    BASE_DIR + "/Templates/Aministration",
+)
 
 
 BASE_LOG_DIR = os.path.join(BASE_DIR, "log")

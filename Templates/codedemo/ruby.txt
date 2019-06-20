@@ -1,0 +1,4 @@
+def main()
+   puts "Hello," + $*[0]
+end
+main
