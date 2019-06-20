@@ -14,339 +14,6 @@
   <link rel="stylesheet" href="build/css/font-awesome.min.css">
   <link href="build/css/material-kit.css?v=2.0.5" rel="stylesheet" />
   <link href="build/css/demo.css" rel="stylesheet" />
-    <style data-jss="" data-meta="MuiButtonBase">
-        .MuiButtonBase-root-127 {
-        color: inherit;
-        border: 0;
-        cursor: pointer;
-        margin: 0;
-        display: inline-flex;
-        outline: none;
-        padding: 0;
-        position: relative;
-        align-items: center;
-        user-select: none;
-        border-radius: 0;
-        vertical-align: middle;
-        -moz-appearance: none;
-        justify-content: center;
-        text-decoration: none;
-        background-color: transparent;
-        -webkit-appearance: none;
-        -webkit-tap-highlight-color: transparent;
-        }
-        .MuiButtonBase-root-127::-moz-focus-inner {
-        border-style: none;
-        }
-        .MuiButtonBase-root-127.Mui-disabled {
-        cursor: default;
-        pointer-events: none;
-        }
-    </style>
-    <style data-jss="" data-meta="makeStyles">
-        .jss239 {
-        margin-top: 64px;
-        margin-bottom: 32px;
-        }
-        .jss240 {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 64px;
-        }
-        .jss241 {
-        height: 40vh;
-        display: block;
-        padding: 0;
-        position: relative;
-        border-radius: 0;
-        }
-        @media (max-width:959.95px) {
-        .jss241 {
-            width: 100% !important;
-            height: 100px;
-        }
-        }
-        .jss241:hover {
-        z-index: 1;
-        }
-        .jss241:hover .jss244 {
-        opacity: 0.15;
-        }
-        .jss241:hover .jss246 {
-        opacity: 0;
-        }
-        .jss241:hover .jss245 {
-        border: 4px solid currentColor;
-        }
-        .jss242 {
-        top: 0;
-        left: 0;
-        color: #fff;
-        right: 0;
-        bottom: 0;
-        display: flex;
-        position: absolute;
-        align-items: center;
-        justify-content: center;
-        }
-        .jss243 {
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        position: absolute;
-        background-size: cover;
-        background-position: center 40%;
-        }
-        .jss244 {
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        opacity: 0.5;
-        position: absolute;
-        background: #000;
-        transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-        }
-        .jss245 {
-        padding: 16px 32px 14px;
-        position: relative;
-        }
-        .jss246 {
-        left: calc(50% - 9px);
-        width: 18px;
-        bottom: -2px;
-        height: 3px;
-        position: absolute;
-        background: #fff;
-        transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-        }
-    </style>
-    <style data-jss="" data-meta="MuiTypography">
-        .MuiTypography-root-57 {
-        margin: 0;
-        }
-        .MuiTypography-body2-58 {
-        font-size: 14px;
-        font-family: 'Work Sans', sans-serif;
-        font-weight: 400;
-        line-height: 1.5;
-        }
-        .MuiTypography-body1-59 {
-        font-size: 16px;
-        font-family: 'Work Sans', sans-serif;
-        font-weight: 400;
-        line-height: 1.43;
-        }
-        .MuiTypography-caption-60 {
-        font-size: 0.75rem;
-        font-family: 'Work Sans', sans-serif;
-        font-weight: 400;
-        line-height: 1.66;
-        }
-        .MuiTypography-button-61 {
-        font-size: 0.875rem;
-        font-family: 'Work Sans', sans-serif;
-        font-weight: 700;
-        line-height: 1.75;
-        text-transform: uppercase;
-        }
-        .MuiTypography-h1-62 {
-        color: rgba(0, 0, 0, 0.87);
-        font-size: 60px;
-        font-family: 'Roboto Condensed', sans-serif;
-        font-weight: 700;
-        line-height: 1;
-        letter-spacing: 0;
-        text-transform: uppercase;
-        }
-        .MuiTypography-h2-63 {
-        color: rgba(0, 0, 0, 0.87);
-        font-size: 48px;
-        font-family: 'Roboto Condensed', sans-serif;
-        font-weight: 700;
-        line-height: 1;
-        text-transform: uppercase;
-        }
-        .MuiTypography-h3-64 {
-        color: rgba(0, 0, 0, 0.87);
-        font-size: 42px;
-        font-family: 'Roboto Condensed', sans-serif;
-        font-weight: 700;
-        line-height: 1.04;
-        text-transform: uppercase;
-        }
-        .MuiTypography-h4-65 {
-        color: rgba(0, 0, 0, 0.87);
-        font-size: 36px;
-        font-family: 'Roboto Condensed', sans-serif;
-        font-weight: 700;
-        line-height: 1.17;
-        text-transform: uppercase;
-        }
-        .MuiTypography-h5-66 {
-        font-size: 20px;
-        font-family: 'Work Sans', sans-serif;
-        font-weight: 300;
-        line-height: 1.33;
-        }
-        .MuiTypography-h6-67 {
-        color: rgba(0, 0, 0, 0.87);
-        font-size: 18px;
-        font-family: 'Roboto Condensed', sans-serif;
-        font-weight: 700;
-        line-height: 1.6;
-        text-transform: uppercase;
-        }
-        .MuiTypography-subtitle1-68 {
-        font-size: 18px;
-        font-family: 'Work Sans', sans-serif;
-        font-weight: 400;
-        line-height: 1.75;
-        }
-        .MuiTypography-subtitle2-69 {
-        font-size: 0.875rem;
-        font-family: 'Work Sans', sans-serif;
-        font-weight: 700;
-        line-height: 1.57;
-        }
-        .MuiTypography-overline-70 {
-        font-size: 0.75rem;
-        font-family: 'Work Sans', sans-serif;
-        font-weight: 400;
-        line-height: 2.66;
-        text-transform: uppercase;
-        }
-        .MuiTypography-srOnly-71 {
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        position: absolute;
-        }
-        .MuiTypography-alignLeft-72 {
-        text-align: left;
-        }
-        .MuiTypography-alignCenter-73 {
-        text-align: center;
-        }
-        .MuiTypography-alignRight-74 {
-        text-align: right;
-        }
-        .MuiTypography-alignJustify-75 {
-        text-align: justify;
-        }
-        .MuiTypography-noWrap-76 {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        }
-        .MuiTypography-gutterBottom-77 {
-        margin-bottom: 0.35em;
-        }
-        .MuiTypography-paragraph-78 {
-        margin-bottom: 16px;
-        }
-        .MuiTypography-colorInherit-79 {
-        color: inherit;
-        }
-        .MuiTypography-colorPrimary-80 {
-        color: #28282a;
-        }
-        .MuiTypography-colorSecondary-81 {
-        color: #ff3366;
-        }
-        .MuiTypography-colorTextPrimary-82 {
-        color: rgba(0, 0, 0, 0.87);
-        }
-        .MuiTypography-colorTextSecondary-83 {
-        color: rgba(0, 0, 0, 0.54);
-        }
-        .MuiTypography-colorError-84 {
-        color: #f44336;
-        }
-        .MuiTypography-displayInline-85 {
-        display: inline;
-        }
-        .MuiTypography-displayBlock-86 {
-        display: block;
-        }
-    </style>
-    <style data-jss="" data-meta="MuiTouchRipple">
-        .MuiTouchRipple-root-348 {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: block;
-        z-index: 0;
-        overflow: hidden;
-        position: absolute;
-        border-radius: inherit;
-        pointer-events: none;
-        }
-        .MuiTouchRipple-ripple-349 {
-        opacity: 0;
-        position: absolute;
-        }
-        .MuiTouchRipple-rippleVisible-350 {
-        opacity: 0.3;
-        animation: mui-ripple-enter 550ms cubic-bezier(0.4, 0, 0.2, 1);
-        transform: scale(1);
-        animation-name: MuiTouchRipple-keyframes-mui-ripple-enter-355;
-        }
-        .MuiTouchRipple-ripplePulsate-351 {
-        animation-duration: 200ms;
-        }
-        .MuiTouchRipple-child-352 {
-        width: 100%;
-        height: 100%;
-        display: block;
-        opacity: 1;
-        border-radius: 50%;
-        background-color: currentColor;
-        }
-        .MuiTouchRipple-childLeaving-353 {
-        opacity: 0;
-        animation: mui-ripple-exit 550ms cubic-bezier(0.4, 0, 0.2, 1);
-        animation-name: MuiTouchRipple-keyframes-mui-ripple-exit-356;
-        }
-        .MuiTouchRipple-childPulsate-354 {
-        top: 0;
-        left: 0;
-        position: absolute;
-        animation: mui-ripple-pulsate 2500ms cubic-bezier(0.4, 0, 0.2, 1) 200ms infinite;
-        animation-name: MuiTouchRipple-keyframes-mui-ripple-pulsate-357;
-        }
-        @-webkit-keyframes MuiTouchRipple-keyframes-mui-ripple-enter-355 {
-        0% {
-            opacity: 0.1;
-            transform: scale(0);
-        }
-        100% {
-            opacity: 0.3;
-            transform: scale(1);
-        }
-        }
-        @-webkit-keyframes MuiTouchRipple-keyframes-mui-ripple-exit-356 {
-        0% {
-            opacity: 1;
-        }
-        100% {
-            opacity: 0;
-        }
-        }
-        @-webkit-keyframes MuiTouchRipple-keyframes-mui-ripple-pulsate-357 {
-        0% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(0.92);
-        }
-        100% {
-            transform: scale(1);
-        }
-        }
-    </style>
 </head>
 
 <body class="index-page sidebar-collapse">
@@ -365,31 +32,31 @@
             </a>
             <div class="dropdown-menu dropdown-with-icons">
               <a href="./index.html" class="dropdown-item">
-                <i class="material-icons">layers</i> JAVA学习
+                <i class="material-icons">layers</i> 算法学习
               </a>
               <a href="#" class="dropdown-item">
-                <i class="material-icons">content_paste</i> SQL学习
+                <i class="material-icons">content_paste</i> 语言手册
               </a>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0)">
-              <i class="material-icons">cloud_download</i> 在线编码
+            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="50种语言在线编码、运行">
+              <i class="material-icons">launch</i> 在线编码
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank" data-original-title="Follow us on Twitter">
+            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="不停练习，追求卓越">
               <i class="fa fa-twitter"></i>成长之路
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank" data-original-title="Like us on Facebook">
-              <i class="fa fa-facebook-square"></i>参加竞赛
+            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="捍卫荣誉，冲击桂冠">
+              <i class="material-icons">build</i>参加竞赛
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank" data-original-title="Follow us on Instagram">
-              <i class="fa fa-instagram"></i>面试刷题
+            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="名企题库，临阵磨枪">
+              <i class="material-icons">table_chart</i>面试刷题
             </a>
           </li>
         </ul>
@@ -413,28 +80,82 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-2 ">
-                   <h4 style="text-align:center">基础学习</h4>
-                    <img src="build/img/timg.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
+                    <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
+                      <div class="jss243" style="background-image:url(build/img/timg.jpg)"></div>
+                      <div class="jss244"></div>
+                      <div class="jss242">
+                          <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
+                              能力测评
+                              <div class="jss246"></div>
+                          </h3>
+                      </div>
+                      <span class="MuiTouchRipple-root-348"></span>
+                  </button>
                 </div>
                 <div class="col-sm-2 ">
-                   <h4 style="text-align:center">在线编码</h4>
-                    <img src="build/img/timg2.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
+                   <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
+                      <div class="jss243" style="background-image:url(build/img/timg2.jpg)"></div>
+                      <div class="jss244"></div>
+                      <div class="jss242">
+                          <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
+                              算法学习
+                              <div class="jss246"></div>
+                          </h3>
+                      </div>
+                      <span class="MuiTouchRipple-root-348"></span>
+                  </button>                
                 </div>
                 <div class="col-sm-2 ">
-                   <h4 style="text-align:center">成长之路</h4>
-                    <img src="build/img/timg3.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
+                    <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
+                      <div class="jss243" style="background-image:url(build/img/timg3.jpg)"></div>
+                      <div class="jss244"></div>
+                      <div class="jss242">
+                          <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
+                              成长之路
+                              <div class="jss246"></div>
+                          </h3>
+                      </div>
+                      <span class="MuiTouchRipple-root-348"></span>
+                  </button> 
                 </div>
                 <div class="col-sm-2 ">
-                   <h4 style="text-align:center">参加竞赛</h4>
-                    <img src="build/img/faces/avatar.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
+                    <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
+                      <div class="jss243" style="background-image:url(build/img/faces/avatar.jpg)"></div>
+                      <div class="jss244"></div>
+                      <div class="jss242">
+                          <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
+                              加入竞赛
+                              <div class="jss246"></div>
+                          </h3>
+                      </div>
+                      <span class="MuiTouchRipple-root-348"></span>
+                  </button>
                 </div>
                 <div class="col-sm-2 ">
-                   <h4 style="text-align:center">面试刷题</h4>
-                    <img src="build/img/faces/avatar.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
+                    <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
+                      <div class="jss243" style="background-image:url(build/img/faces/avatar.jpg)"></div>
+                      <div class="jss244"></div>
+                      <div class="jss242">
+                          <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
+                              面试刷题
+                              <div class="jss246"></div>
+                          </h3>
+                      </div>
+                      <span class="MuiTouchRipple-root-348"></span>
+                  </button>
                 </div>
                 <div class="col-sm-2 ">
-                   <h4 style="text-align:center">加入开源</h4>
-                    <img src="build/img/faces/avatar.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
+                   <button class="MuiButtonBase-root-127 jss341" tabindex="0" type="button" style="width:100%">
+                      <div class="jss243" style="background-image:url(build/img/faces/avatar.jpg)"></div>
+                      <div class="jss244"></div>
+                      <div class="jss242">
+                          <h3 class="MuiTypography-root-57 jss245 MuiTypography-h6-67 MuiTypography-colorInherit-79">
+                              加入我们  
+                              <div class="jss246"></div>
+                          </h3>
+                      </div>
+                      <span class="MuiTouchRipple-root-348"></span>
+                  </button>
                 </div>
             </div>
         </div>
@@ -446,7 +167,6 @@
           <h3>基础学习</h3>
           <div class="row">
             <div class="col-md-12">
-              <!-- Tabs with icons on Card -->
               <div class="card card-nav-tabs">
                 <div class="card-header card-header-primary">
                   <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
@@ -455,52 +175,52 @@
                       <ul class="nav nav-tabs" data-tabs="tabs">
                         <li class="nav-item">
                           <a class="nav-link active" href="#profile" data-toggle="tab">
-                            <i class="material-icons">face</i> JAVA
+                            <i class="material-icons">blur_on</i> 算法大全
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#messages" data-toggle="tab">
-                            <i class="material-icons">chat</i> PYTHON
+                            <i class="material-icons">ac_unit</i> PYTHON
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#settings" data-toggle="tab">
-                            <i class="material-icons">build</i> C/C++
+                            <i class="material-icons">spa</i> C/C++
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#settings" data-toggle="tab">
-                            <i class="material-icons">build</i> RUBY
+                            <i class="material-icons">child_friendly</i> RUBY
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#settings" data-toggle="tab">
-                            <i class="material-icons">build</i> NODE
+                            <i class="material-icons">free_breakfast</i> NODE
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#settings" data-toggle="tab">
-                            <i class="material-icons">build</i> C#
+                            <i class="material-icons">room_service</i> C#
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#settings" data-toggle="tab">
-                            <i class="material-icons">build</i> GO
+                            <i class="material-icons">pages</i> GO
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#settings" data-toggle="tab">
-                            <i class="material-icons">build</i> SQL
+                            <i class="material-icons">public</i> SQL
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#settings" data-toggle="tab">
-                            <i class="material-icons">build</i> PERL
+                            <i class="material-icons">adb</i> PERL
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#settings" data-toggle="tab">
-                            <i class="material-icons">build</i> PHP
+                            <i class="material-icons">local_library</i> 更多
                           </a>
                         </li>
 
@@ -851,40 +571,87 @@
   </div>
 
 
-  <footer class="footer" data-background-color="black">
-    <div class="container">
-      <nav class="float-left">
-        <ul>
-          <li>
-            <a href="https://www.creative-tim.com">
-              Creative Tim
-            </a>
-          </li>
-          <li>
-            <a href="https://creative-tim.com/presentation">
-              About Us
-            </a>
-          </li>
-          <li>
-            <a href="http://blog.creative-tim.com">
-              Blog
-            </a>
-          </li>
-          <li>
-            <a href="https://www.creative-tim.com/license">
-              Licenses
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="copyright float-right">
-        &copy;
-        <script>
-          document.write(new Date().getFullYear())
-        </script>, made with <i class="material-icons">favorite</i> by
-        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-      </div>
-    </div>
+  <footer class="footer footer-black footer-big">
+              <div class="container">
+
+                <div class="content">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <h5>About Us</h5>
+                      <p>Creative Tim is a startup that creates design tools that make the web development process faster and easier. </p> <p>We love the web and care deeply for how users interact with a digital product. We power businesses and individuals to create better looking web projects around the world. </p>
+                    </div>
+
+                    <div class="col-md-4">
+                      <h5>Social Feed</h5>
+                      <div class="social-feed">
+                        <div class="feed-line">
+                          <i class="fa fa-twitter"></i>
+                          <p>How to handle ethical disagreements with your clients.</p>
+                        </div>
+                        <div class="feed-line">
+                          <i class="fa fa-twitter"></i>
+                          <p>The tangible benefits of designing at 1x pixel density.</p>
+                        </div>
+                        <div class="feed-line">
+                          <i class="fa fa-facebook-square"></i>
+                          <p>A collection of 25 stunning sites that you can use for inspiration.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <h5>Instagram Feed</h5>
+                      <div class="gallery-feed">
+                        <img src="build/img/faces/card-profile6-square.jpg" class="img img-raised rounded" alt="">
+                        <img src="build/img/faces/christian.jpg" class="img img-raised rounded" alt="">
+                        <img src="build/img/faces/card-profile4-square.jpg" class="img img-raised rounded" alt="">
+                        <img src="build/img/faces/card-profile1-square.jpg" class="img img-raised rounded" alt="">
+
+                        <img src="build/img/faces/marc.jpg" class="img img-raised rounded" alt="">
+                        <img src="build/img/faces/kendall.jpg" class="img img-raised rounded" alt="">
+                        <img src="build/img/faces/card-profile5-square.jpg" class="img img-raised rounded" alt="">
+                        <img src="build/img/faces/card-profile2-square.jpg" class="img img-raised rounded" alt="">
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+
+                <hr>
+
+                <ul class="pull-left">
+                  <li>
+                    <a href="#pablo">
+                      Blog
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#pablo">
+                      Presentation
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#pablo">
+                      Discover
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#pablo">
+                      Payment
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#pablo">
+                      Contact Us
+                    </a>
+                  </li>
+                </ul>
+
+                <div class="copyright pull-right">
+                  Copyright © <script>document.write(new Date().getFullYear())</script>2019 Creative Tim All Rights Reserved.
+                </div>
+              </div>
   </footer>
   <!--   Core JS Files   -->
   <script src="build/js/jquery.min.js" type="text/javascript"></script>
