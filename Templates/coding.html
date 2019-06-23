@@ -13,9 +13,7 @@
   <script src="{% static '/codemirror/mode/pascal/pascal.js' %}"></script>
   <script src="{% static '/codemirror/mode/fortran/fortran.js' %}"></script>
   <script src="{% static '/codemirror/mode/javascript/javascript.js' %}"></script>
- 
   <link rel="stylesheet" href="{% static '/codemirror/theme/panda-syntax.css' %}">
-  
   <style>
     .CodeMirror {border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;height:400px}
     .breakpoints {width: .8em;}
@@ -33,33 +31,32 @@
 {% endblock%}
 {% block body %}
 <div class="main pagecontent-raised">
-    <!-- 在线刷题-->
     <div class="section">
         <div class="container">
-                                       
+            <!-- 操作按钮 -->                           
             <div class=" collapse navbar-collapse">
                 <div class="col-md-2">
-                     <select id="codetype" name="codetype" class="selectpicker" data-style="btn btn-info" data-size="7" tabindex="-98">
+                     <select id="codetype" name="codetype" class="selectpicker" data-style="btn btn-info" data-size="10" tabindex="-98">
                         <option value="python" select="">Python</option>
                         <option value="text/x-go">GO</option>
                         <option value="text/x-c++src">C++</option>
                         <option value="text/x-csrc">C</option>
                         <option value="text/x-java">JAVA</option>
-                        <option value="text/x-csharp">C#</option>
-                        <option value="text/x-objectivec">Objective C</option>
+                        <option value="text/x-csharp">CSharp</option>
+                        <option value="text/x-objectivec">ObjectiveC</option>
                         <option value="text/x-swift">Swift</option>
                         <option value="text/x-ruby">Ruby</option>
                         <option value="text/x-perl">Perl</option>
                         <option value="text/x-fortran">Fortran</option>
                         <option value="text/x-pascal">Pascal</option>
-                        <option value="text/typescript">JS</option>
+                        <option value="text/typescript">TypeScript</option>
                     </select>
                 </div>
                 <nav class="col-md-10 navbar  navbar-info  " >
                     <ul class="nav navbar-nav navbar-left">
 
                         <li>
-                            <a href="#">
+                            <a id="save" href="#" class="dropdown-toggle">
                                 <i class="material-icons">save</i> 保存
                             </a>
 
@@ -113,11 +110,14 @@
                     </ul>
                 </nav>
             </div>
+            <!--代码及调试区域-->
             <div class="row">
-                <div class="col-md-8">
+                <!--代码-->
+                <div class="col-md-6" id="maindiv">
                     <textarea id="codeid" class="form-control" name="code"></textarea>  
                 </div>
-                <div class="col-md-4">
+                <!--输入输出-->
+                <div class="col-md-3">
                     <div class="card">
                         <div class="card-content ">
                             <label class="control-label">这里是程序启动输入</label>
@@ -131,6 +131,48 @@
                         </div>
                     </div>
                 </div>
+                <!--调试信息-->
+                <div class="col-md-3" id="debugpanel" style="display: none;">
+                    <div class="card">
+                        <div class="card-content ">
+                            <label class="control-label">本地变量</label>
+                            <table class="table" id='vartable'>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content ">
+                            <label class="control-label">监视变量</label>
+                                <table class="table" id="watchtable">
+                                    <tbody><tr>
+                                    <td><a href="#" id="var1" data-type="text" data-pk="1" data-url="../debug/" data-title="输入变量名">superuser</a></td>
+                                    <td><a href="#" id="var1value" data-type="text" data-pk="2" data-url="../debug/" data-title="Enter username"></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="card">
+                        <div class="card-content ">
+                            <label class="control-label">堆栈信息</label>
+                                <table class="table" id="stacktable">
+                                <thead>
+                                    <tr>
+                                    <th>行</th>
+                                    <th>位置</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                
+                                    
+                                </tbody>
+                                </table> 
+                        </div>
+                    </div>
+                    -->
+                </div>
             </div>
 
         </div>
@@ -141,29 +183,29 @@
 <script src="{% static '/js/bootstrap-editable.min.js' %}"></script>
 <script>
     $(function(){
-    //$.fn.editable.defaults.mode = 'inline'; 
-    $('.nav_menu').hide();
-    
-    $('#var1').editable({
-        url: '../debug/',
-        type: 'text',
-        name: 'setwatch',
-        success: function(response, newValue) {
-            if(response.result == true){
-            $('#var1value').text(response.pdbresult);
+        //$.fn.editable.defaults.mode = 'inline'; 
+        $('.nav_menu').hide();
+        
+        $('#var1').editable({
+            url: '../debug/',
+            type: 'text',
+            name: 'setwatch',
+            success: function(response, newValue) {
+                if(response.result == true){
+                $('#var1value').text(response.pdbresult);
+                }
             }
-        }
-    });
-    $('#var1value').editable({
-        url: '../debug/',
-        type: 'text',
-        name: 'setwatch',
-        success: function(response, newValue) {
-            if(response.result == true){
-            $('#var1value').text(response.pdbresult);
+        });
+        $('#var1value').editable({
+            url: '../debug/',
+            type: 'text',
+            name: 'setwatch',
+            success: function(response, newValue) {
+                if(response.result == true){
+                $('#var1value').text(response.pdbresult);
+                }
             }
-        }
-    });
+        });
     });
     var editor = CodeMirror.fromTextArea(document.getElementById("codeid"), {
         mode: {name: $('#codetype').val(),
@@ -178,26 +220,62 @@
                 indentWithTabs: true, // 使用制表符进行智能缩进
                 matchBrackets: true
     });
+    //添加断点
     editor.on("gutterClick", function(cm, n) {
-    var info = cm.lineInfo(n);
-    var obj = info.gutterMarkers ? null : makeMarker()
-    var lines = [];
-    lines.push(n+1);
+        var info = cm.lineInfo(n);
+        var obj = info.gutterMarkers ? null : makeMarker()
+        var lines = [];
+        lines.push(n+1);
 
-    cm.setGutterMarker(n, "breakpoints", obj);
-    if(debugging){
-        $.post("../debug/", { 
-                                line:JSON.stringify(lines),
-                                action: obj ? 'addbreak':'removebreak'},
-        function(data){
-        });
-    }
+        cm.setGutterMarker(n, "breakpoints", obj);
+        if(debugging){
+            $.post("../debug/", { 
+                                    line:JSON.stringify(lines),
+                                    action: obj ? 'addbreak':'removebreak'},
+            function(data){
+            });
+        }
     });
+    //添加断点
     function makeMarker() {
-    var marker = document.createElement("div");
-    marker.style.color = "#822";
-    marker.innerHTML = "●";
-    return marker;
+        var marker = document.createElement("div");
+        marker.style.color = "#822";
+        marker.innerHTML = "●";
+        return marker;
+    }
+    //设置状态
+    function setstatus(){
+        if(debugging){
+            //调试模式
+            $('#debugstop').show();
+            $('#debugup').show();
+            $('#debugdown').show();
+            $('#debugcontinue').show();
+            $('#debugpanel').show();
+            $('#maindiv').toggleClass('col-md-9');
+            $('#maindiv').toggleClass('col-md-6');
+            
+            $('#debug').hide();
+            $('#save').hide();
+            $('#reset').hide();
+            $('#run').hide();
+            $('#submit').hide();
+        }else{
+            //非调试模式
+            $('#debugstop').hide();
+            $('#debugup').hide();
+            $('#debugdown').hide();
+            $('#debugcontinue').hide();
+            $('#debugpanel').hide();
+            $('#maindiv').toggleClass('col-md-9');
+            $('#maindiv').toggleClass('col-md-6');
+            
+            $('#debug').show();
+            $('#save').show();
+            $('#reset').show();
+            $('#run').show();
+            $('#submit').show();
+        }
     }
     //更改语言
     function changecode() {
@@ -208,143 +286,77 @@
                 editor.setOption("mode",t);
                 editor.setValue(data);
         });
-
-        return ;
-
-        if(t == "python"){
-            c = 'def factorial(x):\n  if x == 1:\n    print(x)\n    return x\n  y = x * factorial(x-1)\n  print(y)\n  return y\nprint()\nfactorial(10)';
-        }else if(t == "text/x-go"){
-            c = 'package main\n\nimport (\n    "fmt"\n    "os"\n)\n\nfunc main() {\n    fmt.Println(os.Args)\n}';
-        }else if(t == "text/x-c++src"){
-            c = '#include<iostream>\nusing namespace std;\n\nint main(int argc,char *argv[])\n{\n    for(int i=0;i<argc;i++)\n        cout<<argv[i]<<endl;\n}';
-        }else if(t == "text/x-csrc"){
-            c = '#include <stdio.h>\n\nint main(int argn,char **argv)\n{\n    printf("main input is %d %s",argn,*(argv+1));\n    return 0;\n}';
-        }else if(t == "perl"){
-            c = 'def factorial(x):\n  if x == 1:\n    print(x)\n    return x\n  y = x * factorial(x-1)\n  print(y)\n  return y\nprint()\nfactorial(10)';
-        }else if(t == "text/x-ruby"){
-            c = 'def main()\n   puts "Hello," + $*[0]\nend\nmain';
-        }else if(t == "text/x-csharp"){
-            c = 'class HelloMono\n { \n    public static void Main(string[ ] args) \n    {\n         System.Console.WriteLine(args[0]); \n    } \n}';
-        }else if(t == "text/x-java"){
-            c = 'public class VMargs {\n\n    public static void main(String[] args) {\n        String result = args[0];\n        System.out.println("my: " + result);\n    }\n}'
-        }else if(t == "text/x-objectivec"){
-            c = 'int main(int argc, const char * argv[])\n{\n    printf(argv[0]);\n    return 0;\n}';
-        }else if(t == "text/x-swift"){
-            c = 'print("my first swift ")';
-        }else if(t == "text/x-perl"){
-            c = '#!/usr/bin/perl\nsub Average{\n$n = scalar(@_);\n\n$sum = 0;\n   foreach $item (@_){\n      $sum += $item;\n   }\n   $average = $sum / $n;\n   print "传入的参数为 : ","@_\n";           # 打印整个数组\n}\nAverage(10, 20, 30);'
-        }else if(t == "text/x-fortran"){
-            c = 'PROGRAM test_get_command_argument\nInteger :: i,n\nCharacter(len=128) :: arg\ni = 0\nDO\nCALL get_command_argument(i, arg)\nIF (LEN_TRIM(arg) == 0) EXIT\nWRITE (*,*) i,arg\ni = i+1\nEND DO\nEND PROGRAM\n'
-        }else if(t == "text/x-pascal"){
-            c = 'program hello;\nbegin\n	writeln(\'hhh\')\nend.'
-        }else if(t == "text/typescript"){
-            c = 'function hello() {\nconsole.log(\'Hello World!\');\n}\nhello();'
-        }
-        
-        editor.setOption("mode",t);
-        editor.setValue(c);
     }
     $('#codetype').change(changecode);
     changecode();
     debugging = false;
+    setstatus();
     //run代码
     $('#run').click(function(){
-    $('#run').attr("disabled",true); 
-    $('#submit').attr("disabled",true); 
-    //console.log($('#issue').text());
-    $.post("../running/", { codetype: $('#codetype').val(), 
-                            stdin: $('#stdin').val() ,
-                            code: editor.getValue(),
-                            issue: $('#issue').text()},
-        function(data){
-        $('#run').attr("disabled",false); 
-        $('#submit').attr("disabled",false); 
-        $('#stdout').val(data['stdout']['outdata']);
-        
-        $('#runtime').text('运行时间:' + data['stdout']['runtime']+'秒');
-        });
+        $('#run').attr("disabled",true); 
+        $('#submit').attr("disabled",true); 
+        $.post("../running/", { codetype: $('#codetype').val(), 
+                                stdin: $('#stdin').val() ,
+                                code: editor.getValue(),
+                                issue: $('#issue').text()},
+            function(data){
+                console.log(data);
+                $('#run').attr("disabled",false); 
+                $('#submit').attr("disabled",false); 
+                $('#stdout').val(data['stdout']['outdata']);
+                
+                $('#runtime').text('运行时间:' + data['stdout']['runtime']+'秒');
+            });
     });
     //提交代码
     $('#submit').click(function(){
-    $('#run').attr("disabled",true); 
-    $('#submit').attr("disabled",true); 
-    $('#runtime').text('');
-    $.post("../submit/", { codetype: $('#codetype').val(), 
-                            stdin: $('#stdin').val() ,
-                            code: editor.getValue(),
-                            issue: $('#issue').text()},
-        function(data){
-        console.log(data);
-        $('#run').attr("disabled",false); 
-        $('#submit').attr("disabled",false); 
-        $('#stdout').val(data['stdout']);
-        });
+        $('#run').attr("disabled",true); 
+        $('#submit').attr("disabled",true); 
+        $('#runtime').text('');
+        $.post("../submit/", { codetype: $('#codetype').val(), 
+                                stdin: $('#stdin').val() ,
+                                code: editor.getValue(),
+                                issue: $('#issue').text()},
+            function(data){
+            console.log(data);
+            $('#run').attr("disabled",false); 
+            $('#submit').attr("disabled",false); 
+            $('#stdout').val(data['stdout']);
+            });
     });
     //开始调试
     $('#debug').click(function(){
-    $('#stdout').val('');
-    $('#runtime').text('');
-    $("#vartable tr").remove();
-    $("#stacktable tr:not(:first)").remove();
-    debugging=true;
-    $.post("../debug/", { codetype: $('#codetype').val(), 
-                            stdin: $('#stdin').val() ,
-                            code: editor.getValue(),
-                            action:'debug',
-                            breaks:JSON.stringify(getbreaks())
-                        },
-        function(data){
-        console.log(data);
-        if( data['result'] == true){
-            editor.setCursor(Number(data['pdbresult'])-1);
-            $('#debugstop').show();
-            $('#debugup').show();
-            $('#debugdown').show();
-            $('#debugcontinue').show();
-            $('#maindiv').toggleClass('col-md-12 col-sm-12');
-            $('#maindiv').toggleClass('col-md-8 col-sm-8');
-
-            $('#debugpanel').show();
-
-            $('#debug').hide();
-            $('#save').hide();
-            $('#reset').hide();
-            $('#run').hide();
-            $('#submit').hide();
-            $('#debugpanel').css("height",$('#mainpanel').height()+22);
-            $('#panel1').css("height",$('#debugpanel').height()/3)
-            $('#panel2').css("height",$('#debugpanel').height()/3)
-            $('#panel3').css("height",$('#debugpanel').height()/3)
-        }else{
-            debugging=false;
-        }
-        $('#stdout').val(data['appresult']);
-        });
+        $('#stdout').val('');
+        $('#runtime').text('');
+        $("#vartable tr").remove();
+        $("#stacktable tr:not(:first)").remove();
+        debugging=true;
+        $.post("../debug/", { codetype: $('#codetype').val(), 
+                                stdin: $('#stdin').val() ,
+                                code: editor.getValue(),
+                                action:'debug',
+                                breaks:JSON.stringify(getbreaks())
+                            },
+            function(data){
+            console.log(data);
+            if( data['result'] == true){
+                editor.setCursor(Number(data['pdbresult'])-1);
+                setstatus();
+            }else{
+                debugging=false;
+            }
+            $('#stdout').val(data['appresult']);
+            });
     });
     //停止调试
     $('#debugstop').click(function(){
-    debugging=false;
+        debugging=false;
         $.post("../debug/", { 
                             action:'stop'
                             },
         function(data){
         console.log(data);
-
-            $('#debugstop').hide();
-            $('#debugup').hide();
-            $('#debugdown').hide();
-            $('#debugcontinue').hide();
-            $('#debugpanel').hide();
-            $('#maindiv').toggleClass('col-md-8 col-sm-8');
-            $('#maindiv').toggleClass('col-md-12 col-sm-12');
-            
-            
-            $('#debug').show();
-            $('#save').show();
-            $('#reset').show();
-            $('#run').show();
-            $('#submit').show();
-        
+        setstatus();
         });
     });
     //单步进入
@@ -353,34 +365,22 @@
                             action:'stepinto'
                             },
         function(data){
-        console.log(data);
-        if( data['result']  == true){
-            old = $('#stdout').val();
-            $('#stdout').val( old + data['appresult']);
+            console.log(data);
+            if( data['result']  == true){
+                old = $('#stdout').val();
+                $('#stdout').val( old + data['appresult']);
 
-            if(data['pdbresult'] == 'end'){
-            debugging=false;
-            editor.setCursor(0)
-            $('#debugstop').hide();
-            $('#debugup').hide();
-            $('#debugdown').hide();
-            $('#debugcontinue').hide();
-            $('#debugpanel').hide();
-            $('#maindiv').toggleClass('col-md-8 col-sm-8');
-            $('#maindiv').toggleClass('col-md-12 col-sm-12');
-            
-            $('#debug').show();
-            $('#save').show();
-            $('#reset').show();
-            $('#run').show();
-            $('#submit').show();
-            }else{
-            editor.setCursor(Number(data['pdbresult'])-1);
-            showvars(data['localvars'])
-            showstacks(data['stacks'])
+                if(data['pdbresult'] == 'end'){
+                    debugging=false;
+                    editor.setCursor(0)
+                    setstatus();
+                }else{
+                    editor.setCursor(Number(data['pdbresult'])-1);
+                    showvars(data['localvars'])
+                    showstacks(data['stacks'])
+                }
             }
-        }
-        });
+            });
     });
     //单步跳过
     $('#debugup').click(function(){
@@ -388,33 +388,21 @@
                             action:'stepover'
                             },
         function(data){
-        console.log(data);
-        if( data['result'] == true){
-            old = $('#stdout').val();
-            $('#stdout').val( old + data['appresult']);
-            
-            if(data['pdbresult'] == 'end'){
-            debugging=false;
-            editor.setCursor(0)
-            $('#debugstop').hide();
-            $('#debugup').hide();
-            $('#debugdown').hide();
-            $('#debugcontinue').hide();
-            $('#debugpanel').hide();
-            $('#maindiv').toggleClass('col-md-8 col-sm-8');
-            $('#maindiv').toggleClass('col-md-12 col-sm-12');
-
-            $('#debug').show();
-            $('#save').show();
-            $('#reset').show();
-            $('#run').show();
-            $('#submit').show();
-            }else{
-            editor.setCursor(Number(data['pdbresult'])-1);
-            showvars(data['localvars'])
-            showstacks(data['stacks'])
+            console.log(data);
+            if( data['result'] == true){
+                old = $('#stdout').val();
+                $('#stdout').val( old + data['appresult']);
+                
+                if(data['pdbresult'] == 'end'){
+                    debugging=false;
+                    editor.setCursor(0)
+                    setstatus();
+                }else{
+                    editor.setCursor(Number(data['pdbresult'])-1);
+                    showvars(data['localvars'])
+                    showstacks(data['stacks'])
+                }
             }
-        }
         });
     });
     //继续
@@ -423,64 +411,53 @@
                             action:'continue'
                             },
         function(data){
-        console.log(data);
-        if( data['result'] == true){
-            old = $('#stdout').val();
-            $('#stdout').val( old + data['appresult']);
-            
-            if(data['pdbresult'] == 'end'){
-            debugging=false;
-            editor.setCursor(0)
-            $('#debugstop').hide();
-            $('#debugup').hide();
-            $('#debugdown').hide();
-            $('#debugcontinue').hide();
-            $('#debugpanel').hide();
-            $('#maindiv').toggleClass('col-md-8 col-sm-8');
-            $('#maindiv').toggleClass('col-md-12 col-sm-12');
-
-            $('#debug').show();
-            $('#save').show();
-            $('#reset').show();
-            $('#run').show();
-            $('#submit').show();
-            }else{
-            editor.setCursor(Number(data['pdbresult'])-1);
-            showvars(data['localvars'])
-            showstacks(data['stacks'])
+            console.log(data);
+            if( data['result'] == true){
+                old = $('#stdout').val();
+                $('#stdout').val( old + data['appresult']);
+                
+                if(data['pdbresult'] == 'end'){
+                    debugging=false;
+                    editor.setCursor(0);
+                    setstatus();
+                }else{
+                    editor.setCursor(Number(data['pdbresult'])-1);
+                    showvars(data['localvars']);
+                    showstacks(data['stacks']);
+                }
             }
-        }
         });
-
-
     });
     //添加断点
     function getbreaks(){
-    var lines=[];
-    linecount = editor.lineCount();
-    for( i = 0 ;i<linecount;i++){
-        var info = editor.lineInfo(i);
-        if (info.gutterMarkers){
-        lines.push(i+1);
-        } 
+        var lines=[];
+        linecount = editor.lineCount();
+        for( i = 0 ;i<linecount;i++){
+            var info = editor.lineInfo(i);
+            if (info.gutterMarkers){
+            lines.push(i+1);
+            } 
+        }
+        return lines;
     }
-    return lines;
-    }
+    //显示变量
     function showvars(data){
-    $("#vartable tr").remove();
-    for(var key in data){
-        $("#vartable>tbody").after('<tr><td>'+key +'：</td><td>'+data[key]+'</td></tr>');
+        $("#vartable tr").remove();
+        for(var key in data){
+            $("#vartable>tbody").after('<tr><td>'+key +'：</td><td>'+data[key]+'</td></tr>');
+        }
     }
-    }
+
+    //显示堆栈
     function showstacks(data){
-    $("#stacktable tr:not(:first)").remove();
-    for(var item = data.length - 1 ; item >=0 ; item--){
-        $("#stacktable tr:last").after('<tr><td>*'+ data[item]['line'] +'：</td><td>'+data[item]['function']+'</td></tr>');
-    }
+        //$("#stacktable tr:not(:first)").remove();
+        //for(var item = data.length - 1 ; item >=0 ; item--){
+        //    $("#stacktable tr:last").after('<tr><td>*'+ data[item]['line'] +'：</td><td>'+data[item]['function']+'</td></tr>');
+        //}
     }
     //重置运行时间
     $('#reset').click(function(){
-    $('#runtime').text('');
+        $('#runtime').text('');
     })
 </script>
 {% endblock%}
