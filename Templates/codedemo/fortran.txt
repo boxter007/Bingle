@@ -1,0 +1,11 @@
+PROGRAM test_get_command_argument
+    Integer :: i,n
+    Character(len=128) :: arg
+    i = 0
+    DO
+        CALL get_command_argument(i, arg)
+        IF (LEN_TRIM(arg) == 0) EXIT
+        WRITE (*,*) i,arg
+        i = i+1
+    END DO
+END PROGRAM
