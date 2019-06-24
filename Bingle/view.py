@@ -65,10 +65,11 @@ def answers(request):
 
 #获取指定代码提交的内容
 def viewsolution(request):
-    id = request.GET['id']
+    id = request.GET.get('id',-1)
     user = request.session['user']
     submitobj = issue.getSolution(id)
     context = {}
+    context['id'] = id
     if submitobj != None:
         context['codetype'] = submitobj.codetype
         context['code'] = submitobj.code
@@ -76,7 +77,7 @@ def viewsolution(request):
         context['createdate'] = submitobj.createdate
         context['cost'] = submitobj.cost
         context['issue'] = submitobj.issue
-    return render(request, 'c-viewsolution.html', context)
+    return render(request, 'viewsolution.html', context)
 
 
 #首页
