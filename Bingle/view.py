@@ -35,7 +35,7 @@ def qlist(request):
     context['codelevel'] = codelevel
     context['lists'] = lists
 
-    return render(request, 'c-list.html', context)
+    return render(request, 'list.html', context)
 
 
 #获取试题明细
@@ -54,7 +54,7 @@ def detail(request):
         context['codelimit'] = issueobj.codelimit
         context['cost'] = issueobj.cost
         context['submit'] = issueobj.submit_set.all()[0:10]
-    return render(request, 'c-detail.html', context)
+    return render(request, 'detail.html', context)
 
 
 #所有代码提交页面
@@ -166,12 +166,12 @@ def makequestion(request):
 
         issue.makeIssue(user, title, timelimit, codelimit, cost, issuecontent,
                         checks, issuetype, level)
-    return render(request, 'c-makequestion.html', context)
+    return render(request, 'makequestion.html', context)
 
 
 def makequestionsurvey(request):
     context = {}
-    return render(request, 'c-makequestionsurvey.html', context)
+    return render(request, 'makequestionsurvey.html', context)
 
 
 @csrf_exempt

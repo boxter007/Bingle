@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<script src="{% static 'js/knockout-min.js' %}"></script>
+<script src="{% static 'js/survey.ko.min.js'%}"></script>
+<link href="{% static 'css/survey-creator.min.css' %}" type="text/css" rel="stylesheet"/>
+<script src="{% static 'js/survey-creator.min.js' %}"></script>
+
+{% endblock %}
+{% block banner%}
+<div class="page-header header-filter clear-filter" data-parallax="true"
+  style="background-image: url({% static 'build/img/bg3.jpg' %});">
+
+</div>
+{% endblock%}
+{% block body %}
+<div class="main pagecontent-raised">
+    <div class="section">
+        <div class="container">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content" id="content">
+                        <div id="surveyContainer">
+                            <div id="creatorElement"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block bottom %}
+<script>
+    SurveyCreator.localization.currentLocale = "zh-cn";
+    var creatorOptions = {designerHeight: "600px"};
+    var creator = new SurveyCreator.SurveyCreator("creatorElement", creatorOptions);
+    creator.saveSurveyFunc = function () {
+        
+        //var jsonEl = document.getElementById('surveyJSON');
+        //jsonEl.value = creator.text;
+        alert(creator.text);
+    }
+</script>
+{% endblock %}

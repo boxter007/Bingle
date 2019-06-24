@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<script src="{% static '/js/commonmark.min.js' %}"></script>    
+{% endblock %}
+{% block banner%}
+<div class="page-header header-filter clear-filter" data-parallax="true"
+  style="background-image: url({% static 'build/img/bg5.jpg' %});">
+</div>
+{% endblock%}
+{% block body %}
+
+<!-- page content -->
+<div class="main pagecontent-raised">
+  <div class="section">
+    <div class="container">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-9">
+            <h2>题目：{{ title }}</h2>
+          </div>
+          <div class="col-md-3">
+            <a href="../coding/?id={{ id }}">
+              <button type="button" class="btn btn-success btn-sm">开始答题</button>
+            </a>
+          </div>
+        </div>
+
+        <div class="x_content" id="content"></div>
+
+          <table class="table">
+            <tbody>
+              <tr>
+                <th style="width:20%">作者:</th>
+                <td>{{ user }}</td>
+              </tr>
+              <tr>
+                <th>标签</th>
+                <td>基础问题</td>
+              </tr>
+              <tr>
+                <th>创建日期:</th>
+                <td>{{ createdate }}</td>
+              </tr>
+              <tr>
+                <th>时间限制</th>
+                <td>{{ timelimit }}s</td>
+              </tr>
+              <tr>
+                  <th>代码限制</th>
+                  <td>{{ codelimit }} Bytes</td>
+              </tr>
+              <tr>
+                  <th>得分</th>
+                  <td>{{ cost }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <textarea id="hcontent" style="display: none">{{ content }}</textarea>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+            <button type="button" class="btn btn-info btn-sm">我的答案</button>
+            <button type="button" class="btn btn-info btn-sm">全部答案</button>
+        </div>
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th><h6>大神</h6></th>
+                    <th><h6>得分</h6></th>
+                    <th><h6>语言</h6></th>
+                    <th><h6>时间</h6></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for row in submit %}
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ row.user.name }}</td>
+                    <td>{{ row.cost }}</td>
+                    <td>{{ row.codetype }}</td>
+                    <td>{{ row.createdate|date:'Y /m /d' }}</td>
+                    <td><a href="../viewsolution/?id={{ row.id }}"><button type="button" class="btn btn-info btn-xs">看</button></a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /page content -->
+{% endblock %}
+{% block bottom %}
+<script>
+  var reader = new commonmark.Parser({smart: true});
+  var writer = new commonmark.HtmlRenderer({sourcepos: true});
+  var parsed = reader.parse($('#hcontent').val()); 
+  var result = writer.render(parsed); 
+  document.querySelector('#content').innerHTML = result;
+</script>
+{% endblock %}

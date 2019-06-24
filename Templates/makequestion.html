@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'build/css/editormd.css' %}">
+
+{% endblock %}
+{% block banner%}
+<div class="page-header header-filter clear-filter" data-parallax="true"
+  style="background-image: url({% static 'build/img/bg7.jpg' %});">
+</div>
+{% endblock%}
+{% block body %}
+<!-- page content -->
+<form class="form-horizontal form-label-left" method="post" >
+  <div class="main pagecontent-raised">
+      <div class="section">
+          <div class="container">
+            <div class="row">
+                <div class="form-group label-floating col-md-12">
+                  <label class="control-label">题目</label>
+                  <input type="email" class="form-control">
+                  <span class="material-input"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group label-floating col-md-4">
+								  <label class="control-label">时间限制(s)</label>
+								  <input  class="form-control col-md-2" name="timelimit">
+                  <span class="material-input"></span>
+                </div>
+
+                <div class="form-group label-floating col-md-4">
+								  <label class="control-label">时间限制(s)</label>
+								  <input  class="form-control col-md-2" name="timelimit">
+                  <span class="material-input"></span>
+                </div>
+
+                <div class="form-group label-floating col-md-4">
+								  <label class="control-label">时间限制(s)</label>
+								  <input  class="form-control col-md-2" name="timelimit">
+                  <span class="material-input"></span>
+                </div>
+            </div>
+                <label class="control-label col-md-1 ">时间限制(s)</label>
+                <div class="col-md-1 col-sm-1 col-xs-12">
+                  <select class="form-control" id="level" name="level">
+                            <option value="1">入门</option>
+                            <option value="2">简单</option>
+                            <option value="3">普通</option>
+                            <option value="4">困难</option>
+                            <option value="5">挑战</option>
+                            <option value="6">无敌</option>
+                  </select>
+                </div>
+                <label class="control-label col-md-2 col-sm-2 col-xs-12">代码限制(Bytes)</label>
+                <div class="col-md-1 col-sm-1 col-xs-12">
+                  <input type="text" class="form-control" name="codelimit" >
+                </div>
+                <label class="control-label col-md-1 col-sm-1 col-xs-12">分值</label>
+                <div class="col-md-1 col-sm-1 col-xs-12">
+                  <input type="text" class="form-control"  name="issuecost" >
+                </div>
+                <label class="control-label col-md-1 col-sm-1 col-xs-12">类型</label>
+                <div class="col-md-1 col-sm-1 col-xs-12">
+                  <select class="form-control" id="issuetype" name="issuetype" >
+                            <option value="1" selected>练习</option>
+                            <option value="2">竞赛</option>
+                  </select>
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-12">
+                  <button class="btn btn-success pull-right" type="submit" id="submit">提交</button>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div  id="content"></div><textarea id="issuecontent" name="issuecontent" style="display:none"></textarea>
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                  <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#tab_content1" id="profile-tab1" role="tab" data-toggle="tab" aria-expanded="true">Check1</a>
+                    </li>
+                    <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Check2</a>
+                    </li>
+                    <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">Check3</a>
+                    </li>
+                    <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab4" data-toggle="tab" aria-expanded="false">Check4</a>
+                    </li>
+                  </ul>
+                  <div id="myTabContent" class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label for="message">输入:</label>
+                        <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label for="message">输出:</label>
+                        <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
+                      </div>
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="message">得分占比(%):</label>
+                        <input type="text" id="range_1" value="" name="cost" />
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label for="message">输入:</label>
+                        <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label for="message">输出:</label>
+                        <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
+                      </div>
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="message">得分占比(%):</label>
+                        <input type="text" id="range_2" value="" name="cost" />
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label for="message">输入:</label>
+                        <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label for="message">输出:</label>
+                        <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
+                      </div>
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="message">得分占比(%):</label>
+                        <input type="text" id="range_3" value="" name="cost" />
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label for="message">输入:</label>
+                        <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label for="message">输出:</label>
+                        <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
+                      </div>
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="message">得分占比(%):</label>
+                        <input type="text" id="range_4" value="" name="cost" />
+                      </div>
+                    </div>
+                  </div>
+                </div>        
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</form>
+<!-- /page content -->
+
+
+{% endblock %}
+{% block bottom %}
+<script src="{% static 'build/js/editormd.js' %}"></script>
+
+<script type="text/javascript">
+  var testEditor;
+  
+  $(function() {
+
+          testEditor = editormd("content", {
+          width: "100%",
+          height: "600px",
+          path : "..{% static '/build/'%}",
+          pluginPath : "..{% static '/plugins/'%}",
+          katexURL: {
+            css : "..{% static 'build/css/katex.min'%}",
+            js  : "..{% static 'build/js/katex.min'%}"
+          },
+          toolbarAutoFixed     : false,
+          markdown : '',
+          codeFold : true,
+          htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启    
+          emoji : true,
+          taskList : true,
+          tocm     : true,         // Using [TOCM]
+          tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+          flowChart : true,             // 开启流程图支持，默认关闭
+          sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
+
+      });
+      $('#submit').bind("click", function(){
+          $('#issuecontent').text(testEditor.getMarkdown());
+      });
+
+      $("#goto-line-btn").bind("click", function(){
+          testEditor.gotoLine(90);
+      });
+      
+      $("#show-btn").bind('click', function(){
+          testEditor.show();
+      });
+      
+      $("#hide-btn").bind('click', function(){
+          testEditor.hide();
+      });
+      
+      $("#get-md-btn").bind('click', function(){
+          alert(testEditor.getMarkdown());
+      });
+      
+      $("#get-html-btn").bind('click', function() {
+          alert(testEditor.getHTML());
+      });                
+      
+      $("#watch-btn").bind('click', function() {
+          testEditor.watch();
+      });                 
+      
+      $("#unwatch-btn").bind('click', function() {
+          testEditor.unwatch();
+      });              
+      
+      $("#preview-btn").bind('click', function() {
+          testEditor.previewing();
+      });
+      
+      $("#fullscreen-btn").bind('click', function() {
+          testEditor.fullscreen();
+      });
+      
+      $("#show-toolbar-btn").bind('click', function() {
+          testEditor.showToolbar();
+      });
+      
+      $("#close-toolbar-btn").bind('click', function() {
+          testEditor.hideToolbar();
+      });
+      
+      $("#toc-menu-btn").click(function(){
+          testEditor.config({
+              tocDropdown   : true,
+              tocTitle      : "目录 Table of Contents",
+          });
+      });
+      
+      $("#toc-default-btn").click(function() {
+          testEditor.config("tocDropdown", false);
+      });
+  });
+</script>
+
+{% endblock %}
