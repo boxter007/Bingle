@@ -7,6 +7,7 @@ Python3+Django
 ### 依赖
 
 pip3 install pexpect
+
 pip3 install demjson
 
 ### 语言编译环境
@@ -15,7 +16,7 @@ pip3 install demjson
 - C++:g++
 - C#:Mono
 - Python:Python3
-- JAVA:Java8
+- JAVA:Java12
 - Pascal:Free Pascal
 
 需要预先在服务器上安装各种语言的编译器，并将其路径加入到 PATH 中。开发测试的时候建议使用 Mac 电脑，可以一次性便捷安装所有的编译环境。
@@ -28,7 +29,7 @@ python3 manage.py runserver
 
 ### 代码结构
 
-- Bingle/Templetes/production 下为界面模板
+- Bingle/Templetes 下为界面模板
   - urls.py 分发 url 请求
   - view.py 处理 urls.py 分发的请求
   - compiler.py 处理编译和运行代码的主类
