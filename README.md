@@ -5,11 +5,11 @@
 Python3+Django
 
 ### 依赖
-
+```shell 
 pip3 install pexpect
 
 pip3 install demjson
-
+```
 ### 语言编译环境
 
 - C:gcc
@@ -17,12 +17,25 @@ pip3 install demjson
 - C#:Mono
 - Python:Python3
 - JAVA:Java12
-- Pascal:Free Pascal
+- Pascal:Free Pascal (https://github.com/graemeg/freepascal.git)
+- Perl:5.18
+- Ruby:2.2
+- Fortran:gfortran
+- Swift:Swift:4.2
 
-需要预先在服务器上安装各种语言的编译器，并将其路径加入到 PATH 中。开发测试的时候建议使用 Mac 电脑，可以一次性便捷安装所有的编译环境。
+
+
+- 需要预先在服务器上安装各种语言的编译器，并将其路径加入到 PATH 中。开发测试的时候建议使用 Mac 电脑，可以一次性便捷安装所有的编译环境。
+- Mac 操作系统需要安装 Xcode Command Line Tools 。
+- 需要手动在项目根目录（与Templates平行）下创建log文件夹
 
 ### 运行程序
-
+初始化数据库
+```shell 
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+启动
 ```shell
 python3 manage.py runserver
 ```
@@ -32,8 +45,10 @@ python3 manage.py runserver
 - Bingle/Templetes 下为界面模板
   - urls.py 分发 url 请求
   - view.py 处理 urls.py 分发的请求
+  - adminview.py 后台页面请求处理
   - compiler.py 处理编译和运行代码的主类
   - debugger.py 在线调试代码的主类
+  - issue.py 问题数据库操作类
 - Background 为后台处理数据库、模型相关模块
   - models.py 定义了数据库模型
 
@@ -49,12 +64,12 @@ python3 manage.py runserver
 
 ### MarkDown 编辑器
 
-- 来源于https://github.com/pandao/editor.md
+- 来源于 https://github.com/pandao/editor.md
 
 ### 测试题编辑展示
 
-- 来源于https://github.com/surveyjs/survey-library
+- 来源于 https://github.com/surveyjs/survey-library
 
 ### 监视变量可编辑表格
 
-- 来源于https://github.com/vitalets/x-editable
+- 来源于 https://github.com/vitalets/x-editable
