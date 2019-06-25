@@ -51,7 +51,7 @@
                         <option value="text/typescript">TypeScript</option>
                     </select>
                 </div>
-                <nav class="col-md-10 navbar  navbar-info  " >
+                <nav id="debugbuttons" class="col-md-10 navbar  navbar-success  " >
                     <ul class="nav navbar-nav navbar-left">
 
                         <li>
@@ -259,6 +259,9 @@
             $('#reset').hide();
             $('#run').hide();
             $('#submit').hide();
+
+            $('#debugbuttons').toggleClass('navbar-info');
+            $('#debugbuttons').toggleClass('navbar-success');
         }else{
             //非调试模式
             $('#debugstop').hide();
@@ -274,6 +277,9 @@
             $('#reset').show();
             $('#run').show();
             $('#submit').show();
+
+            $('#debugbuttons').toggleClass('navbar-info');
+            $('#debugbuttons').toggleClass('navbar-success');
         }
     }
     //更改语言
