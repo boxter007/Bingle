@@ -238,6 +238,8 @@ class pythondebugger(debugger):
                 r = r.replace('locals()\r\n', '').strip()
             if (r.find(sig) >= 0):
                 r = r[r.find(sig) + len(sig):]
+                if r.find(': <function ' >= 0):
+                    r=''
                 if r.startswith(','):
                     r = '{' + r[2:]
                 if r == '}':
