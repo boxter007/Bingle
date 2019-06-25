@@ -24,7 +24,6 @@ pip3 install demjson
 - Swift:Swift:4.2
 
 
-
 - 需要预先在服务器上安装各种语言的编译器，并将其路径加入到 PATH 中。开发测试的时候建议使用 Mac 电脑，可以一次性便捷安装所有的编译环境。
 - Mac 操作系统需要安装 Xcode Command Line Tools 。
 - 需要手动在项目根目录（与Templates平行）下创建log文件夹
@@ -51,6 +50,16 @@ python3 manage.py runserver
   - issue.py 问题数据库操作类
 - Background 为后台处理数据库、模型相关模块
   - models.py 定义了数据库模型
+
+### 主要页面 
+- 代码编写、编译、运行、调试页面
+[http://xxx.xxx.xxx:XXXX/coding/]()
+- 可视化算法页面
+[http://xxx.xxx.xxx:XXXX/visual-algorithm/index.html]()
+- 竞赛首页
+[http://xxx.xxx.xxx:XXXX/competition/]()
+- 题目列表(从列表页可以进入详情页)
+[http://xxx.xxx.xxx:XXXX/qlist/]()
 
 ### 可视化算法
 
