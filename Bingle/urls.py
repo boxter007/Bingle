@@ -34,9 +34,10 @@ urlpatterns = [
     path('makequestionsurvey/', view.makequestionsurvey),
     path('getSurveyIssues/', adminview.getSurveyIssues),
     path('debug/', view.debug),
+    path('competition/', view.competition),
 ]
 
 from django.views.static import serve
- 
+
 urlpatterns += [ url(r'visual-algorithm/(?P<path>.*)$', serve, {'document_root': 'visual-algorithm/',}), ]
 urlpatterns += [ url(r'test/(?P<path>.*)$', serve, {'document_root': 'Templates/',}), ]

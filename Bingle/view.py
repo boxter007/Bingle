@@ -11,7 +11,7 @@ log = logging.getLogger("collect")
 #代码编写页
 def coding(request):
     context = {}
-    id = request.GET['id']
+    id = request.GET.get('id',1)
     issueobj = issue.getIssue(id)
     context['issueid'] = id
     context['title'] = issueobj.title
@@ -79,6 +79,10 @@ def viewsolution(request):
         context['issue'] = submitobj.issue
     return render(request, 'viewsolution.html', context)
 
+#竞赛首页
+def competition(request):
+    context = {}
+    return render(request, 'competition.index.html', context)
 
 #首页
 def index(request):
