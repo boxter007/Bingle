@@ -144,8 +144,8 @@
                     <div class="card">
                         <div class="card-content ">
                             <label class="control-label">监视变量</label>
-                            <label class="control-label pull-right"><a id="addvar" href="#">+</a></label>
-                                <table class="table" id="watchtable">
+                            <label class="control-label pull-right"><a id="addvar" href="#"><i class="fa fa-plus"></i></a></label>
+                                <table class="table" id="watchtable" style="width:100%">
                                     <tbody></tbody>
                                 </table>
                         </div>
@@ -283,7 +283,7 @@
     $('#addvar').click(function(e){
         e.stopPropagation();
         var pk = $('#watchtable').find("tr").length 
-        $('#watchtable>tbody').after('<tr><td><a href="#" id="var' + pk + '" data-type="text" data-pk="'+ pk + '" data-url="../debug/" data-title="输入变量名"></a></td><td><a href="#" id="var' + pk + 'value" data-type="text" data-pk="v' + pk +'" data-url="../debug/" data-title="输入变量值"></a></td></tr>');
+        $('#watchtable>tbody').after('<tr><td><a href="#" id="var' + pk + '" data-type="text" data-pk="'+ pk + '" data-url="../debug/" data-title="输入变量名"></a></td><td><a href="#" id="var' + pk + 'value" data-type="text" data-pk="v' + pk +'" data-url="../debug/" data-title="输入变量值"></a></td><td style="width:10px"><a href="#" onclick="$(this).parents(\'tr\').remove();"><i class="fa fa-times"></i></a></td></tr>');
         $('#var'+ pk).editable({
             type: "text",
             url: '../debug/',
