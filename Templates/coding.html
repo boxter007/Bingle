@@ -29,6 +29,7 @@
 </div>
 {% endblock%}
 {% block body %}
+
 <div class="main pagecontent-raised">
     <div class="section">
         <div class="container">
@@ -143,12 +144,9 @@
                     <div class="card">
                         <div class="card-content ">
                             <label class="control-label">监视变量</label>
+                            <label class="control-label pull-right"><a id="addvar" href="#">+</a></label>
                                 <table class="table" id="watchtable">
-                                    <tbody><tr>
-                                    <td><a href="#" id="var1" data-type="text" data-pk="1" data-url="../debug/" data-title="输入变量名">superuser</a></td>
-                                    <td><a href="#" id="var1value" data-type="text" data-pk="2" data-url="../debug/" data-title="Enter username"></a></td>
-                                    </tr>
-                                    </tbody>
+                                    <tbody></tbody>
                                 </table>
                         </div>
                     </div>
@@ -179,33 +177,9 @@
 </div>
 {% endblock%}
 {% block bottom %}
-<script src="{% static '/js/bootstrap-editable.min.js' %}"></script>
+<script src="{% static '/js/bootstrap-editable.js' %}"></script>
 <script>
-    $(function(){
-        //$.fn.editable.defaults.mode = 'inline'; 
-        $('.nav_menu').hide();
-        
-        $('#var1').editable({
-            url: '../debug/',
-            type: 'text',
-            name: 'setwatch',
-            success: function(response, newValue) {
-                if(response.result == true){
-                $('#var1value').text(response.pdbresult);
-                }
-            }
-        });
-        $('#var1value').editable({
-            url: '../debug/',
-            type: 'text',
-            name: 'setwatch',
-            success: function(response, newValue) {
-                if(response.result == true){
-                $('#var1value').text(response.pdbresult);
-                }
-            }
-        });
-    });
+
     var editor = CodeMirror.fromTextArea(document.getElementById("codeid"), {
         mode: {name: $('#codetype').val(),
                 version: 3,
@@ -296,6 +270,29 @@
     changecode();
     debugging = false;
     setstatus();
+    //添加监视变量
+    $('#addvar').click(function(e){
+        e.stopPropagation();
+        var pk = $('#watchtable').find("tr").length 
+        $('#watchtable>tbody').after('<tr><td><a href="#" id="var' + pk + '" data-type="text" data-pk="'+ pk + '" data-url="../debug/" data-title="输入变量名">var</a></td><td><a href="#" id="var' + pk + 'value" data-type="text" data-pk="v' + pk +'" data-url="../debug/" data-title="输入变量值"></a></td></tr>');
+        $('#var'+ pk).editable({
+            type: "text",
+            url: '../debug/',
+            type: 'text',
+            name: 'setwatch',
+            toggle:'manual',
+            success: function(response, newValue) {
+                if(response.result == true){
+                $('#var' + pk +'value').text(response.pdbresult);
+                }
+            }
+        });
+        $('#var'+ pk).editable('toggle');
+        $('#var'+ pk).click(function(e){
+            e.stopPropagation();
+            $('#var'+ pk).editable('toggle');
+        })
+    })
     //run代码
     $('#run').click(function(){
         $('#run').attr("disabled",true); 
