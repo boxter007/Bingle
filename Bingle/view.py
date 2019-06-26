@@ -201,15 +201,19 @@ def debug(request):
 
         elif (action == 'stepinto'):
             mydebugger = debugger.getdebugger(codetype)
-            result, appresult, pdbresult, localvars, stacks = mydebugger.stepinto(
-            )
+            watchlist = json.loads(request.POST.get('watchvars', ''))
+            result, appresult, pdbresult, localvars, stacks, watchvars = mydebugger.stepinto(
+                watchlist)
             context["localvars"] = localvars
+            context["watchvars"] = watchvars
             context["stacks"] = stacks
         elif (action == 'stepover'):
             mydebugger = debugger.getdebugger(codetype)
-            result, appresult, pdbresult, localvars, stacks = mydebugger.stepover(
-            )
+            watchlist = json.loads(request.POST.get('watchvars', ''))
+            result, appresult, pdbresult, localvars, stacks, watchvars = mydebugger.stepover(
+                watchlist)
             context["localvars"] = localvars
+            context["watchvars"] = watchvars
             context["stacks"] = stacks
         elif (action == 'stop'):
             mydebugger = debugger.getdebugger(codetype)
@@ -217,9 +221,11 @@ def debug(request):
 
         elif (action == 'continue'):
             mydebugger = debugger.getdebugger(codetype)
-            result, appresult, pdbresult, localvars, stacks = mydebugger.continuedebug(
-            )
+            watchlist = json.loads(request.POST.get('watchvars', ''))
+            result, appresult, pdbresult, localvars, stacks, watchvars = mydebugger.continuedebug(
+                watchlist)
             context["localvars"] = localvars
+            context["watchvars"] = watchvars
             context["stacks"] = stacks
         elif (action == 'addbreak'):
             line = json.loads(request.POST.get('line', ''))

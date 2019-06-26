@@ -266,6 +266,15 @@
                 editor.setValue(data);
         });
     }
+    //获取监视变量列表
+    function getvarslist(){
+        var count = $('#watchtable').find("tr").length;
+        var arrayObj = new Array();
+        for (i = 0;i<count;i++){
+            arrayObj. push($('#var' + i).text());
+        }
+        return JSON.stringify( arrayObj )
+    }    
     $('#codetype').change(changecode);
     changecode();
     debugging = false;
@@ -274,7 +283,7 @@
     $('#addvar').click(function(e){
         e.stopPropagation();
         var pk = $('#watchtable').find("tr").length 
-        $('#watchtable>tbody').after('<tr><td><a href="#" id="var' + pk + '" data-type="text" data-pk="'+ pk + '" data-url="../debug/" data-title="输入变量名">var</a></td><td><a href="#" id="var' + pk + 'value" data-type="text" data-pk="v' + pk +'" data-url="../debug/" data-title="输入变量值"></a></td></tr>');
+        $('#watchtable>tbody').after('<tr><td><a href="#" id="var' + pk + '" data-type="text" data-pk="'+ pk + '" data-url="../debug/" data-title="输入变量名"></a></td><td><a href="#" id="var' + pk + 'value" data-type="text" data-pk="v' + pk +'" data-url="../debug/" data-title="输入变量值"></a></td></tr>');
         $('#var'+ pk).editable({
             type: "text",
             url: '../debug/',
@@ -283,7 +292,7 @@
             toggle:'manual',
             success: function(response, newValue) {
                 if(response.result == true){
-                $('#var' + pk +'value').text(response.pdbresult);
+                    $('#var' + pk +'value').text(response.pdbresult);
                 }
             }
         });
@@ -291,7 +300,8 @@
         $('#var'+ pk).click(function(e){
             e.stopPropagation();
             $('#var'+ pk).editable('toggle');
-        })
+        });
+        getvarslist();
     })
     //run代码
     $('#run').click(function(){
@@ -332,6 +342,7 @@
         $('#runtime').text('');
         $("#vartable tr").remove();
         $("#stacktable tr:not(:first)").remove();
+        clearwatchvarvalue();
         debugging=true;
         $.post("../debug/", { codetype: $('#codetype').val(), 
                                 stdin: $('#stdin').val() ,
@@ -340,15 +351,14 @@
                                 breaks:JSON.stringify(getbreaks())
                             },
             function(data){
-            console.log(data);
-            if( data['result'] == true){
-                editor.setCursor(Number(data['pdbresult'])-1);
-                setstatus();
-            }else{
-                debugging=false;
-            }
-            $('#stdout').val(data['appresult']);
-            });
+                if( data['result'] == true){
+                    editor.setCursor(Number(data['pdbresult'])-1);
+                    setstatus();
+                }else{
+                    debugging=false;
+                }
+                $('#stdout').val(data['appresult']);
+        });
     });
     //停止调试
     $('#debugstop').click(function(){
@@ -364,7 +374,8 @@
     //单步进入
     $('#debugdown').click(function(){
         $.post("../debug/", { 
-                            action:'stepinto'
+                            action:'stepinto',
+                            watchvars:getvarslist()
                             },
         function(data){
             console.log(data);
@@ -380,6 +391,7 @@
                     editor.setCursor(Number(data['pdbresult'])-1);
                     showvars(data['localvars'])
                     showstacks(data['stacks'])
+                    showwatchvars(data['watchvars'])
                 }
             }
             });
@@ -387,7 +399,8 @@
     //单步跳过
     $('#debugup').click(function(){
         $.post("../debug/", { 
-                            action:'stepover'
+                            action:'stepover',
+                            watchvars:getvarslist()
                             },
         function(data){
             console.log(data);
@@ -403,6 +416,7 @@
                     editor.setCursor(Number(data['pdbresult'])-1);
                     showvars(data['localvars'])
                     showstacks(data['stacks'])
+                    showwatchvars(data['watchvars'])
                 }
             }
         });
@@ -410,7 +424,8 @@
     //继续
     $('#debugcontinue').click(function(){
         $.post("../debug/", { 
-                            action:'continue'
+                            action:'continue',
+                            watchvars:getvarslist()
                             },
         function(data){
             console.log(data);
@@ -426,6 +441,7 @@
                     editor.setCursor(Number(data['pdbresult'])-1);
                     showvars(data['localvars']);
                     showstacks(data['stacks']);
+                    showwatchvars(data['watchvars'])
                 }
             }
         });
@@ -456,6 +472,19 @@
         //for(var item = data.length - 1 ; item >=0 ; item--){
         //    $("#stacktable tr:last").after('<tr><td>*'+ data[item]['line'] +'：</td><td>'+data[item]['function']+'</td></tr>');
         //}
+    }
+    //显示监视变量
+    function showwatchvars(data){
+        for(i=0;i<data.length;i++){
+            $('#var' + i +'value').text(data[i][1]);
+        }
+    }
+    //清除监视变量的值
+    function clearwatchvarvalue(){
+        var count = $('#watchtable').find("tr").length;
+        for (i = 0;i<count;i++){
+           $('#var' + i +'value').text('');
+        }
     }
     //重置运行时间
     $('#reset').click(function(){

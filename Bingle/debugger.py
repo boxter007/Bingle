@@ -54,11 +54,11 @@ class pythondebugger(debugger):
         appresult = ""
         pdbresult = ""
         try:
-            TempFile = tempfile.mkdtemp(suffix='_test', prefix='python_') 
-            FileNum = "%d.py" % int(time.time() * 1000) 
-            self.filename = os.path.join(TempFile, FileNum) 
-            with open(self.filename, 'w', encoding='utf-8') as f: 
-                f.write(self.code) 
+            TempFile = tempfile.mkdtemp(suffix='_test', prefix='python_')
+            FileNum = "%d.py" % int(time.time() * 1000)
+            self.filename = os.path.join(TempFile, FileNum)
+            with open(self.filename, 'w', encoding='utf-8') as f:
+                f.write(self.code)
             #先编译一下再开始调试，否则开始调试时很难分离编译错误
             subprocess.check_output([sys.executable, '-m','py_compile',self.filename], stderr=subprocess.STDOUT, timeout=50)
             #启动调试进程
@@ -75,14 +75,15 @@ class pythondebugger(debugger):
         except Exception as e:
             result = False
             appresult = e.stdout.decode()
-        return result, appresult, pdbresult    
+        return result, appresult, pdbresult
     #单步跳过
-    def stepover(self):
+    def stepover(self, watchlist):
         result = False
         appresult = ""
         pdbresult = ""
         localvars = None
         stacks = None
+        watchvars = None
         try:
             self.process.sendline('n')
             ret = self.process.expect('\(Pdb\)')
@@ -94,7 +95,7 @@ class pythondebugger(debugger):
             appresult = r[0:index]
             appresult = appresult.replace('\x07n\r\n', '')
             if appresult == '--Return--\r\n':
-                return self.stepover()
+                return self.stepover(watchlist)
             if appresult.find('--Return--\r\n') >= 0:
                 appresult = appresult[0:appresult.index('--Return--\r\n')]
 
@@ -102,6 +103,7 @@ class pythondebugger(debugger):
             pdbresult = pdbresult[pdbresult.find('(') + 1:pdbresult.find(')')].strip()
             localvars = self.getvar()
             stacks = self.getstack()
+            watchvars = self.getwatchvars(watchlist)
             if (r.find('<module>()->None') >= 0):
                 pdbresult = "end"
                 self.process.close()
@@ -109,14 +111,15 @@ class pythondebugger(debugger):
             result = True
         except:
             result = False
-        return result, appresult, pdbresult,localvars,stacks
+        return result, appresult, pdbresult, localvars, stacks, watchvars
     #单步进入
-    def stepinto(self):
+    def stepinto(self,watchlist):
         result = False
         appresult = ""
         pdbresult = ""
         localvars = None
         stacks = None
+        watchvars = None
         try:
             self.process.sendline('s')
             ret = self.process.expect('\(Pdb\)')
@@ -127,16 +130,17 @@ class pythondebugger(debugger):
             appresult = r[0:index]
             appresult = appresult.replace('s\r\n', '')
             if appresult == '--Call--\r\n':
-                return self.stepinto()
+                return self.stepinto(watchlist)
             if appresult == '--Return--\r\n':
-                return self.stepinto()
+                return self.stepinto(watchlist)
             if appresult.find('--Return--\r\n') >= 0:
                 appresult = appresult[0:appresult.index('--Return--\r\n')]
-                
+
             pdbresult = r.replace('> ' + self.process.args[3].decode(),'').replace(appresult,'')
             pdbresult = pdbresult[pdbresult.find('(') + 1:pdbresult.find(')')].strip()
             localvars = self.getvar()
             stacks = self.getstack()
+            watchvars = self.getwatchvars(watchlist)
             if (r.find('> <string>(1)<module>()->None') >= 0):
                 pdbresult = "end"
                 appresult = ""
@@ -145,8 +149,8 @@ class pythondebugger(debugger):
             result = True
         except Exception as e:
             result = False
-        
-        return result, appresult, pdbresult,localvars,stacks
+
+        return result, appresult, pdbresult, localvars, stacks, watchvars
     #停止调试
     def stop(self):
         result = False
@@ -155,18 +159,19 @@ class pythondebugger(debugger):
         try:
             self.process.terminate()
             result = True
-            
+
         except:
             result = False
-        
+
         return result, appresult, pdbresult
     #继续运行
-    def continuedebug(self):
+    def continuedebug(self, watchlist):
         result = False
         appresult = ""
         pdbresult = ""
         localvars = None
         stacks = None
+        watchvars = None
         try:
             self.process.sendline('c')
             ret = self.process.expect('\(Pdb\)')
@@ -185,11 +190,12 @@ class pythondebugger(debugger):
                 pdbresult = pdbresult[pdbresult.find('(') + 1:pdbresult.find(')')].strip()
             localvars = self.getvar()
             stacks = self.getstack()
+            watchvars = self.getwatchvars(watchlist)
             result = True
         except Exception as e:
             result = False
-        
-        return result, appresult, pdbresult,localvars,stacks
+
+        return result, appresult, pdbresult, localvars, stacks, watchvars
     #添加断点
     def addbreak(self,l):
         result = False
@@ -207,7 +213,7 @@ class pythondebugger(debugger):
             result = True
         except Exception as e:
             result = False
-        
+
         return result, appresult, pdbresult
     #取消断点
     def removebreak(self,l):
@@ -224,7 +230,7 @@ class pythondebugger(debugger):
             result = True
         except Exception as e:
             result = False
-        
+
         return result, appresult, pdbresult
     #获取变量
     def getvar(self):
@@ -244,14 +250,14 @@ class pythondebugger(debugger):
                     r = '{' + r[2:]
                 if r == '}':
                     r='{}'
-            
+
             bold = re.compile(r'\<(.*?)\>')
             x = bold.sub(r'"\(\1\)"', r)
             localvars = demjson.decode(x)
 
         except Exception as e:
             pass
-        
+
         return localvars
     #获取堆栈
     def getstack(self):
@@ -267,7 +273,7 @@ class pythondebugger(debugger):
                 r = r[r.find(sig) + len(sig):]
                 r = r.replace(self.filename, '').strip()
                 r = r.split('\r\n')
-            
+
             for item in r:
                 if item.startswith('->'):
                     continue
@@ -281,7 +287,7 @@ class pythondebugger(debugger):
 
         except Exception as e:
             pass
-        
+
         return stacks
         pass
     #计算表达式
@@ -301,11 +307,16 @@ class pythondebugger(debugger):
                 r = r.replace('pp ' + varname + '\r\n', '').strip()
             if (r.find(sig) >= 0):
                 r = r[r.find(sig) + len(sig):].strip()
-            
+
             result = True
 
         except Exception as e:
             pass
         return result,r
 
+    def getwatchvars(self, varlist):
+        result = []
+        for var in varlist:
+            result.append(self.setwatch(var))
+        return result
 pythondebuggers = {"python":pythondebugger()}
