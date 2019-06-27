@@ -60,7 +60,18 @@ def detail(request):
 #所有代码提交页面
 def answers(request):
     context = {}
-    return render(request, 'c-answers.html', context)
+    issueid = int(request.GET.get('id', 1))
+    t = int(request.GET.get('type', 1))
+    page = request.GET.get('page', '1')
+
+    cissue = issue.getIssue(issueid)
+    submits = issue.getSubmitByResult(issueid,t,page,)
+
+    context['type'] = t
+    context['id'] = issueid
+    context['issue'] = cissue
+    context['page'] = submits
+    return render(request, 'answers.html', context)
 
 
 #获取指定代码提交的内容
@@ -92,13 +103,13 @@ def index(request):
     codelevel = issue.getLevels()
     lists = {}
 
-    for item in codelevel:
-        issues = issue.getIssuesByLevel(item.id, 1)
-        lists[item.id] = issues
+    #for item in codelevel:
+    #    issues = issue.getIssuesByLevel(item.id, 1)
+    #    lists[item.id] = issues
 
     context['level'] = level
     context['codelevel'] = codelevel
-    context['lists'] = lists
+    #context['lists'] = lists
     return render(request, 'index.html', context)
 
 

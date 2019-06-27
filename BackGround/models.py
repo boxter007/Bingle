@@ -46,9 +46,12 @@ class Issue(models.Model):
         createdate = models.DateTimeField(auto_now_add=True)
         cost = models.FloatField(default=100.00)
         issue = models.ForeignKey('Issue',on_delete=models.CASCADE,default=0)
+        result = models.ForeignKey('SubmitResult',
+                                   on_delete=models.CASCADE,
+                                   default=0)
 
         def __str__(self):
-            return 'ID:%d,USER:%s,LANG:%s' % (self.id, self.user.name,self.codetype) 
+            return 'ID:%d,USER:%s,LANG:%s' % (self.id, self.user.name,self.codetype)
 
     class SubmitCheck(models.Model):
         id = models.AutoField(primary_key=True)
@@ -68,12 +71,19 @@ class Issue(models.Model):
         def __str__(self):
             return self.name
 
+    class SubmitResult(models.Model):
+        id = models.AutoField(primary_key=True)
+        name = models.CharField(max_length=100)
+
+        def __str__(self):
+            return self.name
+
 class IssueChampion(models.Model):
     id = models.AutoField(primary_key=True)
     issueid = models.ForeignKey('Issue',on_delete=models.CASCADE)
     championid = models.ForeignKey('Champion', on_delete=models.CASCADE)
 
-    
+
 class Champion(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -113,6 +123,6 @@ class SurveyIssueChampion(models.Model):
 class SurveyIssueStatus(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    
+
     def __str__(self):
         return self.name

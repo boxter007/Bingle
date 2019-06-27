@@ -1,12 +1,14 @@
 from BackGround import models
 import logging
-from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
+
 log = logging.getLogger("collect")
 def getIssue(id):
     issueobj = models.Issue.objects.filter(id=id)
     curIssue = None
     if(issueobj.exists()):
-            curIssue = issueobj[0]
+        curIssue = issueobj[0]
     return curIssue
 
 def getSolution(id):
@@ -21,6 +23,27 @@ def getSurveyIssueStatuses():
 def getChampions():
     statuses = models.Champion.objects.all()
     return statuses
+
+
+def getSubmitByResult(issueid, t, page):
+    submits = models.Issue.Submit.objects.filter(issue_id=issueid).all()
+    if (t == 2):
+        submits = submits.filter(Q(result_id__in=[1, 2]))
+    elif (t == 3):
+        submits = submits.filter(Q(result_id__in=[3, 4, 5, 6]))
+
+    r1 = Paginator(submits, 10)
+    try:
+        r1 = r1.page(page)
+    except PageNotAnInteger:
+        r1 = r1.page(1)
+    except EmptyPage:
+        r1 = r1.page(r1.num_pages)
+
+    return r1
+
+
+
 def getIssuesByLevel(levelid,page):
     issues = models.Issue.objects.filter(level=levelid)
     lines = []
@@ -28,7 +51,11 @@ def getIssuesByLevel(levelid,page):
         line=[]
         line.append(item)
         line.append(item.Submit.objects.filter(cost=item.cost).count())
-        line.append(100*round(item.Submit.objects.filter(cost=item.cost).count()/item.Submit.objects.all().count(),2))
+        allsubmit = item.Submit.objects.all().count()
+        if allsubmit == 0:
+            line.append(0)
+        else:
+            line.append(100*round(item.Submit.objects.filter(cost=item.cost).count()/allsubmit,2))
         lines.append(line)
     issuesPage = Paginator(lines, 10)
     try:
@@ -59,7 +86,7 @@ def getSurveyIssues(levelid,championid,statusid,page):
 
 
 def makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks,issuetype,level):
-    
+
     newissue =  models.Issue.objects.create(
                         title = title,
                         content = issuecontent,
@@ -68,7 +95,7 @@ def makeIssue(user,title,timelimit,codelimit,cost,issuecontent,checks,issuetype,
                         codelimit = codelimit,
                         cost = cost,
                         level = models.Issue.IssueLevel.objects.filter(id=int(level)).first())
-    
+
     for item in checks:
         if item['input'] != '' and item['output'] != '' and item['cost'] != '' and float(item['cost']) > 0:
             newissue.Check.objects.create(

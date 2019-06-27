@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+
+{% endblock%}
+{% block banner%}
+<div class="page-header header-filter clear-filter" data-parallax="true"
+  style="background-image: url({% static 'build/img/bg3.jpg' %});">
+
+</div>
+{% endblock%}
+{% block body %}
+<div class="main pagecontent-raised">
+    <div class="section">
+        <div class="container">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h4><i class="fa fa-bars"></i><a href="/detail/?id={{issue.id}}">【{{issue.title}}】</a>的答案</h4>
+                    <nav id="debugbuttons" class="navbar  navbar-info  " >
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a href="/answers/?id={{issue.id}}&type=1&page=1" id="profile-tab1" >全部
+                                </a>
+
+                            </li>
+
+                            <li>
+                                <a href="/answers/?id={{issue.id}}&type=2&page=1" id="profile-tab2" >正确</a>
+
+                            </li>
+                            <li>
+                                <a href="/answers/?id={{issue.id}}&type=3&page=1" id="profile-tab3" >错误</a>
+
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <table id="datatable" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>提交用户</th>
+                                <th>结果</th>
+                                <th>得分</th>
+                                <th>语言</th>
+                                <th>提交时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for x in page %}
+                            <tr>
+                                <td>{{x.id}}</td>
+                                <td style= "cursor:pointer;"  onclick="location.href = '/viewuser/?id={{ x.id }}'" >{{x.user}}</td>
+                                <td>{{x.result}}</td>
+                                <td>{{x.cost}}</td>
+                                <td>{{x.codetype}}</td>
+                                <td>{{x.createtime}}</td>
+                                <td>
+                                    <a href="/viewsolution/?id={{ x.id }}"><i class="material-icons">person</i></a>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-sm-5">
+                        <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
+                            Page {{ page.number }} of {{ page.paginator.num_pages }}.
+                        </div>
+                        </div>
+                        <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
+                            <ul class="pagination">
+                            <li class="paginate_button previous {% if not page.has_previous %}disabled{% endif %}" id="datatable_previous">
+                                <a href="#" aria-controls="datatable" data-dt-idx="0" tabindex="0">Previous</a>
+                            </li>
+                            {% for pg in page.paginator.page_range %}
+                            {%if pg == page.number %}
+                            <li class="paginate_button active">
+                                <a href="#" aria-controls="datatable" data-dt-idx="2" tabindex="0">{{ page.number }}</a>
+                            </li>
+                            {% else %}
+                            <li class="paginate_button">
+                                <a href="/answers/?id={{ id }}&type={{ type }}&page={{ page.number}}" aria-controls="datatable" data-dt-idx="2" tabindex="0">{{ page.number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <li class="paginate_button next {% if not page.has_next %}disabled{% endif %}" id="datatable_next">
+                                <a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0">Next</a>
+                            </li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
+{% block bottom %}
+
+{% endblock%}
