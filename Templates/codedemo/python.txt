@@ -1,9 +1,17 @@
-def factorial(x):
-  if x == 1:
-    print(x)
-    return x
-  y = x * factorial(x-1)
-  print(y)
-  return y
-print()
-factorial(10)
+#  汉诺塔
+No = 1
+def show(n, f, t):
+    global No  
+    result = '{0}.第 {1} 个盘子，从 {2} 移动到 {3} '.format(No, n, f, t)
+    print(result)
+    No += 1
+def move(n, a, b, c):  # n表示第几个盘子,a、b、b表示三个柱子
+    if n == 1:
+        show(n, a, c)
+    else:
+        move(n-1, a, c, b)
+        show(n, a, c)
+        move(n-1, b, a, c)
+
+x = 3
+move(x, 'a', 'b', 'c')
