@@ -51,10 +51,9 @@
                         <option value="text/typescript">TypeScript</option>
                     </select>
                 </div>
-                <div class="col-xs-12 col-sm-10 col-md-10 ">
-                    <nav id="debugbuttons" class="navbar  navbar-info  " >
+                <div class="col-xs-12 col-sm-6 col-md-6 ">
+                    <nav id="debugbuttons" class="navbar  navbar-info " >
                         <ul class="nav navbar-nav navbar-left">
-
                             <li>
                                 <a id="save" href="#" >
                                     <i class="material-icons">save</i> 保存
@@ -110,6 +109,45 @@
                         </ul>
                     </nav>
                 </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 ">
+                    <nav id="debugbuttonsslow" class="navbar  navbar-info " >
+                        <ul class="nav navbar-nav navbar-left">
+
+                            <li>
+                                <a id="slowrun" href="#" >
+                                    <i class="material-icons">play_arrow</i> 慢速执行
+                                </a>
+
+                            </li>
+                            <li>
+                                <a id="slowpause" href="#" style="display:none">
+                                    <i class="material-icons">pause</i> 慢速暂停
+                                </a>
+
+                            </li>
+                            <li>
+                                <a id="slowcontinue" href="#" style="display:none">
+                                    <i class="material-icons">playlist_play</i> 慢速继续
+                                </a>
+
+                            </li>
+                            <li>
+                                <a id="slowstop" href="#" style="display:none">
+                                    <i class="material-icons">stop</i> 停止
+                                </a>
+
+                            </li>
+
+                            <li>
+                                <select id="slowspeed" name="codetype" class="selectpicker" data-style="btn btn-info" data-size="10" tabindex="-98">
+                                    <option value="100" select="">慢</option>
+                                    <option value="300">很慢</option>
+                                    <option value="500">最慢</option>
+                                </select>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
 
             </div>
             <!--代码及调试区域-->
@@ -133,7 +171,7 @@
                     <div class="card">
                         <div class="card-content ">
                             <label class="control-label">这里是程序执行结果输出</label>
-                            <textarea id="stdout" name="stdout" class="form-control" rows="7"></textarea>
+                            <textarea id="stdout" name="stdout" class="form-control" rows="7" ></textarea>
                         </div>
                     </div>
                 </div>
@@ -185,7 +223,7 @@
 {% block bottom %}
 <script src="{% static '/js/bootstrap-editable.js' %}"></script>
 <script>
-
+    var slowtimeout;
     var editor = CodeMirror.fromTextArea(document.getElementById("codeid"), {
         mode: {name: $('#codetype').val(),
                 version: 3,
@@ -225,22 +263,20 @@
     //设置运行状态
     function setrunstatus(){
         if(running){
-            $('#debugstop').css("pointer-events","none");
+            //$('#debugstop').css("pointer-events","none");
             $('#debugup').css("pointer-events","none");
             $("#debugdown").css("pointer-events","none");
             $('#debugcontinue').css("pointer-events","none");
-            $('#debugpanel').css("pointer-events","none");
             $('#debug').css("pointer-events","none");
             $('#save').css("pointer-events","none");
             $('#reset').css("pointer-events","none");
             $('#run').css("pointer-events","none");
             $('#submit').css("pointer-events","none");
         }else{
-            $('#debugstop').css('pointer-events', '');
+            //$('#debugstop').css('pointer-events', '');
             $('#debugup').css('pointer-events', '');
             $('#debugdown').css('pointer-events', '');
             $('#debugcontinue').css('pointer-events', '');
-            $('#debugpanel').css('pointer-events', '');
             $('#debug').css('pointer-events', '');
             $('#save').css('pointer-events', '');
             $('#reset').css('pointer-events', '');
@@ -257,8 +293,8 @@
             $('#debugdown').show();
             $('#debugcontinue').show();
             $('#debugpanel').show();
-            $('#maindiv').toggleClass('col-md-9');
-            $('#maindiv').toggleClass('col-md-6');
+            $('#maindiv').removeClass('col-md-9');
+            $('#maindiv').addClass('col-md-6');
             
             $('#debug').hide();
             $('#save').hide();
@@ -268,6 +304,8 @@
 
             $('#debugbuttons').removeClass('navbar-info');
             $('#debugbuttons').addClass('navbar-success');
+            $('#debugbuttonsslow').removeClass('navbar-info');
+            $('#debugbuttonsslow').addClass('navbar-success');
         }else{
             //非调试模式
             $('#debugstop').hide();
@@ -275,8 +313,8 @@
             $('#debugdown').hide();
             $('#debugcontinue').hide();
             $('#debugpanel').hide();
-            $('#maindiv').toggleClass('col-md-9');
-            $('#maindiv').toggleClass('col-md-6');
+            $('#maindiv').addClass('col-md-9');
+            $('#maindiv').removeClass('col-md-6');
             
             $('#debug').show();
             $('#save').show();
@@ -286,8 +324,9 @@
 
             $('#debugbuttons').addClass('navbar-info');
             $('#debugbuttons').removeClass('navbar-success');
+            $('#debugbuttonsslow').addClass('navbar-info');
+            $('#debugbuttonsslow').removeClass('navbar-success');
         }
-        
     }
     //更改语言
     function changecode() {
@@ -310,8 +349,12 @@
     }    
     $('#codetype').change(changecode);
     changecode();
+    //是否调试状态
     debugging = false;
+    //是否与服务器交互等待状态
     running = false;
+    //是否慢速自动调试状态
+    slowing = false;
     setstatus();
     //添加监视变量
     $('#addvar').click(function(e){
@@ -348,7 +391,7 @@
             function(data){
                 running = false;
                 setrunstatus();
-                $('#stdout').val(data['stdout']['outdata']);
+                setstdout(true,data['stdout']['outdata'])
                 $('#runtime').text('运行时间:' + data['stdout']['runtime']+'秒');
                 running = false;
             });
@@ -396,14 +439,25 @@
                 }
                 
                 $('#stdout').val(data['appresult']);
+
+                if( data['result'] == true && slowing && debugging){
+                    slowsetstep();
+                }
         });
     });
     //停止调试
     $('#debugstop').click(function(){
+        //console.log('debugstop=>' + 'slowing:' + slowing + ";debugging:" + debugging)
+        
         debugging=false;
         running = false;
+        slowing = false;
+        //console.log('debugstop2=>' + 'slowing:' + slowing + ";debugging:" + debugging)
+        
+        clearTimeout(slowtimeout);
         setrunstatus();
         setstatus();
+        setslowrunstatus();
         $.post("../debug/", { 
                             action:'stop'
                             },
@@ -412,6 +466,11 @@
     });
     //单步进入
     $('#debugdown').click(function(){
+        console.log('debugdown=>' + 'slowing:' + slowing + ";debugging:" + debugging)
+        
+        if(!debugging){
+            return;
+        }
         running=true;
         setrunstatus();
         $.post("../debug/", { 
@@ -422,25 +481,34 @@
             running=false;
             setrunstatus();
             if( data['result']  == true){
-                old = $('#stdout').val();
-                $('#stdout').val( old + data['appresult']);
-
+                setstdout(false,data['appresult']);
                 if(data['pdbresult'] == 'end'){
                     debugging=false;
-                    editor.setCursor(0)
+                    slowing = false;
+                    editor.setCursor(0);
                     setstatus();
+                    setslowrunstatus();
                 }else{
                     editor.setCursor(Number(data['pdbresult'])-1);
                     showvars(data['localvars'])
                     showstacks(data['stacks'])
                     showwatchvars(data['watchvars'])
+                    console.log('debugdown2=>' + 'slowing:' + slowing + ";debugging:" + debugging)
+        
+                    if(slowing && debugging){
+                        slowsetstep();
+                    }
                 }
+
             }
 
             });
     });
     //单步跳过
     $('#debugup').click(function(){
+        if(!debugging){
+            return;
+        }
         running=true;
         setrunstatus();
         $.post("../debug/", { 
@@ -452,13 +520,12 @@
             setrunstatus();
             console.log(data);
             if( data['result'] == true){
-                old = $('#stdout').val();
-                $('#stdout').val( old + data['appresult']);
-                
+                setstdout(false,data['appresult']);
                 if(data['pdbresult'] == 'end'){
                     debugging=false;
-                    editor.setCursor(0)
+                    editor.setCursor(0);
                     setstatus();
+                    setslowrunstatus();
                 }else{
                     editor.setCursor(Number(data['pdbresult'])-1);
                     showvars(data['localvars'])
@@ -470,6 +537,9 @@
     });
     //继续
     $('#debugcontinue').click(function(){
+        if(!debugging){
+            return;
+        }
         running=true;
         setrunstatus();
         $.post("../debug/", { 
@@ -481,13 +551,12 @@
             setrunstatus();
             console.log(data);
             if( data['result'] == true){
-                old = $('#stdout').val();
-                $('#stdout').val( old + data['appresult']);
-                
+                setstdout(false,data['appresult']);
                 if(data['pdbresult'] == 'end'){
                     debugging=false;
                     editor.setCursor(0);
                     setstatus();
+                    setslowrunstatus();
                 }else{
                     editor.setCursor(Number(data['pdbresult'])-1);
                     showvars(data['localvars']);
@@ -541,5 +610,96 @@
     $('#reset').click(function(){
         $('#runtime').text('');
     })
+    //设置输出框显示
+    function setstdout(clear,data){
+        if(clear){
+            $('#stdout').val(data);
+        }else{
+            old = $('#stdout').val();
+            $('#stdout').val( old + data);
+            $('#stdout').scrollTop($('#stdout')[0].scrollHeight);
+        }
+        
+    }
+    //慢速执行开始
+    $('#slowrun').click(function(){
+        slowing = true;
+        if(debugging){
+            slowsetstep();
+        }else{
+            $('#debug').click();
+        }
+        setslowrunstatus();
+        
+    });
+    //慢速执行继续
+    $('#slowcontinue').click(function(){
+        slowing = true;
+        setslowrunstatus();
+        slowsetstep();
+    });
+    //慢速执行暂停
+    $('#slowpause').click(function(){
+        clearTimeout(slowtimeout);
+        slowing = false;
+        setstatus();
+        setslowrunstatus();
+    });
+    //慢速执行停止
+    $('#slowstop').click(function(){
+        debugging=false;
+        running = false;
+        slowing = false;
+        
+        clearTimeout(slowtimeout);
+        setrunstatus();
+        setstatus();
+        setslowrunstatus();
+        $.post("../debug/", { 
+                            action:'stop'
+                            },
+        function(data){
+        });
+    });
+    //设置慢速运行状态
+    function setslowrunstatus(){
+        if(slowing){
+            $('#slowpause').show();
+            $('#slowstop').show();
+            $('#slowcontinue').hide();
+            $('#slowspeed').hide();
+            $('#debugstop').hide();
+            $('#debugup').hide();
+            $('#debugdown').hide();
+            $('#debugcontinue').hide();
+            $('#slowrun').hide();
+            $('#debug').hide();
+            $('#save').hide();
+            $('#reset').hide();
+            $('#run').hide();
+            $('#submit').hide();
+        }else{
+            $('#slowpause').hide();
+            $('#slowstop').hide();
+            if(debugging){
+                $('#slowcontinue').show();
+            }else{
+                $('#slowrun').show();
+                $('#slowcontinue').hide();
+            }
+            $('#slowspeed').show();
+        }
+    }
+
+    //慢速运行定时任务
+    function slowsetstep(){
+        clearTimeout(slowtimeout);
+        //console.log('slowsetstep=>' + 'slowing:' + slowing + ";debugging:" + debugging)
+        if(slowing && debugging){
+            slowtimeout = setTimeout(function(){
+                $('#debugdown').click();
+                },$('#slowspeed').val());
+        }
+    }
 </script>
 {% endblock%}
