@@ -16,137 +16,118 @@
       <div class="section">
           <div class="container">
             <div class="row">
-                <div class="form-group label-floating col-md-12">
+                <div class="form-group label-floating col-md-10 col-sm-10 col-xs-12">
                   <label class="control-label">题目</label>
-                  <input type="email" class="form-control">
+                  <input  class="form-control" autocomplete="off">
                   <span class="material-input"></span>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                  <button class="btn btn-success pull-right" type="submit" id="submit">提交</button>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group label-floating col-md-4">
-								  <label class="control-label">时间限制(s)</label>
-								  <input  class="form-control col-md-2" name="timelimit">
-                  <span class="material-input"></span>
-                </div>
-
-                <div class="form-group label-floating col-md-4">
-								  <label class="control-label">时间限制(s)</label>
-								  <input  class="form-control col-md-2" name="timelimit">
-                  <span class="material-input"></span>
-                </div>
-
-                <div class="form-group label-floating col-md-4">
-								  <label class="control-label">时间限制(s)</label>
-								  <input  class="form-control col-md-2" name="timelimit">
-                  <span class="material-input"></span>
-                </div>
-            </div>
-                <label class="control-label col-md-1 ">时间限制(s)</label>
-                <div class="col-md-1 col-sm-1 col-xs-12">
-                  <select class="form-control" id="level" name="level">
-                            <option value="1">入门</option>
-                            <option value="2">简单</option>
-                            <option value="3">普通</option>
-                            <option value="4">困难</option>
-                            <option value="5">挑战</option>
-                            <option value="6">无敌</option>
-                  </select>
-                </div>
-                <label class="control-label col-md-2 col-sm-2 col-xs-12">代码限制(Bytes)</label>
-                <div class="col-md-1 col-sm-1 col-xs-12">
-                  <input type="text" class="form-control" name="codelimit" >
-                </div>
-                <label class="control-label col-md-1 col-sm-1 col-xs-12">分值</label>
-                <div class="col-md-1 col-sm-1 col-xs-12">
-                  <input type="text" class="form-control"  name="issuecost" >
-                </div>
-                <label class="control-label col-md-1 col-sm-1 col-xs-12">类型</label>
-                <div class="col-md-1 col-sm-1 col-xs-12">
-                  <select class="form-control" id="issuetype" name="issuetype" >
-                            <option value="1" selected>练习</option>
-                            <option value="2">竞赛</option>
-                  </select>
-                </div>
-                <div class="col-md-1 col-sm-1 col-xs-12">
-                  <button class="btn btn-success pull-right" type="submit" id="submit">提交</button>
-                </div>
+              <div class="form-group  col-md-3 col-sm-3 col-xs-12">
+									<select class="selectpicker" data-style="select-with-transition" title="难度">
+										<option disabled>难度</option>
+                    <option value="1">入门</option>
+                    <option value="2">简单</option>
+                    <option value="3">普通</option>
+                    <option value="4">困难</option>
+                    <option value="5">挑战</option>
+                    <option value="6">无敌</option>
+									</select>
+							</div>
+              <div class="form-group  col-md-3 col-sm-3 col-xs-12">
+									<select class="selectpicker" data-style="select-with-transition" title="题目类型">
+										<option disabled>题目类型</option>
+                    <option value="1" selected>练习</option>
+                    <option value="2">竞赛</option>
+									</select>
+							</div>
+              <div class="form-group label-floating col-md-3 col-sm-3 col-xs-12">
+                <label class="control-label">代码限制(Bytes)</label>
+                <input  class="form-control col-md-2" name="codelimit" autocomplete="off">
+                <span class="material-input"></span>
               </div>
-              <div class="clearfix"></div>
-              <div  id="content"></div><textarea id="issuecontent" name="issuecontent" style="display:none"></textarea>
-                <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                  <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#tab_content1" id="profile-tab1" role="tab" data-toggle="tab" aria-expanded="true">Check1</a>
-                    </li>
-                    <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Check2</a>
-                    </li>
-                    <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">Check3</a>
-                    </li>
-                    <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab4" data-toggle="tab" aria-expanded="false">Check4</a>
-                    </li>
-                  </ul>
-                  <div id="myTabContent" class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label for="message">输入:</label>
-                        <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
-                      </div>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label for="message">输出:</label>
-                        <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
-                      </div>
-                      <div class="col-md-12 col-sm-12 col-xs-12">
-                        <label for="message">得分占比(%):</label>
-                        <input type="text" id="range_1" value="" name="cost" />
-                      </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label for="message">输入:</label>
-                        <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
-                      </div>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label for="message">输出:</label>
-                        <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
-                      </div>
-                      <div class="col-md-12 col-sm-12 col-xs-12">
-                        <label for="message">得分占比(%):</label>
-                        <input type="text" id="range_2" value="" name="cost" />
-                      </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label for="message">输入:</label>
-                        <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
-                      </div>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label for="message">输出:</label>
-                        <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
-                      </div>
-                      <div class="col-md-12 col-sm-12 col-xs-12">
-                        <label for="message">得分占比(%):</label>
-                        <input type="text" id="range_3" value="" name="cost" />
-                      </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label for="message">输入:</label>
-                        <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
-                      </div>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label for="message">输出:</label>
-                        <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
-                      </div>
-                      <div class="col-md-12 col-sm-12 col-xs-12">
-                        <label for="message">得分占比(%):</label>
-                        <input type="text" id="range_4" value="" name="cost" />
-                      </div>
-                    </div>
-                  </div>
-                </div>        
+              <div class="form-group label-floating col-md-3 col-sm-3 col-xs-12">
+                <label class="control-label">分值</label>
+                <input  class="form-control col-md-2" name="issuecost" autocomplete="off">
+                <span class="material-input"></span>
               </div>
             </div>
           </div>
+          <div  id="content"></div><textarea id="issuecontent" name="issuecontent" style="display:none"></textarea>
+          <div class="container" role="tabpanel" data-example-id="togglable-tabs">
+            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#tab_content1" id="profile-tab1" role="tab" data-toggle="tab" aria-expanded="true">Check1</a>
+              </li>
+              <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Check2</a>
+              </li>
+              <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">Check3</a>
+              </li>
+              <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab4" data-toggle="tab" aria-expanded="false">Check4</a>
+              </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+              <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="message">输入:</label>
+                  <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="message">输出:</label>
+                  <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <label for="message">得分占比(%):</label>
+                  <input type="text" id="range_1" value="" name="cost" />
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="message">输入:</label>
+                  <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="message">输出:</label>
+                  <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <label for="message">得分占比(%):</label>
+                  <input type="text" id="range_2" value="" name="cost" />
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="message">输入:</label>
+                  <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="message">输出:</label>
+                  <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <label for="message">得分占比(%):</label>
+                  <input type="text" id="range_3" value="" name="cost" />
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="message">输入:</label>
+                  <textarea id="message" rows="5" class="form-control" name="checkinput" ></textarea>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="message">输出:</label>
+                  <textarea id="message" rows="5" class="form-control" name="checkoutput" ></textarea>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <label for="message">得分占比(%):</label>
+                  <input type="text" id="range_4" value="" name="cost" />
+                </div>
+              </div>
+            </div>
+          </div>        
       </div>
   </div>
 </form>
