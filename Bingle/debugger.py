@@ -281,7 +281,7 @@ class pythondebugger(debugger):
                     item = item[1:]
                 item = item.strip()
                 stack = {}
-                stack['line'] = item[0:item.find(')')+1]
+                stack['line'] = item[item.find('(')+1:item.find(')')]
                 stack['function'] = item[item.find(')')+1:]
                 stacks.append(stack)
 

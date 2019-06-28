@@ -194,25 +194,17 @@
                                 </table>
                         </div>
                     </div>
-                    <!--
                     <div class="card">
-                        <div class="card-content ">
+                        <div class="card-content" >
                             <label class="control-label">堆栈信息</label>
-                                <table class="table" id="stacktable">
-                                <thead>
-                                    <tr>
-                                    <th>行</th>
-                                    <th>位置</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                
-                                    
-                                </tbody>
-                                </table> 
+                                <div style="max-height: 150px;overflow-y: scroll;">
+                                    <table class="table table-striped  table-hover" id="stacktable" >
+                                        <tbody></tbody>
+                                    </table> 
+                                </div>
+
                         </div>
                     </div>
-                    -->
                 </div>
             </div>
 
@@ -416,7 +408,7 @@
         $('#stdout').val('');
         $('#runtime').text('');
         $("#vartable tr").remove();
-        $("#stacktable tr:not(:first)").remove();
+        $("#stacktable tr").remove();
         clearwatchvarvalue();
         debugging=true;
         running = true;
@@ -466,7 +458,7 @@
     });
     //单步进入
     $('#debugdown').click(function(){
-        console.log('debugdown=>' + 'slowing:' + slowing + ";debugging:" + debugging)
+        //console.log('debugdown=>' + 'slowing:' + slowing + ";debugging:" + debugging)
         
         if(!debugging){
             return;
@@ -493,7 +485,7 @@
                     showvars(data['localvars'])
                     showstacks(data['stacks'])
                     showwatchvars(data['watchvars'])
-                    console.log('debugdown2=>' + 'slowing:' + slowing + ";debugging:" + debugging)
+                    //console.log('debugdown2=>' + 'slowing:' + slowing + ";debugging:" + debugging)
         
                     if(slowing && debugging){
                         slowsetstep();
@@ -582,16 +574,16 @@
     function showvars(data){
         $("#vartable tr").remove();
         for(var key in data){
-            $("#vartable>tbody").after('<tr><td>'+key +'：</td><td>'+data[key]+'</td></tr>');
+            $("#vartable>tbody").append('<tr><td>'+key +'：</td><td>'+data[key]+'</td></tr>');
         }
     }
 
     //显示堆栈
     function showstacks(data){
-        //$("#stacktable tr:not(:first)").remove();
-        //for(var item = data.length - 1 ; item >=0 ; item--){
-        //    $("#stacktable tr:last").after('<tr><td>*'+ data[item]['line'] +'：</td><td>'+data[item]['function']+'</td></tr>');
-        //}
+        $("#stacktable tr").remove();
+        for(var item = data.length - 1 ; item >=0 ; item--){
+            $("#stacktable>tbody").append('<tr style= "cursor:pointer; "  onclick="editor.setCursor(Number(' + data[item]['line'] +')-1)"><td>'+ data[item]['line'] +'</td><td>'+data[item]['function']+'</td></tr>');
+        }
     }
     //显示监视变量
     function showwatchvars(data){
