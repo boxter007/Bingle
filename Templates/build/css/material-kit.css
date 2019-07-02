@@ -16,6 +16,8 @@
 body {
     background-color: #E5E5E5;
     color: #3C4858;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body.inverse {

@@ -13,5 +13,5 @@ def move(n, a, b, c):  # n表示第几个盘子,a、b、b表示三个柱子
         show(n, a, c)
         move(n-1, b, a, c)
 
-x = 3
+x = 5
 move(x, 'a', 'b', 'c')
