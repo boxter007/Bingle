@@ -291,9 +291,31 @@ class pythondebugger(debugger):
         return stacks
         pass
     #计算表达式
-    def evalexpress(self):
-        #当手动修改变量值的时候后再调用赋值命令！，否则直接打印表达式p
-        pass
+    def setvalue(self,varname,varvalue):
+        result = False
+        localvars = None
+        r = ''
+        try:
+            sig = '*** NameError:'
+            self.process.sendline('!' + varname + '=' + varvalue)
+            ret = self.process.expect('\(Pdb\)')
+            r = self.process.before.strip()
+            if (r.find(sig) >= 0):
+                r = r[r.find(sig) + len(sig):].strip()
+            elif (r == '!' + varname + '=' + varvalue):
+                r=""
+                localvars = self.getvar()
+                result = True
+
+        except Exception as e:
+            pass
+        return result, r, localvars
+
+    def getwatchvars(self, varlist):
+        result = []
+        for var in varlist:
+            result.append(self.setwatch(var))
+        return result
 
     def setwatch(self, varname):
         result = False

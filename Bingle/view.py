@@ -256,6 +256,17 @@ def debug(request):
                 result, pdbresult = mydebugger.setwatch(varname)
             else:
                 result = False
+        elif (name == "setvalue"):
+            varname = request.POST.get('pk', '')
+            varvalue = request.POST.get('value', '')
+            if (len(varname) > 0 and len(varvalue) > 0):
+                mydebugger = debugger.getdebugger(codetype)
+                result, pdbresult, localvars = mydebugger.setvalue(varname, varvalue)
+                context["localvars"] = localvars
+            else:
+                result = False
+
+
         context["result"] = result
         context["appresult"] = appresult
         context["pdbresult"] = pdbresult
