@@ -5169,7 +5169,7 @@ hr.on-light {
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-    padding: 12px 8px;
+    padding: 2px 2px;
     vertical-align: middle;
 }
 

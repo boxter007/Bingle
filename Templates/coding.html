@@ -22,7 +22,7 @@
 
 {% endblock%}
 {% block banner%}
-<div class="page-header header-filter clear-filter" data-parallax="true"
+<div id="banner" class="page-header header-filter clear-filter" data-parallax="true"
   style="background-image: url({% static 'build/img/bg7.jpg' %});">
 
 </div>
@@ -56,35 +56,35 @@
                         <ul class="nav navbar-nav navbar-left">
                             <li>
                                 <a id="save" href="#" >
-                                    <i class="material-icons">save</i> 保存
+                                    <i class="material-icons">save</i> Save
                                 </a>
 
                             </li>
 
                             <li>
                                 <a id="run" href="#"  >
-                                    <i class="material-icons">play_arrow</i> 运行
+                                    <i class="material-icons">play_arrow</i> Run
 
                                 </a>
 
                             </li>
                             <li>
                                 <a id="submit" href="#" >
-                                    <i class="material-icons">mail</i> 提交
+                                    <i class="material-icons">mail</i> Submit
 
                                 </a>
 
                             </li>
                             <li>
                                 <a id="debug" href="#" >
-                                    <i class="material-icons">bug_report</i> 调试
+                                    <i class="material-icons">bug_report</i> Debug
 
                                 </a>
 
                             </li>
                             <li>
                                 <a id="debugstop" href="#" style="display:none" >
-                                    <i class="material-icons">stop</i> 停止
+                                    <i class="material-icons">stop</i> Stop
 
                                 </a>
 
@@ -115,25 +115,25 @@
 
                             <li>
                                 <a id="slowrun" href="#" >
-                                    <i class="material-icons">play_arrow</i> 慢速执行
+                                    <i class="material-icons">play_arrow</i> Slow
                                 </a>
 
                             </li>
                             <li>
                                 <a id="slowpause" href="#" style="display:none">
-                                    <i class="material-icons">pause</i> 慢速暂停
+                                    <i class="material-icons">pause</i> Pause
                                 </a>
 
                             </li>
                             <li>
                                 <a id="slowcontinue" href="#" style="display:none">
-                                    <i class="material-icons">playlist_play</i> 慢速继续
+                                    <i class="material-icons">playlist_play</i> Continue
                                 </a>
 
                             </li>
                             <li>
                                 <a id="slowstop" href="#" style="display:none">
-                                    <i class="material-icons">stop</i> 停止
+                                    <i class="material-icons">stop</i> Stop
                                 </a>
 
                             </li>
@@ -145,6 +145,11 @@
                                     <option value="500">最慢</option>
                                 </select>
                             </li>
+                            <li >
+                                <a id="fullscreen" href="#" >
+                                    <i class="material-icons" >fullscreen</i> 
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -153,7 +158,7 @@
             <!--代码及调试区域-->
             <div class="row">
                 <!--代码-->
-                <div class="col-xs-12 col-md-6" id="maindiv">
+                <div class="col-xs-12 col-md-6" id="maindiv" >
                     <div class="card">
                         <div class="card-content ">
                             <textarea id="codeid" class="form-control" name="code"></textarea>  
@@ -162,13 +167,13 @@
                 </div>
                 <!--输入输出-->
                 <div class="col-xs-12 col-md-3">
-                    <div class="card">
+                    <div class="card" id="inpanel">
                         <div class="card-content ">
                             <label class="control-label">这里是程序启动输入</label>
                             <textarea id="stdin" name="stdin" class="form-control" rows="6"></textarea>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card" id="outpanel">
                         <div class="card-content ">
                             <label class="control-label">这里是程序执行结果输出</label>
                             <textarea id="stdout" name="stdout" class="form-control" rows="7" ></textarea>
@@ -177,28 +182,32 @@
                 </div>
                 <!--调试信息-->
                 <div class="col-xs-12 col-md-3" id="debugpanel" style="display: none;">
-                    <div class="card">
+                    <div class="card" id="varpanel">
                         <div class="card-content ">
                             <label class="control-label">本地变量</label>
-                            <table class="table" id='vartable'>
-                                <tbody></tbody>
-                            </table>
+                            <div style="overflow-y: scroll;" id="vartablepanel">
+                                <table class="table" id='vartable'>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card" id="watchpanel">
                         <div class="card-content ">
                             <label class="control-label">监视变量</label>
                             <label class="control-label pull-right"><a id="addvar" href="#"><i class="fa fa-plus"></i></a></label>
+                            <div style="overflow-y: scroll;" id="watchtablepanel">
                                 <table class="table" id="watchtable" style="width:100%">
                                     <tbody></tbody>
                                 </table>
+                            </div>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card" id="stackpanel">
                         <div class="card-content" >
                             <label class="control-label">堆栈信息</label>
-                                <div style="max-height: 150px;overflow-y: scroll;">
-                                    <table class="table table-striped  table-hover" id="stacktable" >
+                                <div style="overflow-y: scroll;" id="stacktablepanel">
+                                    <table class="table table-hover" id="stacktable" >
                                         <tbody></tbody>
                                     </table> 
                                 </div>
@@ -216,6 +225,46 @@
 <script src="{% static '/js/bootstrap-editable.js' %}"></script>
 <script>
     var slowtimeout;
+    //是否调试状态
+    debugging = false;
+    //是否与服务器交互等待状态
+    running = false;
+    //是否慢速自动调试状态
+    slowing = false;
+    //是否全屏
+    fullscreen = false;
+        $(document).ready(function(){
+            $('#codetype').change(changecode);
+            changecode();
+            setstatus();
+            setpanelsize();
+    });
+    function setpanelsize(){
+        arg = 270;
+        if(fullscreen){
+            arg = 200
+            $('#sectionsNav').hide();
+            $('#basefooter').hide();
+            $('.main').css("margin"," -610px 20px 20px 20px");
+        }else{
+            $('.main').css("margin","");
+            $('#sectionsNav').show();
+            $('#basefooter').show();
+        }
+        //设置代码框自适应高度
+        editor.setSize("auto",($(window).height()-arg)+"px");
+        //设置输入、输出自适应高度
+        $('#inpanel').height(($(window).height()-arg-30)*0.3);
+        $('#outpanel').height(($(window).height()-arg-30)*0.7);
+        $('#stdin').height($('#inpanel').height()-42-14);
+        $('#stdout').height($('#outpanel').height()-42-14);
+        $('#varpanel').height(($(window).height()-arg-60)/3);
+        $('#watchpanel').height(($(window).height()-arg-60)/3);
+        $('#stackpanel').height(($(window).height()-arg-60)/3);
+        $('#vartablepanel').height(($(window).height()-arg-60)/3-30-14);
+        $('#stacktablepanel').height(($(window).height()-arg-60)/3-30-14);
+        $('#watchtablepanel').height(($(window).height()-arg-60)/3-30-14);
+    }
     var editor = CodeMirror.fromTextArea(document.getElementById("codeid"), {
         mode: {name: $('#codetype').val(),
                 version: 3,
@@ -339,20 +388,15 @@
         }
         return JSON.stringify( arrayObj )
     }    
-    $('#codetype').change(changecode);
-    changecode();
-    //是否调试状态
-    debugging = false;
-    //是否与服务器交互等待状态
-    running = false;
-    //是否慢速自动调试状态
-    slowing = false;
-    setstatus();
+    $('#fullscreen').click(function(){
+        fullscreen = !fullscreen;
+        setpanelsize();
+    });
     //添加监视变量
     $('#addvar').click(function(e){
         e.stopPropagation();
         var pk = $('#watchtable').find("tr").length 
-        $('#watchtable>tbody').after('<tr><td><a href="#" id="var' + pk + '" data-type="text" data-pk="'+ pk + '" data-url="../debug/" data-title="输入变量名"></a></td><td><a href="#" id="var' + pk + 'value" data-type="text" data-pk="v' + pk +'" data-url="../debug/" data-title="输入变量值"></a></td><td style="width:10px"><a href="#" onclick="$(this).parents(\'tr\').remove();"><i class="fa fa-times"></i></a></td></tr>');
+        $('#watchtable>tbody').after('<tr><td><a href="#" id="var' + pk + '" data-type="text" data-pk="'+ pk + '" data-url="../debug/" data-title="输入变量名"></a></td><td><a href="#" id="var' + pk + 'value" data-type="text"  data-url="../debug/" data-title="输入变量值"></a></td><td style="width:10px"><a href="#" onclick="$(this).parents(\'tr\').remove();"><i class="fa fa-times"></i></a></td></tr>');
         $('#var'+ pk).editable({
             type: "text",
             url: '../debug/',
@@ -362,15 +406,38 @@
             success: function(response, newValue) {
                 if(response.result == true){
                     $('#var' + pk +'value').text(response.pdbresult);
+
+                    $('#var'+ pk + 'value').editable({
+                        type: "text",
+                        url: '../debug/',
+                        type: 'text',
+                        name: 'setvalue',
+                        pk: newValue,
+                        success: function(response, newValue) {
+                            if(response.result == true){
+                                $('#var' + pk +'value').text(response.pdbresult);
+                                showvars(response.localvars);
+                            }
+                        }
+                    });
+
+
+
+
+
+
                 }
             }
         });
+
+        
+
         $('#var'+ pk).editable('toggle');
         $('#var'+ pk).click(function(e){
             e.stopPropagation();
             $('#var'+ pk).editable('toggle');
         });
-        getvarslist();
+        //getvarslist();
     })
     //run代码
     $('#run').click(function(){
