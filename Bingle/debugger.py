@@ -88,7 +88,7 @@ class pythondebugger(debugger):
             self.process.sendline('n')
             ret = self.process.expect('\(Pdb\)')
             r = self.process.before.strip()
-            log.info(r)
+            #log.info(r)
 
             #分离应用输出和PDB输出
             index = r.find('> ' + self.process.args[3].decode())  #index之前基本上为应用输出，之后为PDB输出
