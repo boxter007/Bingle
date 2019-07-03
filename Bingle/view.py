@@ -15,6 +15,9 @@ def coding(request):
     issueobj = issue.getIssue(id)
     context['issueid'] = id
     context['title'] = issueobj.title
+    context['timelimit'] = issueobj.timelimit
+    context['codelimit'] = issueobj.codelimit
+    context['level'] = issueobj.level
 
     return render(request, 'coding.html', context)
 

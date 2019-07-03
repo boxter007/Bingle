@@ -139,7 +139,7 @@
                             </li>
 
                             <li>
-                                <select id="slowspeed" name="codetype" class="selectpicker" data-style="btn btn-info" data-size="10" tabindex="-98">
+                                <select id="slowspeed" name="codetype" class="selectpicker" data-style="btn btn-info" >
                                     <option value="100" select="">慢</option>
                                     <option value="300">很慢</option>
                                     <option value="500">最慢</option>
@@ -215,6 +215,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xs-12 col-md-6">
+                    <a href="/detail/?id={{ issueid }}">题目：【{{ title }}】</a>
+                </div>
+                <div class="col-xs-12 col-md-2">时间限制：{{ timelimit}}秒</div>
+                <div class="col-xs-12 col-md-2">代码限制：{{ codelimit}}字节</div>
+                <div class="col-xs-12 col-md-2">难度：{{ level }}</div>
             </div>
 
         </div>
@@ -240,9 +246,9 @@
             setpanelsize();
     });
     function setpanelsize(){
-        arg = 270;
+        arg = 300;
         if(fullscreen){
-            arg = 200
+            arg = 230
             $('#sectionsNav').hide();
             $('#basefooter').hide();
             $('.main').css("margin"," -610px 20px 20px 20px");
