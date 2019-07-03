@@ -209,6 +209,9 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     will-change: box-shadow, transform;
     transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.navbar .navbar-nav > li > div.bootstrap-select {
+    padding: 0px 15px;
+}
 
 .btn::-moz-focus-inner,
 .navbar .navbar-nav > li > a.btn::-moz-focus-inner {
