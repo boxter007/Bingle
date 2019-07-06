@@ -2,10 +2,12 @@
 
 ### 运行环境
 
-Python3+Django
+Python3
 
 ### 依赖
 ```shell 
+pip3 install django
+
 pip3 install pexpect
 
 pip3 install demjson
