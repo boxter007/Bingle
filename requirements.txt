@@ -1,5 +1,5 @@
 astroid==2.2.5
-certifi==2017.4.17
+certifi==2022.12.7
 chardet==3.0.4
 demjson==2.2.4
 Django>=2.2.2
